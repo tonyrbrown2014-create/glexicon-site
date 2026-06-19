@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glexicon – Customer Dashboard</title>
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text: #111111;
+            --accent: #666666;
+            --border: #eaeaea;
+            --faint: #fafafa;
+            --mid: #f3f3f3;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* ── LAYOUT ── */
+        .shell {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            grid-template-rows: auto 1fr;
+            min-height: 100vh;
+        }
+
+        /* ── TOP BAR ── */
+        .topbar {
+            grid-column: 1 / -1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 32px;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .topbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .topbar-brand h1 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+        .topbar-brand span {
+            font-size: 0.8rem;
+            color: var(--accent);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+        .license-badge {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            border: 1px solid var(--text);
+            padding: 4px 12px;
+        }
+        .points-display {
+            text-align: right;
+        }
+        .points-display .pts-number {
+            font-size: 1.1rem;
+            font-weight: 800;
+            display: block;
+            line-height: 1;
+        }
+        .points-display .pts-label {
+            font-size: 0.68rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ── SIDEBAR ── */
+        .sidebar {
+            border-right: 1px solid var(--border);
+            padding: 32px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .sidebar-section-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--accent);
+            padding: 16px 24px 6px 24px;
+            margin-top: 8px;
+        }
+        .sidebar-section-label:first-child { margin-top: 0; }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 24px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--accent);
+            cursor: pointer;
+            border-left: 2px solid transparent;
+            transition: color 0.15s, border-color 0.15s;
+            user-select: none;
+        }
+        .nav-item:hover { color: var(--text); }
+        .nav-item.active {
+            color: var(--text);
+            border-left-color: var(--text);
+            font-weight: 600;
+        }
+        .nav-icon { font-size: 0.9rem; width: 16px; text-align: center; }
+
+        /* ── MAIN CONTENT ── */
+        .main {
+            padding: 40px 48px;
+            overflow-y: auto;
+        }
+        .panel { display: none; }
+        .panel.active { display: block; }
+
+        /* ── PAGE HEADERS ── */
+        .page-header { margin-bottom: 36px; }
+        .page-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .page-header p { font-size: 0.95rem; color: var(--accent); margin: 0; }
+
+        /* ── STAT CARDS ── */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .stat-card {
+            border: 1px solid var(--border);
+            padding: 22px 24px;
+        }
+        .stat-card .stat-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+        .stat-card .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+        .stat-card .stat-sub {
+            font-size: 0.8rem;
+            color: var(--accent);
+        }
+
+        /* ── SECTION BLOCKS ── */
+        .block {
+            border: 1px solid var(--border);
+            margin-bottom: 24px;
+        }
+        .block-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            background: var(--faint);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .block-header h3 {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+        .block-body { padding: 24px; }
+
+        /* ── INPUT TABS ── */
+        .input-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 24px;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            background: none;
+            color: var(--accent);
+            border-bottom: 2px solid transparent;
+            margin-bottom: -1px;
+            transition: color 0.15s;
+        }
+        .tab-btn:hover { color: var(--text); }
+        .tab-btn.active {
+            color: var(--text);
+            font-weight: 700;
+            border-bottom-color: var(--text);
+        }
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+
+        /* ── FORM ELEMENTS ── */
+        label.field-label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+        textarea, input[type="text"] {
+            width: 100%;
+            border: 1px solid var(--border);
+            padding: 12px 14px;
+            font-size: 0.95rem;
+            font-family: "SF Mono", "Fira Mono", "Consolas", monospace;
+            color: var(--text);
+            background: var(--bg);
+            resize: vertical;
+            transition: border-color 0.2s;
+        }
+        textarea:focus, input[type="text"]:focus {
+            outline: none;
+            border-color: var(--text);
+        }
+        .upload-zone {
+            border: 1px dashed var(--border);
+            padding: 40px 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s;
+            position: relative;
+        }
+        .upload-zone:hover { background: var(--faint); border-color: var(--accent); }
+        .upload-zone input[type="file"] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+        .upload-zone .upload-icon { font-size: 1.6rem; margin-bottom: 10px; }
+        .upload-zone p { font-size: 0.9rem; color: var(--accent); margin: 0; }
+        .upload-zone .upload-filename {
+            margin-top: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border: none;
+            transition: opacity 0.2s;
+        }
+        .btn:hover { opacity: 0.8; }
+        .btn-primary {
+            background: var(--text);
+            color: #fff;
+        }
+        .btn-secondary {
+            background: none;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        .btn-sm {
+            padding: 7px 14px;
+            font-size: 0.75rem;
+        }
+        .btn-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+            align-items: center;
+        }
+
+        /* ── OUTPUT TABLE ── */
+        .output-area { margin-top: 28px; }
+        .output-area h4 {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
+        .output-table-wrap {
+            border: 1px solid var(--border);
+            overflow-x: auto;
+            max-height: 320px;
+            overflow-y: auto;
+        }
+        table.output-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+        table.output-table th {
+            background: var(--faint);
+            padding: 10px 14px;
+            text-align: left;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+        }
+        table.output-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+            font-family: "SF Mono", "Fira Mono", "Consolas", monospace;
+            font-size: 0.82rem;
+            color: #444;
+        }
+        table.output-table tr:last-child td { border-bottom: none; }
+        table.output-table tr:nth-child(even) td { background: var(--faint); }
+        .token-cell { color: var(--text); font-weight: 600; }
+        .size-reduction {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            background: var(--text);
+            color: #fff;
+            padding: 2px 8px;
+            letter-spacing: 0.5px;
+        }
+
+        /* ── SAVINGS METER ── */
+        .savings-bar-wrap { margin: 16px 0; }
+        .savings-bar-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.78rem;
+            color: var(--accent);
+            margin-bottom: 6px;
+        }
+        .savings-bar-track {
+            height: 6px;
+            background: var(--border);
+            width: 100%;
+        }
+        .savings-bar-fill {
+            height: 6px;
+            background: var(--text);
+            width: 0%;
+            transition: width 0.8s ease;
+        }
+
+        /* ── HISTORY TABLE ── */
+        table.history-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+        table.history-table th {
+            text-align: left;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+            background: var(--faint);
+        }
+        table.history-table td {
+            padding: 11px 14px;
+            border-bottom: 1px solid var(--border);
+            color: #444;
+            font-size: 0.875rem;
+        }
+        table.history-table tr:last-child td { border-bottom: none; }
+
+        /* ── POINTS PANEL ── */
+        .points-breakdown {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+        .points-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px dashed var(--border);
+            font-size: 0.9rem;
+        }
+        .points-row:last-child { border-bottom: none; }
+        .points-row .pts-key { color: var(--accent); }
+        .points-row .pts-val { font-weight: 700; }
+
+        /* ── LICENSE PANEL ── */
+        .license-detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+        .ld-row {
+            padding: 14px 0;
+            border-bottom: 1px dashed var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+        .ld-row:nth-last-child(-n+2) { border-bottom: none; }
+        .ld-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--accent);
+        }
+        .ld-value { font-size: 0.95rem; font-weight: 600; }
+
+        /* ── CALLOUT ── */
+        .callout {
+            border: 1px solid var(--border);
+            background: var(--faint);
+            padding: 18px 20px;
+            font-size: 0.9rem;
+            color: #444;
+            margin-top: 20px;
+        }
+        .callout strong { color: var(--text); }
+
+        /* ── STATUS PILL ── */
+        .status-active {
+            display: inline-block;
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid var(--text);
+            padding: 2px 10px;
+        }
+
+        /* ── EMPTY STATE ── */
+        .empty-state {
+            text-align: center;
+            padding: 48px 24px;
+            color: var(--accent);
+        }
+        .empty-state .empty-icon { font-size: 2rem; margin-bottom: 12px; }
+        .empty-state p { font-size: 0.9rem; }
+
+        /* ── FOOTER ── */
+        .sidebar-footer {
+            margin-top: auto;
+            padding: 24px;
+            border-top: 1px solid var(--border);
+            font-size: 0.72rem;
+            color: var(--accent);
+            line-height: 1.8;
+        }
+
+        /* ── TOAST ── */
+        #toast {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            background: var(--text);
+            color: #fff;
+            padding: 12px 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            z-index: 999;
+        }
+        #toast.show { opacity: 1; }
+
+        @media (max-width: 800px) {
+            .shell { grid-template-columns: 1fr; }
+            .sidebar { display: none; }
+            .main { padding: 24px 20px; }
+            .stat-grid { grid-template-columns: 1fr 1fr; }
+            .points-breakdown, .license-detail-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="shell">
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+        <div class="topbar-brand">
+            <svg width="36" height="36" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="30" cy="8" r="4.5" fill="#111"/>
+                <circle cx="8" cy="48" r="4.5" fill="#111"/>
+                <circle cx="52" cy="48" r="4.5" fill="#111"/>
+                <text x="30" y="36" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Roboto" font-size="28" font-weight="800" text-anchor="middle" dominant-baseline="central" fill="#111">G</text>
+            </svg>
+            <div>
+                <h1>Glexicon</h1>
+                <span>Customer Protocol Dashboard</span>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <div class="points-display">
+                <span class="pts-number" id="header-points">50,000</span>
+                <span class="pts-label">Tick Tock Points</span>
+            </div>
+            <div class="license-badge" id="header-tier">Silver</div>
+        </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-section-label">Overview</div>
+        <div class="nav-item active" data-panel="overview">
+            <span class="nav-icon">◻</span> Dashboard
+        </div>
+        <div class="nav-item" data-panel="history">
+            <span class="nav-icon">◫</span> Session History
+        </div>
+
+        <div class="sidebar-section-label">Protocol</div>
+        <div class="nav-item" data-panel="process">
+            <span class="nav-icon">⟳</span> Process Keys
+        </div>
+
+        <div class="sidebar-section-label">Account</div>
+        <div class="nav-item" data-panel="points">
+            <span class="nav-icon">◈</span> Tick Tock Points
+        </div>
+        <div class="nav-item" data-panel="license">
+            <span class="nav-icon">◉</span> License
+        </div>
+
+        <div class="sidebar-footer">
+            All processing occurs<br>
+            locally on this device.<br>
+            No data leaves this drive.<br><br>
+            <strong style="color:#111; letter-spacing:1px;">Tick. Tock. Token.</strong>
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <!-- OVERVIEW PANEL -->
+        <div class="panel active" id="panel-overview">
+            <div class="page-header">
+                <h2>Dashboard</h2>
+                <p>Your protocol activity at a glance.</p>
+            </div>
+
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Keys Processed</div>
+                    <div class="stat-value" id="stat-keys">0</div>
+                    <div class="stat-sub">this session</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Storage Saved</div>
+                    <div class="stat-value" id="stat-saved">0%</div>
+                    <div class="stat-sub">avg reduction</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Tokens Generated</div>
+                    <div class="stat-value" id="stat-tokens">0</div>
+                    <div class="stat-sub">this session</div>
+                </div>
+            </div>
+
+            <div class="block">
+                <div class="block-header">
+                    <h3>Storage Reduction</h3>
+                    <span style="font-size:0.78rem;color:var(--accent);">Protocol efficiency</span>
+                </div>
+                <div class="block-body">
+                    <div class="savings-bar-wrap">
+                        <div class="savings-bar-label">
+                            <span>Original size</span>
+                            <span id="bar-pct-label">— awaiting data</span>
+                        </div>
+                        <div class="savings-bar-track">
+                            <div class="savings-bar-fill" id="savings-bar"></div>
+                        </div>
+                        <div class="savings-bar-label" style="margin-top:6px;">
+                            <span></span>
+                            <span>Optimised size</span>
+                        </div>
+                    </div>
+                    <div class="callout" id="overview-callout">
+                        Process your first batch of keys to see live savings metrics here.
+                    </div>
+                </div>
+            </div>
+
+            <div class="block">
+                <div class="block-header">
+                    <h3>Recent Activity</h3>
+                </div>
+                <div class="block-body" id="recent-activity-wrap">
+                    <div class="empty-state">
+                        <div class="empty-icon">◻</div>
+                        <p>No activity yet. Process a batch of keys to get started.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PROCESS KEYS PANEL -->
+        <div class="panel" id="panel-process">
+            <div class="page-header">
+                <h2>Process Keys</h2>
+                <p>Input your primary keys below. All processing happens locally — no data leaves this device.</p>
+            </div>
+
+            <div class="block">
+                <div class="block-header"><h3>Input Method</h3></div>
+                <div class="block-body">
+                    <div class="input-tabs">
+                        <button class="tab-btn active" data-tab="single">Single Key</button>
+                        <button class="tab-btn" data-tab="bulk">Bulk Paste</button>
+                        <button class="tab-btn" data-tab="csv">Upload CSV</button>
+                    </div>
+
+                    <!-- Single Key -->
+                    <div class="tab-panel active" id="tab-single">
+                        <label class="field-label">Primary Key</label>
+                        <input type="text" id="single-key-input" placeholder="e.g. USR-00291-A" />
+                        <div class="btn-row">
+                            <button class="btn btn-primary" onclick="processSingle()">Generate Token</button>
+                        </div>
+                    </div>
+
+                    <!-- Bulk Paste -->
+                    <div class="tab-panel" id="tab-bulk">
+                        <label class="field-label">Paste Keys — one per line</label>
+                        <textarea id="bulk-input" rows="8" placeholder="USR-00291-A&#10;USR-00292-B&#10;USR-00293-C&#10;..."></textarea>
+                        <div class="btn-row">
+                            <button class="btn btn-primary" onclick="processBulk()">Process All Keys</button>
+                            <button class="btn btn-secondary" onclick="clearBulk()">Clear</button>
+                        </div>
+                    </div>
+
+                    <!-- CSV Upload -->
+                    <div class="tab-panel" id="tab-csv">
+                        <label class="field-label">Upload CSV File</label>
+                        <div class="upload-zone" id="upload-zone">
+                            <input type="file" accept=".csv,.txt" id="csv-file-input" onchange="handleFileUpload(this)" />
+                            <div class="upload-icon">⬆</div>
+                            <p>Drop a CSV file here or click to browse</p>
+                            <p style="margin-top:6px;font-size:0.78rem;">One primary key per row. First column used if multiple columns present.</p>
+                            <div class="upload-filename" id="upload-filename"></div>
+                        </div>
+                        <div class="btn-row">
+                            <button class="btn btn-primary" onclick="processCsv()">Process CSV</button>
+                            <button class="btn btn-secondary" onclick="clearCsv()">Clear</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Output -->
+            <div class="output-area" id="output-area" style="display:none;">
+                <div class="block">
+                    <div class="block-header">
+                        <h3>Generated Tokens</h3>
+                        <div style="display:flex;gap:10px;">
+                            <button class="btn btn-secondary btn-sm" onclick="copyOutput()">Copy All</button>
+                            <button class="btn btn-secondary btn-sm" onclick="downloadOutput()">Download CSV</button>
+                        </div>
+                    </div>
+                    <div class="block-body" style="padding:0;">
+                        <div class="output-table-wrap">
+                            <table class="output-table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Original Key</th>
+                                        <th>Tick Tock Token</th>
+                                        <th>Reduction</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="output-tbody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- HISTORY PANEL -->
+        <div class="panel" id="panel-history">
+            <div class="page-header">
+                <h2>Session History</h2>
+                <p>All batches processed in this session.</p>
+            </div>
+            <div class="block">
+                <div class="block-header">
+                    <h3>Processed Batches</h3>
+                    <button class="btn btn-secondary btn-sm" onclick="clearHistory()">Clear History</button>
+                </div>
+                <div class="block-body" style="padding:0;" id="history-wrap">
+                    <div class="empty-state">
+                        <div class="empty-icon">◫</div>
+                        <p>No batches processed yet this session.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- POINTS PANEL -->
+        <div class="panel" id="panel-points">
+            <div class="page-header">
+                <h2>Tick Tock Points</h2>
+                <p>Your accrued points balance and redemption status.</p>
+            </div>
+            <div class="stat-grid" style="grid-template-columns:1fr 1fr 1fr;">
+                <div class="stat-card">
+                    <div class="stat-label">Current Balance</div>
+                    <div class="stat-value">50,000</div>
+                    <div class="stat-sub">points</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Point Value</div>
+                    <div class="stat-value">$0.02</div>
+                    <div class="stat-sub">per point (Silver)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Max Redemption</div>
+                    <div class="stat-value">$3,000</div>
+                    <div class="stat-sub">20% of annual fee</div>
+                </div>
+            </div>
+
+            <div class="block">
+                <div class="block-header"><h3>Points Summary</h3></div>
+                <div class="block-body">
+                    <div class="points-row">
+                        <span class="pts-key">Annual allocation</span>
+                        <span class="pts-val">50,000 pts</span>
+                    </div>
+                    <div class="points-row">
+                        <span class="pts-key">Points used</span>
+                        <span class="pts-val">0 pts</span>
+                    </div>
+                    <div class="points-row">
+                        <span class="pts-key">Remaining balance</span>
+                        <span class="pts-val">50,000 pts</span>
+                    </div>
+                    <div class="points-row">
+                        <span class="pts-key">Expiry</span>
+                        <span class="pts-val">90 days after license end</span>
+                    </div>
+                    <div class="points-row">
+                        <span class="pts-key">Transferable</span>
+                        <span class="pts-val">No</span>
+                    </div>
+                    <div class="points-row">
+                        <span class="pts-key">Cash value</span>
+                        <span class="pts-val">None</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <strong>To redeem points</strong> against your annual renewal, provide 60 days written notice to your Glexicon account contact. Maximum 20% of annual license fee per year.
+            </div>
+        </div>
+
+        <!-- LICENSE PANEL -->
+        <div class="panel" id="panel-license">
+            <div class="page-header">
+                <h2>License</h2>
+                <p>Your current licensing details and support contacts.</p>
+            </div>
+
+            <div class="block">
+                <div class="block-header">
+                    <h3>License Details</h3>
+                    <span class="status-active">Active</span>
+                </div>
+                <div class="block-body">
+                    <div class="license-detail-grid">
+                        <div class="ld-row">
+                            <span class="ld-label">Licensee</span>
+                            <span class="ld-value">[Company Name]</span>
+                        </div>
+                        <div class="ld-row">
+                            <span class="ld-label">Tier</span>
+                            <span class="ld-value">Silver Enterprise</span>
+                        </div>
+                        <div class="ld-row">
+                            <span class="ld-label">Effective Date</span>
+                            <span class="ld-value">[DATE]</span>
+                        </div>
+                        <div class="ld-row">
+                            <span class="ld-label">Renewal Date</span>
+                            <span class="ld-value">[DATE]</span>
+                        </div>
+                        <div class="ld-row">
+                            <span class="ld-label">Annual Fee</span>
+                            <span class="ld-value">$15,000</span>
+                        </div>
+                        <div class="ld-row">
+                            <span class="ld-label">Support Response</span>
+                            <span class="ld-value">24 hours</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="block">
+                <div class="block-header"><h3>Support</h3></div>
+                <div class="block-body">
+                    <div class="points-row">
+                        <span class="pts-key">Support hours</span>
+                        <span class="pts-val">Email + Chat (24h)</span>
+                    </div>
+                    <div class="points-row">
+                        <span class="pts-key">Contact</span>
+                        <span class="pts-val">support@glexicon.com</span>
+                    </div>
+                    <div class="points-row">
+                        <span class="pts-key">Drive replacement</span>
+                        <span class="pts-val">Included (defective units)</span>
+                    </div>
+                    <div class="points-row">
+                        <span class="pts-key">Protocol updates</span>
+                        <span class="pts-val">Included</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <strong>Confidentiality reminder:</strong> The Protocol, its method, and its inner workings are Glexicon Trade Secrets. Access is restricted to employees with a need to know.
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<div id="toast"></div>
+
+<script>
+    // ── NAV ──────────────────────────────────────────────────────────────────
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', () => {
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+            item.classList.add('active');
+            document.getElementById('panel-' + item.dataset.panel).classList.add('active');
+        });
+    });
+
+    // ── TABS ─────────────────────────────────────────────────────────────────
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+        });
+    });
+
+    // ── STATE ─────────────────────────────────────────────────────────────────
+    let sessionKeys = 0;
+    let sessionTokens = 0;
+    let history = [];
+    let csvKeys = [];
+    let lastOutput = [];
+
+    // ── PROTOCOL SIMULATION ───────────────────────────────────────────────────
+    // Deterministic token generation from a primary key
+    function generateToken(key) {
+        const clean = key.trim();
+        if (!clean) return null;
+
+        // Simple deterministic hash → token format
+        let hash = 0;
+        for (let i = 0; i < clean.length; i++) {
+            hash = ((hash << 5) - hash) + clean.charCodeAt(i);
+            hash |= 0;
+        }
+        const abs = Math.abs(hash);
+        const seg1 = abs.toString(36).toUpperCase().padStart(4, '0').slice(-4);
+        const seg2 = (abs * 31337).toString(36).toUpperCase().padStart(4, '0').slice(-4);
+        const seg3 = (abs * 7919 + 1337).toString(36).toUpperCase().padStart(4, '0').slice(-4);
+        const token = `TTT-${seg1}-${seg2}-${seg3}`;
+
+        const origBytes = clean.length;
+        const tokenBytes = token.length;
+        // Simulate 75% reduction: token represents compressed form
+        const reductionPct = 75;
+
+        return { key: clean, token, origBytes, tokenBytes, reductionPct };
+    }
+
+    function renderOutput(results) {
+        if (!results.length) return;
+        lastOutput = results;
+
+        const tbody = document.getElementById('output-tbody');
+        tbody.innerHTML = '';
+        results.forEach((r, i) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${i + 1}</td>
+                <td>${escHtml(r.key)}</td>
+                <td class="token-cell">${r.token}</td>
+                <td><span class="size-reduction">−${r.reductionPct}%</span></td>
+            `;
+            tbody.appendChild(tr);
+        });
+
+        document.getElementById('output-area').style.display = 'block';
+
+        // Update stats
+        sessionKeys += results.length;
+        sessionTokens += results.length;
+        document.getElementById('stat-keys').textContent = sessionKeys.toLocaleString();
+        document.getElementById('stat-tokens').textContent = sessionTokens.toLocaleString();
+        document.getElementById('stat-saved').textContent = '75%';
+
+        // Update savings bar
+        const bar = document.getElementById('savings-bar');
+        bar.style.width = '0%';
+        setTimeout(() => { bar.style.width = '75%'; }, 50);
+        document.getElementById('bar-pct-label').textContent = '75% reduction achieved';
+
+        // Update callout
+        document.getElementById('overview-callout').innerHTML =
+            `<strong>${results.length} key${results.length > 1 ? 's' : ''} processed.</strong> Average storage reduction: <strong>75%</strong>. All tokens generated locally — no data transmitted.`;
+
+        // Add to history
+        const batch = {
+            time: new Date().toLocaleTimeString(),
+            count: results.length,
+            results: [...results]
+        };
+        history.unshift(batch);
+        updateHistory();
+        updateRecentActivity(batch);
+    }
+
+    function processSingle() {
+        const val = document.getElementById('single-key-input').value.trim();
+        if (!val) { showToast('Enter a primary key first.'); return; }
+        const result = generateToken(val);
+        if (result) renderOutput([result]);
+        switchPanel('process');
+    }
+
+    function processBulk() {
+        const raw = document.getElementById('bulk-input').value;
+        const lines = raw.split('\n').map(l => l.trim()).filter(Boolean);
+        if (!lines.length) { showToast('Paste at least one key.'); return; }
+        const results = lines.map(generateToken).filter(Boolean);
+        renderOutput(results);
+    }
+
+    function clearBulk() {
+        document.getElementById('bulk-input').value = '';
+        document.getElementById('output-area').style.display = 'none';
+    }
+
+    function handleFileUpload(input) {
+        const file = input.files[0];
+        if (!file) return;
+        document.getElementById('upload-filename').textContent = file.name;
+        const reader = new FileReader();
+        reader.onload = e => {
+            const lines = e.target.result.split('\n').map(l => l.split(',')[0].trim()).filter(Boolean);
+            csvKeys = lines;
+        };
+        reader.readAsText(file);
+    }
+
+    function processCsv() {
+        if (!csvKeys.length) { showToast('Upload a CSV file first.'); return; }
+        const results = csvKeys.map(generateToken).filter(Boolean);
+        renderOutput(results);
+    }
+
+    function clearCsv() {
+        csvKeys = [];
+        document.getElementById('csv-file-input').value = '';
+        document.getElementById('upload-filename').textContent = '';
+        document.getElementById('output-area').style.display = 'none';
+    }
+
+    function copyOutput() {
+        if (!lastOutput.length) return;
+        const text = lastOutput.map(r => `${r.key},${r.token}`).join('\n');
+        navigator.clipboard.writeText(text).then(() => showToast('Copied to clipboard.'));
+    }
+
+    function downloadOutput() {
+        if (!lastOutput.length) return;
+        const csv = 'Original Key,Tick Tock Token,Reduction\n' +
+            lastOutput.map(r => `${r.key},${r.token},${r.reductionPct}%`).join('\n');
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `glexicon-tokens-${Date.now()}.csv`;
+        a.click();
+        showToast('Downloaded.');
+    }
+
+    // ── HISTORY ───────────────────────────────────────────────────────────────
+    function updateHistory() {
+        const wrap = document.getElementById('history-wrap');
+        if (!history.length) {
+            wrap.innerHTML = `<div class="empty-state"><div class="empty-icon">◫</div><p>No batches processed yet this session.</p></div>`;
+            return;
+        }
+        let html = `<table class="history-table"><thead><tr><th>Time</th><th>Keys</th><th>Tokens</th><th>Reduction</th></tr></thead><tbody>`;
+        history.forEach(b => {
+            html += `<tr>
+                <td>${b.time}</td>
+                <td>${b.count}</td>
+                <td>${b.count}</td>
+                <td>75%</td>
+            </tr>`;
+        });
+        html += `</tbody></table>`;
+        wrap.innerHTML = html;
+    }
+
+    function updateRecentActivity(batch) {
+        const wrap = document.getElementById('recent-activity-wrap');
+        wrap.innerHTML = `<table class="history-table"><thead><tr><th>Time</th><th>Keys</th><th>Tokens</th><th>Reduction</th></tr></thead><tbody>` +
+            history.slice(0, 5).map(b => `<tr><td>${b.time}</td><td>${b.count}</td><td>${b.count}</td><td>75%</td></tr>`).join('') +
+            `</tbody></table>`;
+    }
+
+    function clearHistory() {
+        history = [];
+        updateHistory();
+    }
+
+    // ── HELPERS ───────────────────────────────────────────────────────────────
+    function switchPanel(id) {
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+        document.querySelector(`[data-panel="${id}"]`).classList.add('active');
+        document.getElementById(`panel-${id}`).classList.add('active');
+    }
+
+    function escHtml(str) {
+        return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 2400);
+    }
+</script>
+
+</body>
+</html>
