@@ -8,7 +8,7 @@
 *Database fat, database thin,*
 *Monster grins and rubs its chin.*
 *Numbers in and symbols spin,*
-*Ninety-five percent saved within.*
+*90-96X gain a win.*
 
 *Ask no more, just let it be,*
 *The monster guards the mystery.*
@@ -17,4 +17,5 @@
 ---
 
 **For licensing, whisper to the wind. It will find us.*
-*This is the Truth**
+
+Tick Tock Token Mania!
