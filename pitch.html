@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glexicon – The Pitch</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #111111;
+            --accent-color: #666666;
+            --border-color: #eaeaea;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; scroll-padding-top: 210px; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 0 20px;
+        }
+
+        /* ── HEADER ── */
+        header {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 0 20px 0;
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--bg-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .header-brand { display: flex; align-items: center; gap: 20px; margin-bottom: 20px; }
+        header h1 { letter-spacing: 3px; font-weight: 800; text-transform: uppercase; font-size: 1.8rem; margin-bottom: 6px; }
+        header p { color: var(--accent-color); font-size: 1.1rem; }
+        nav { margin-top: 12px; padding-top: 15px; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-start; gap: 12px 20px; flex-wrap: wrap; }
+        nav a { color: var(--text-color); text-decoration: none; font-weight: 500; font-size: 0.9rem; }
+        nav a:hover { color: var(--accent-color); }
+        nav a.cta-link { font-weight: 700; }
+
+        /* ── MAIN ── */
+        main { max-width: 800px; margin: 20px auto 0 auto; }
+        section { padding: 60px 0; border-bottom: 1px solid var(--border-color); }
+        section:last-of-type { border-bottom: none; }
+
+        h2 { font-size: 1.6rem; font-weight: 600; margin-bottom: 20px; }
+        p { margin-bottom: 15px; font-size: 1.05rem; color: #333333; }
+
+        .hero-statement { font-size: 2rem; font-weight: 800; line-height: 1.2; letter-spacing: -0.5px; color: var(--text-color); margin-bottom: 0; }
+        .callout { border: 1px solid var(--border-color); background: #fafafa; padding: 22px 24px; margin: 24px 0; }
+        .callout p { margin-bottom: 0; font-size: 1.05rem; color: #333; }
+
+        .table-wrapper { margin: 28px 0; overflow-x: auto; border: 1px solid var(--border-color); }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.95rem; }
+        th, td { padding: 13px 16px; border-bottom: 1px solid var(--border-color); }
+        th { background-color: #fcfcfc; font-weight: 600; text-transform: uppercase; font-size: 0.78rem; letter-spacing: 0.5px; color: var(--text-color); }
+        td { color: #444; }
+        tr:last-child td { border-bottom: none; }
+        tr:nth-child(even) td { background: #fafafa; }
+
+        .feature-list { margin: 24px 0; }
+        .feature-item { padding: 18px 0; border-bottom: 1px dashed var(--border-color); display: flex; gap: 20px; }
+        .feature-item:last-child { border-bottom: none; }
+        .feature-item strong { display: block; font-size: 1rem; color: var(--text-color); margin-bottom: 4px; min-width: 180px; flex-shrink: 0; }
+        .feature-item p { margin-bottom: 0; font-size: 0.95rem; color: #555; }
+
+        .closing-statement { font-size: 1.4rem; font-weight: 700; color: var(--text-color); margin-bottom: 0; line-height: 1.4; }
+        .tagline { text-align: center; margin: 50px 0 20px 0; font-size: 0.85rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--accent-color); }
+        .back-to-top { display: inline-block; margin-top: 25px; font-size: 0.9rem; color: var(--accent-color); text-decoration: none; font-weight: 500; }
+        .back-to-top:hover { color: var(--text-color); text-decoration: underline; }
+
+        footer { max-width: 800px; margin: 40px auto 60px auto; text-align: center; font-size: 0.85rem; color: var(--accent-color); border-top: 1px solid var(--border-color); padding-top: 20px; }
+        footer p { margin-bottom: 4px; color: var(--accent-color); font-size: 0.85rem; }
+    </style>
+</head>
+<body id="top">
+
+    <header>
+        <div class="header-brand">
+            <svg width="64" height="64" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+                <circle cx="30" cy="8" r="4.5" fill="#111111"/>
+                <circle cx="8" cy="48" r="4.5" fill="#111111"/>
+                <circle cx="52" cy="48" r="4.5" fill="#111111"/>
+                <text x="30" y="36" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto" font-size="28" font-weight="800" text-anchor="middle" dominant-baseline="central" fill="#111111">G</text>
+            </svg>
+            <div>
+                <h1>Glexicon</h1>
+                <p>The Protocol — The Pitch</p>
+            </div>
+        </div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="#one-sentence">One Sentence</a>
+            <a href="#summary">Summary</a>
+            <a href="#problem">The Problem</a>
+            <a href="#solution">The Solution</a>
+            <a href="#different">Why Different</a>
+            <a href="#customers">Customers</a>
+            <a href="#closing" class="cta-link">Closing</a>
+        </nav>
+    </header>
+
+    <main>
+
+        <section id="one-sentence">
+            <h2>One Sentence</h2>
+            <p class="hero-statement">"Glexicon unlocks [90-96X] operational database storage capacity."</p>
+        </section>
+
+        <section id="summary">
+            <h2>Summary</h2>
+            <div class="callout">
+                <p>"Glexicon is an exclusive, proprietary data optimisation protocol protected as a trade secret. It unlocks 90–96X operational database storage capacity, instantaneous retrieval, and inherent data obfuscation. No blockchain. No cloud dependency. No encryption overhead. The method is not disclosed. The results are demonstrable. Licensing available."</p>
+            </div>
+        </section>
+
+        <section id="problem">
+            <h2>The Problem</h2>
+            <p>What enterprise customers feel every day.</p>
+            <div class="table-wrapper">
+                <table>
+                    <thead><tr><th>Pain Point</th><th>Why It Hurts</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Storage costs rising</strong></td><td>Databases grow 20–30% year over year</td></tr>
+                        <tr><td><strong>Backups are huge</strong></td><td>Expensive, slow, and inefficient</td></tr>
+                        <tr><td><strong>Slow queries</strong></td><td>Large indexes, full text search overhead</td></tr>
+                        <tr><td><strong>Data breaches</strong></td><td>Plain text data is a direct liability</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="solution">
+            <h2>The Solution</h2>
+            <p>What Glexicon delivers.</p>
+            <div class="feature-list">
+                <div class="feature-item">
+                    <strong>90–96X operational database storage</strong>
+                    <p>Lower cloud bills, dramatically lower cost infrastructure growth.</p>
+                </div>
+                <div class="feature-item">
+                    <strong>Instant retrieval</strong>
+                    <p>Faster queries, better performance, happier users.</p>
+                </div>
+                <div class="feature-item">
+                    <strong>Data obfuscation</strong>
+                    <p>Safer breaches, reduced exposure, lower liability.</p>
+                </div>
+                <div class="feature-item">
+                    <strong>Tamper-proof delivery</strong>
+                    <p>No installation required. No network risk. No cloud dependency.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="different">
+            <h2>Why It's Different</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead><tr><th>Aspect</th><th>Traditional</th><th>Glexicon</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Reduction</strong></td><td>30–50%</td><td>90–96X Capacity gains</td></tr>
+                        <tr><td><strong>Speed</strong></td><td>Decompression overhead</td><td>Instant</td></tr>
+                        <tr><td><strong>Security</strong></td><td>Encryption required</td><td>Obfuscated by default</td></tr>
+                        <tr><td><strong>Deployment</strong></td><td>Software install</td><td>Secure tamper-proof drive</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="customers">
+            <h2>The Target Customer</h2>
+            <p>Annual licensing tiers structured for enterprise scale.</p>
+            <div class="table-wrapper">
+                <table>
+                    <thead><tr><th>Tier</th><th>Annual License</th></tr></thead>
+                    <tbody>
+                        <tr><td>Bronze</td><td>$5,000</td></tr>
+                        <tr><td>Silver</td><td>$15,000</td></tr>
+                        <tr><td>Gold</td><td>$50,000</td></tr>
+                        <tr><td>Platinum</td><td>$150,000</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="closing">
+            <h2>The Closing Statement</h2>
+            <p class="closing-statement">"Glexicon works. The method is secret. The savings are real."</p>
+		<div </div>
+            <div class="tagline">Tick. &nbsp; Tock. &nbsp; Token.</div>
+        </section>
+
+        <div style="text-align: center; margin: 20px 0 40px 0;">
+            <a href="#top" class="back-to-top">↑ Return to Top</a>
+        </div>
+    </main>
+
+    <footer style="text-align: center;">
+    <div style="margin-bottom: 15px;">
+        <a href="privacy.html">Privacy Policy</a> | 
+        <a href="terms.html">Terms of Service</a>
+    </div>
+    <p>&copy; 2026 Glexicon. All rights reserved.</p>
+    <p>Trade Secret — Confidential — Licensing Available</p>
+    <p style="margin-top: 8px; font-size: 0.75rem;">⚡ Tick. Tock. Token. ⚡</p>
+</footer>
+</body>
+</html>
