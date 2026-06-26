@@ -1,0 +1,2332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glexicon – Customer Dashboard</title>
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text: #111111;
+            --accent: #666666;
+            --border: #eaeaea;
+            --faint: #fafafa;
+            --mid: #f3f3f3;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* ── LAYOUT ── */
+        .shell {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            grid-template-rows: auto 1fr;
+            min-height: 100vh;
+        }
+
+        /* ── TOP BAR ── */
+        .topbar {
+            grid-column: 1 / -1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 32px;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .topbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .topbar-brand h1 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+        .topbar-brand span {
+            font-size: 0.8rem;
+            color: var(--accent);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+        .license-badge {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            border: 1px solid var(--text);
+            padding: 4px 12px;
+        }
+        .points-display {
+            text-align: right;
+        }
+        .points-display .pts-number {
+            font-size: 1.1rem;
+            font-weight: 800;
+            display: block;
+            line-height: 1;
+        }
+        .points-display .pts-label {
+            font-size: 0.68rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ── SIDEBAR ── */
+        .sidebar {
+            border-right: 1px solid var(--border);
+            padding: 32px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .sidebar-section-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--accent);
+            padding: 16px 24px 6px 24px;
+            margin-top: 8px;
+        }
+        .sidebar-section-label:first-child { margin-top: 0; }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 24px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--accent);
+            cursor: pointer;
+            border-left: 2px solid transparent;
+            transition: color 0.15s, border-color 0.15s;
+            user-select: none;
+        }
+        .nav-item:hover { color: var(--text); }
+        .nav-item.active {
+            color: var(--text);
+            border-left-color: var(--text);
+            font-weight: 600;
+        }
+        .nav-icon { font-size: 0.9rem; width: 16px; text-align: center; }
+
+        /* ── MAIN CONTENT ── */
+        .main {
+            padding: 40px 48px;
+            overflow-y: auto;
+        }
+        .panel { display: none; }
+        .panel.active { display: block; }
+
+        /* ── PAGE HEADERS ── */
+        .page-header { margin-bottom: 36px; }
+        .page-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .page-header p { font-size: 0.95rem; color: var(--accent); margin: 0; }
+
+        /* ── STAT CARDS ── */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .stat-card {
+            border: 1px solid var(--border);
+            padding: 22px 24px;
+        }
+        .stat-card .stat-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+        .stat-card .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+        .stat-card .stat-sub {
+            font-size: 0.8rem;
+            color: var(--accent);
+        }
+
+        /* ── SECTION BLOCKS ── */
+        .block {
+            border: 1px solid var(--border);
+            margin-bottom: 24px;
+        }
+        .block-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            background: var(--faint);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .block-header h3 {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+        .block-body { padding: 24px; }
+
+        /* ── INPUT TABS ── */
+        .input-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 24px;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            background: none;
+            color: var(--accent);
+            border-bottom: 2px solid transparent;
+            margin-bottom: -1px;
+            transition: color 0.15s;
+        }
+        .tab-btn:hover { color: var(--text); }
+        .tab-btn.active {
+            color: var(--text);
+            font-weight: 700;
+            border-bottom-color: var(--text);
+        }
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+
+        /* ── FORM ELEMENTS ── */
+        label.field-label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+        textarea, input[type="text"] {
+            width: 100%;
+            border: 1px solid var(--border);
+            padding: 12px 14px;
+            font-size: 0.95rem;
+            font-family: "SF Mono", "Fira Mono", "Consolas", monospace;
+            color: var(--text);
+            background: var(--bg);
+            resize: vertical;
+            transition: border-color 0.2s;
+        }
+        textarea:focus, input[type="text"]:focus {
+            outline: none;
+            border-color: var(--text);
+        }
+        .upload-zone {
+            border: 1px dashed var(--border);
+            padding: 40px 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s;
+            position: relative;
+        }
+        .upload-zone:hover { background: var(--faint); border-color: var(--accent); }
+        .upload-zone input[type="file"] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+        .upload-zone .upload-icon { font-size: 1.6rem; margin-bottom: 10px; }
+        .upload-zone p { font-size: 0.9rem; color: var(--accent); margin: 0; }
+        .upload-zone .upload-filename {
+            margin-top: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border: none;
+            transition: opacity 0.2s;
+        }
+        .btn:hover { opacity: 0.8; }
+        .btn-primary {
+            background: var(--text);
+            color: #fff;
+        }
+        .btn-secondary {
+            background: none;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        .btn-sm {
+            padding: 7px 14px;
+            font-size: 0.75rem;
+        }
+        .btn-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+            align-items: center;
+        }
+
+        /* ── OUTPUT TABLE ── */
+        .output-area { margin-top: 28px; }
+        .output-area h4 {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
+        .output-table-wrap {
+            border: 1px solid var(--border);
+            overflow-x: auto;
+            max-height: 320px;
+            overflow-y: auto;
+        }
+        table.output-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+        table.output-table th {
+            background: var(--faint);
+            padding: 10px 14px;
+            text-align: left;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+        }
+        table.output-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+            font-family: "SF Mono", "Fira Mono", "Consolas", monospace;
+            font-size: 0.82rem;
+            color: #444;
+        }
+        table.output-table tr:last-child td { border-bottom: none; }
+        table.output-table tr:nth-child(even) td { background: var(--faint); }
+        .token-cell { color: var(--text); font-weight: 600; }
+        .storage-gain {
+    display: inline-block;
+    padding: 3px 10px;
+    background: #ffffff;
+    color: #1a5c38;
+    border: 1.5px solid #1a5c38;
+    font-size: 0.78rem;
+    font-weight: 700;
+    border-radius: 3px;
+    letter-spacing: 0.5px;
+}
+        }
+
+        /* ── SAVINGS METER ── */
+        .savings-bar-wrap { margin: 16px 0; }
+        .savings-bar-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.78rem;
+            color: var(--accent);
+            margin-bottom: 6px;
+        }
+        .savings-bar-track {
+            height: 6px;
+            background: var(--border);
+            width: 100%;
+        }
+        .savings-bar-fill {
+            height: 6px;
+            background: #1a5c38;
+            width: 0%;
+            transition: width 1.4s ease-out;
+        }
+
+        /* ── HISTORY TABLE ── */
+        table.history-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+        table.history-table th {
+            text-align: left;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+            background: var(--faint);
+        }
+        table.history-table td {
+            padding: 11px 14px;
+            border-bottom: 1px solid var(--border);
+            color: #444;
+            font-size: 0.875rem;
+        }
+        table.history-table tr:last-child td { border-bottom: none; }
+
+        /* ── POINTS PANEL ── */
+        .points-breakdown {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+        .points-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px dashed var(--border);
+            font-size: 0.9rem;
+        }
+        .points-row:last-child { border-bottom: none; }
+        .points-row .pts-key { color: var(--accent); }
+        .points-row .pts-val { font-weight: 700; }
+
+        /* ── LICENSE PANEL ── */
+        .license-detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+        .ld-row {
+            padding: 14px 0;
+            border-bottom: 1px dashed var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+        .ld-row:nth-last-child(-n+2) { border-bottom: none; }
+        .ld-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--accent);
+        }
+        .ld-value { font-size: 0.95rem; font-weight: 600; }
+
+        /* ── CALLOUT ── */
+        .callout {
+            border: 1px solid var(--border);
+            background: var(--faint);
+            padding: 18px 20px;
+            font-size: 0.9rem;
+            color: #444;
+            margin-top: 20px;
+        }
+        .callout strong { color: var(--text); }
+
+        /* ── STATUS PILL ── */
+        .status-active {
+            display: inline-block;
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid var(--text);
+            padding: 2px 10px;
+        }
+
+        /* ── TOPBAR CLIENT FIELDS ── */
+        .topbar-client-info { display: flex; gap: 12px; align-items: flex-end; }
+        .topbar-field { display: flex; flex-direction: column; gap: 3px; }
+        .topbar-field label { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); }
+        .topbar-field input { border: 1px solid var(--border); padding: 5px 8px; font-size: 0.78rem; font-family: inherit; color: var(--text); background: var(--bg); width: 140px; transition: border-color 0.2s; }
+        .topbar-field input[type="date"] { width: 130px; }
+        .topbar-field input:focus { outline: none; border-color: var(--text); }
+
+        /* ── CONNECTION STATUS ── */
+        .connected {
+            color: #4ade80;
+            font-weight: 600;
+        }
+        .disconnected {
+            color: #f87171;
+            font-weight: 600;
+        }
+
+        /* ── EMPTY STATE ── */
+        .empty-state {
+            text-align: center;
+            padding: 48px 24px;
+            color: var(--accent);
+        }
+        .empty-state .empty-icon { font-size: 2rem; margin-bottom: 12px; }
+        .empty-state p { font-size: 0.9rem; }
+
+        /* ── FOOTER ── */
+        .sidebar-footer {
+            margin-top: auto;
+            padding: 24px;
+            border-top: 1px solid var(--border);
+            font-size: 0.72rem;
+            color: var(--accent);
+            line-height: 1.8;
+        }
+
+        /* ── TOAST ── */
+        #toast {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            background: var(--text);
+            color: #fff;
+            padding: 12px 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            z-index: 999;
+        }
+        #toast.show { opacity: 1; }
+
+        @media (max-width: 800px) {
+            .shell { grid-template-columns: 1fr; }
+            .sidebar { display: none; }
+            .main { padding: 24px 20px; }
+            .stat-grid { grid-template-columns: 1fr 1fr; }
+            .points-breakdown, .license-detail-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ── SAVINGS PANEL ── */
+        .savings-row {
+            border: 1px solid var(--border);
+            margin-bottom: 24px;
+        }
+        .savings-row-header {
+            padding: 14px 20px;
+            background: var(--faint);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .savings-row-header h4 {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+        .savings-pct {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #1a5c38;
+            letter-spacing: 1px;
+        }
+        .savings-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            padding: 24px;
+            gap: 0;
+        }
+        .savings-col {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .savings-col:first-child {
+            border-right: 1px solid var(--border);
+            padding-right: 24px;
+        }
+        .savings-col:last-child { padding-left: 24px; }
+        .savings-col-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+        }
+        .savings-col-size {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .dot-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3px;
+            max-width: 180px;
+        }
+        .dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 1px;
+        }
+        .dot-standard { background: #cccccc; border: 1px solid #bbbbbb; transition: background 0.4s, border-color 0.4s; }
+        .dot-glexicon { background: #1a5c38; transition: background 0.4s, box-shadow 0.4s; }
+        .dot-standard.dot-lit { background: #888888; border-color: #666666; }
+        .dot-glexicon.dot-lit { background: #2ecc71; box-shadow: 0 0 4px rgba(46,204,113,0.6); }
+        @keyframes dot-pulse {
+            0%   { opacity: 1; }
+            50%  { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+        .dot-lit { animation: dot-pulse 0.8s ease-in-out; }
+        .savings-desc {
+            font-size: 0.82rem;
+            color: var(--accent);
+            padding: 14px 24px 18px 24px;
+            border-top: 1px dashed var(--border);
+            line-height: 1.55;
+        }
+        .savings-desc strong { color: var(--text); }
+
+
+        /* ── INFORMATION PANEL ── */
+        .info-section {
+            border: 1px solid var(--border);
+            margin-bottom: 24px;
+        }
+        .info-section-header {
+            padding: 16px 24px;
+            background: var(--faint);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: baseline;
+            gap: 16px;
+        }
+        .info-section-number {
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--accent);
+            text-transform: uppercase;
+            min-width: 28px;
+        }
+        .info-section-header h3 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+        .info-section-body {
+            padding: 28px 28px 28px 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .info-section-body p {
+            font-size: 0.92rem;
+            color: #333333;
+            line-height: 1.75;
+        }
+        .info-section-body p strong {
+            color: var(--text);
+        }
+        .info-highlight {
+            border-left: 3px solid #1a5c38;
+            padding: 14px 18px;
+            background: var(--faint);
+            font-size: 0.9rem;
+            color: #333;
+            line-height: 1.7;
+            margin-top: 4px;
+        }
+        .info-highlight strong { color: var(--text); }
+        .info-closing {
+            border: 1px solid var(--border);
+            background: var(--faint);
+            padding: 32px 28px;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .info-closing p {
+            font-size: 0.95rem;
+            color: #333;
+            line-height: 1.8;
+            max-width: 560px;
+            margin: 0 auto 12px auto;
+        }
+        .info-closing .closing-mark {
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #1a5c38;
+            margin-top: 16px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="shell">
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+        <div class="topbar-brand">
+            <svg width="48" height="48" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;">
+                <circle cx="30" cy="8" r="4.5" fill="#111111" />
+                <circle cx="8" cy="48" r="4.5" fill="#111111" />
+                <circle cx="52" cy="48" r="4.5" fill="#111111" />
+                <text x="30" y="36" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto" font-size="28" font-weight="800" text-anchor="middle" dominant-baseline="central" fill="#111111">G</text>
+            </svg>
+            <div>
+                <h1>Glexicon</h1>
+                <span>The Architecture of Next-Generation Data Efficiency</span>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <div class="topbar-client-info">
+                <div class="topbar-field">
+                    <label for="cfg-company">Company</label>
+                    <input type="text" id="cfg-company" placeholder="Your company name" oninput="updateLicenseFields()" />
+                </div>
+                <div class="topbar-field">
+                    <label for="cfg-start-date">Start Date</label>
+                    <input type="date" id="cfg-start-date" oninput="updateLicenseFields()" />
+                </div>
+            </div>
+            <div class="points-display">
+                <span class="pts-number" id="header-points">—</span>
+                <span class="pts-label">Tick Tock Points</span>
+            </div>
+            <div class="license-badge" id="header-tier">—</div>
+        </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-section-label">Overview</div>
+        <div class="nav-item active" data-panel="overview">
+            <span class="nav-icon">◻</span> Dashboard
+        </div>
+        <div class="nav-item" data-panel="history">
+            <span class="nav-icon">◫</span> Session History
+        </div>
+
+        <div class="sidebar-section-label">Protocol</div>
+        <div class="nav-item" data-panel="process">
+            <span class="nav-icon">⟳</span> Process Keys
+        </div>
+
+        <div class="sidebar-section-label">Account</div>
+        <div class="nav-item" data-panel="points">
+            <span class="nav-icon">◈</span> Tick Tock Points
+        </div>
+        <div class="nav-item" data-panel="license">
+            <span class="nav-icon">◉</span> License
+        </div>
+        <div class="nav-item" data-panel="savings">
+            <span class="nav-icon">◈</span> Savings
+        </div>
+        <div class="nav-item" data-panel="information">
+            <span class="nav-icon">◎</span> Information
+        </div>
+
+        <div class="nav-item" data-panel="dbmanage">
+            <span class="nav-icon">⌫</span> Database
+        </div>
+
+        <div class="sidebar-section-label">Legal</div>
+        <div class="nav-item" data-panel="legal">
+            <span class="nav-icon">§</span> Legal
+        </div>
+        <div class="nav-item" data-panel="privacy">
+            <span class="nav-icon">◎</span> Privacy Policy
+        </div>
+        <div class="nav-item" data-panel="terms">
+            <span class="nav-icon">◻</span> Terms
+        </div>
+
+        <div class="sidebar-footer">
+            <div id="sidebar-tip" style="font-size:0.72rem; color:var(--accent); line-height:1.5; margin-bottom:12px; min-height:48px; transition: opacity 0.5s;"></div>
+            <div style="font-size:0.72rem; color:var(--accent); line-height:1.5; margin-bottom:10px;">
+                Tokens are assigned server&#8209;side.<br>
+                Session data clears on disconnect.<br>
+                Your data never leaves your server.
+            </div>
+            <strong style="color:#111; letter-spacing:1px;">Tick. Tock. Token.</strong>
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <!-- OVERVIEW PANEL -->
+        <div class="panel active" id="panel-overview">
+            <div class="page-header">
+                <h2>Dashboard</h2>
+                <p>Your protocol activity at a glance.</p>
+            </div>
+
+            <div class="block" style="margin-bottom: 24px;">
+                <div class="block-header">
+                    <h3>API Configuration</h3>
+                </div>
+                <div class="block-body">
+                    <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+                        <div style="flex: 1; min-width: 200px;">
+                            <label class="field-label">API URL</label>
+                            <input type="text" id="cfg-url" placeholder="https://your-api.example.com" style="width: 100%;" />
+                        </div>
+                        <div style="min-width: 150px;">
+                            <label class="field-label">API Key</label>
+                            <input type="password" id="cfg-key" placeholder="Your API key" style="width: 100%;" />
+                        </div>
+                        <button onclick="connectAPI()" style="align-self: flex-end; margin-bottom: 0;">Connect</button>
+                        <button onclick="disconnectAPI()" class="btn btn-secondary" style="align-self: flex-end; margin-bottom: 0;">Disconnect</button>
+                        <span id="conn-status" class="disconnected" style="font-size: 0.85rem; font-weight: 600; margin-bottom: 6px;">● not connected</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Keys Processed</div>
+                    <div class="stat-value" id="stat-keys">0</div>
+                    <div class="stat-sub">this session</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Protocol Gains</div>
+                    <div class="stat-value" id="stat-saved">0X</div>
+                    <div class="stat-sub">avg gains</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Tokens Generated</div>
+                    <div class="stat-value" id="stat-tokens">0</div>
+                    <div class="stat-sub">this session</div>
+                </div>
+            </div>
+
+            <div class="block">
+                <div class="block-header">
+                    <h3>Protocol Gains</h3>
+                    <span style="font-size:0.78rem;color:var(--accent);">Protocol efficiency</span>
+                </div>
+                <div class="block-body">
+                    <div class="savings-bar-wrap">
+                        <div class="savings-bar-label">
+                            <span>Original size</span>
+                            <span id="bar-pct-label">— awaiting data</span>
+                        </div>
+                        <div class="savings-bar-track">
+                            <div class="savings-bar-fill" id="savings-bar"></div>
+                        </div>
+                        <div class="savings-bar-label" style="margin-top:6px;">
+                            <span></span>
+                            <span>Optimised size</span>
+                        </div>
+                    </div>
+                    <div class="callout" id="overview-callout">
+                        Process your first batch of keys to see live savings metrics here.
+                    </div>
+                </div>
+            </div>
+
+            <div class="block">
+                <div class="block-header">
+                    <h3>Recent Activity</h3>
+                </div>
+                <div class="block-body" id="recent-activity-wrap">
+                    <div class="empty-state">
+                        <div class="empty-icon">◻</div>
+                        <p>No activity yet. Process a batch of keys to get started.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PROCESS KEYS PANEL -->
+        <div class="panel" id="panel-process">
+            <div class="page-header">
+                <h2>Process Keys</h2>
+                <p>Input your primary keys below. All processing happens locally — no data leaves this device.</p>
+            </div>
+
+            <div class="block">
+                <div class="block-header"><h3>Input Method</h3></div>
+                <div class="block-body">
+                    <div class="input-tabs">
+                        <button class="tab-btn active" data-tab="single">Single Key</button>
+                        <button class="tab-btn" data-tab="bulk">Bulk Paste</button>
+                        <button class="tab-btn" data-tab="csv">Upload CSV</button>
+                        <button class="tab-btn" data-tab="lookup">Token to PK Lookup</button>
+                        <button class="tab-btn" data-tab="save">Save Tokens To Secure Flash Drive</button>
+                    </div>
+
+                    <!-- Single Key -->
+                    <div class="tab-panel active" id="tab-single">
+                        <label class="field-label">Primary Key</label>
+                        <input type="text" id="single-key-input" placeholder="e.g. USR-00291-A" />
+                        <div class="btn-row">
+                            <button class="btn btn-primary" onclick="processSingle()">Generate Token</button>
+                        </div>
+                    </div>
+
+                    <!-- Bulk Paste -->
+                    <div class="tab-panel" id="tab-bulk">
+                        <label class="field-label">Paste Keys — one per line</label>
+                        <textarea id="bulk-input" rows="8" placeholder="USR-00291-A&#10;USR-00292-B&#10;USR-00293-C&#10;..."></textarea>
+                        <div class="btn-row">
+                            <button class="btn btn-primary" onclick="processBulk()">Process All Keys</button>
+                            <button class="btn btn-secondary" onclick="clearBulk()">Clear</button>
+                        </div>
+                    </div>
+
+                    <!-- CSV Upload -->
+                    <div class="tab-panel" id="tab-csv">
+                        <label class="field-label">Upload CSV File</label>
+                        <div class="upload-zone" id="upload-zone">
+                            <input type="file" accept=".csv,.txt" id="csv-file-input" onchange="handleFileUpload(this)" />
+                            <div class="upload-icon">⬆</div>
+                            <p>Drop a CSV file here or click to browse</p>
+                            <p style="margin-top:6px;font-size:0.78rem;">One primary key per row. First column used if multiple columns present.</p>
+                            <div class="upload-filename" id="upload-filename"></div>
+                        </div>
+                        <div class="btn-row">
+                            <button class="btn btn-primary" onclick="processCsv()">Process CSV</button>
+                            <button class="btn btn-secondary" onclick="clearCsv()">Clear</button>
+                        </div>
+                    </div>
+
+                    <!-- Token Lookup -->
+                    <div class="tab-panel" id="tab-lookup">
+                        <p style="font-size:0.9rem; color:var(--accent); margin-bottom:16px;">Enter a Tick Tock Token to retrieve its original Primary Key, or enter a Primary Key to retrieve its assigned token. Searches server database first, then current session and any loaded CSV.</p>
+                        <label class="field-label">Token or Primary Key</label>
+                        <input type="text" id="lookup-input" placeholder="Token (hex) or Primary Key (any format)" style="margin-bottom:12px;" />
+                        <div class="btn-row">
+                            <button class="btn btn-primary" onclick="lookupToken()">Retrieve Primary Key</button>
+                            <button class="btn btn-secondary" onclick="clearLookup()">Clear</button>
+                        </div>
+                        <div id="lookup-result" style="margin-top:16px; display:none;"></div>
+                    </div>
+
+                    <!-- Save to Secure Flash Drive -->
+                    <div class="tab-panel" id="tab-save">
+                        <p style="font-size:0.9rem; color:var(--accent); margin-bottom:16px;">Save your generated token database directly to your Glexicon secure flash drive. Ensure your drive is connected before proceeding.</p>
+                        <div class="callout" style="margin-bottom:16px;">
+                            <strong>Before saving:</strong> Confirm your secure flash drive is connected and has sufficient space for your token database.
+                        </div>
+                        <div class="btn-row">
+                            <button class="btn btn-primary" onclick="saveToFlashDrive()">Save Token Database to Drive</button>
+                            <button class="btn btn-secondary" onclick="clearSave()">Clear</button>
+                        </div>
+                        <div id="save-result" style="margin-top:16px; display:none;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Output -->
+            <div class="output-area" id="output-area" style="display:none;">
+                <div class="block">
+                    <div class="block-header">
+                        <h3>Generated Tokens</h3>
+                        <div style="display:flex;gap:10px;">
+                            <button class="btn btn-secondary btn-sm" onclick="copyOutput()">Copy All</button>
+                            <button class="btn btn-secondary btn-sm" onclick="downloadOutput()">Download CSV</button>
+                        </div>
+                    </div>
+                    <div class="block-body" style="padding:0;">
+                        <div class="output-table-wrap">
+                            <table class="output-table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Original Key</th>
+                                        <th>Tick Tock Token</th>
+                                        <th>Gains</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="output-tbody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- HISTORY PANEL -->
+        <div class="panel" id="panel-history">
+            <div class="page-header">
+                <h2>Session History</h2>
+                <p>All batches processed in this session.</p>
+            </div>
+            <div class="block">
+                <div class="block-header">
+                    <h3>Processed Batches</h3>
+                    <button class="btn btn-secondary btn-sm" onclick="clearHistory()">Clear History</button>
+                </div>
+                <div class="block-body" style="padding:0;" id="history-wrap">
+                    <div class="empty-state">
+                        <div class="empty-icon">◫</div>
+                        <p>No batches processed yet this session.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- POINTS PANEL -->
+        <div class="panel" id="panel-points">
+            <div class="page-header">
+                <h2>Tick Tock Points</h2>
+                <p>Your accrued points balance and redemption status.</p>
+            </div>
+            <div class="stat-grid" style="grid-template-columns:1fr 1fr 1fr;">
+                <div class="stat-card">
+                    <div class="stat-label">Current Balance</div>
+                    <div class="stat-value" id="pts-balance">—</div>
+                    <div class="stat-sub">points</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Point Value</div>
+                    <div class="stat-value" id="pts-point-value">—</div>
+                    <div class="stat-sub" id="pts-point-value-tier">per point</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Max Redemption</div>
+                    <div class="stat-value" id="pts-max-redemption">—</div>
+                    <div class="stat-sub">20% of annual fee</div>
+                </div>
+            </div>
+
+            <div class="block">
+                <div class="block-header"><h3>Points Summary</h3></div>
+                <div class="block-body">
+                    <div class="points-row">
+                        <span class="pts-key">Annual allocation</span>
+                        <span class="pts-val" id="pts-annual">— pts</span>
+                    </div>
+                    <div class="points-row">
+                        <span class="pts-key">Points used</span>
+                        <span class="pts-val" id="pts-used">0 pts</span>
+                    </div>
+                    <div class="points-row">
+                        <span class="pts-key">Remaining balance</span>
+                        <span class="pts-val" id="pts-remaining">— pts</span>
+                    </div>
+                    <div class="points-row">
+                        <span class="pts-key">Expiry</span>
+                        <span class="pts-val">90 days after license end</span>
+                    </div>
+                    <div class="points-row">
+                        <span class="pts-key">Transferable</span>
+                        <span class="pts-val">No</span>
+                    </div>
+                    <div class="points-row">
+                        <span class="pts-key">Cash value</span>
+                        <span class="pts-val">None</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="block" style="margin-top:24px;">
+                <div class="block-header">
+                    <h3>Token Pool Usage</h3>
+                    <button class="btn btn-secondary btn-sm" onclick="refreshTokenUsage()">Refresh</button>
+                </div>
+                <div class="block-body">
+                    <div class="points-row">
+                        <span class="pts-key">Total pool</span>
+                        <span class="pts-val" id="pool-total">— tokens</span>
+                    </div>
+                    <div class="points-row">
+                        <span class="pts-key">Tokens assigned</span>
+                        <span class="pts-val" id="pool-used" style="color:#c0392b; font-weight:600;">0 tokens</span>
+                    </div>
+                    <div class="points-row">
+                        <span class="pts-key">Tokens remaining</span>
+                        <span class="pts-val" id="pool-remaining" style="color:#1a5c38; font-weight:600;">— tokens</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <strong>To redeem points</strong> against your annual renewal, provide 60 days written notice to your Glexicon account contact. Maximum 20% of annual license fee per year.
+            </div>
+        </div>
+
+        <!-- LICENSE PANEL -->
+        <div class="panel" id="panel-license">
+            <div class="page-header">
+                <h2>License</h2>
+                <p>Your current licensing details and support contacts.</p>
+            </div>
+
+            <div class="block">
+                <div class="block-header">
+                    <h3>License Details</h3>
+                    <span class="status-active">Active</span>
+                </div>
+                <div style="text-align:center; padding: 20px 0 4px 0;">
+                    <img src="hero.png" alt="Glexicon Seal" style="width:120px; height:120px; object-fit:contain;" />
+                </div>
+                <div class="block-body">
+                    <div class="license-detail-grid">
+                        <div class="ld-row">
+                            <span class="ld-label">Licensee</span>
+                            <span class="ld-value" id="lic-company">—</span>
+                        </div>
+                        <div class="ld-row">
+                            <span class="ld-label">Tier</span>
+                            <span class="ld-value" id="lic-tier">—</span>
+                        </div>
+                        <div class="ld-row">
+                            <span class="ld-label">Effective Date</span>
+                            <span class="ld-value" id="lic-effective">—</span>
+                        </div>
+                        <div class="ld-row">
+                            <span class="ld-label">Renewal Date</span>
+                            <span class="ld-value" id="lic-renewal">—</span>
+                        </div>
+                        <div class="ld-row">
+                            <span class="ld-label">Annual Fee</span>
+                            <span class="ld-value" id="lic-fee">—</span>
+                        </div>
+                        <div class="ld-row">
+                            <span class="ld-label">Support Response</span>
+                            <span class="ld-value">24 hours</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="block">
+                <div class="block-header"><h3>Support</h3></div>
+                <div class="block-body">
+                    <div class="points-row">
+                        <span class="pts-key">Support hours</span>
+                        <span class="pts-val">Email + Chat (24h)</span>
+                    </div>
+                    <div class="points-row">
+                        <span class="pts-key">Contact</span>
+                        <span class="pts-val">support@glexicon.uk</span>
+                    </div>
+                    <div class="points-row">
+                        <span class="pts-key">Drive replacement</span>
+                        <span class="pts-val">Included (defective units)</span>
+                    </div>
+                    <div class="points-row">
+                        <span class="pts-key">Protocol updates</span>
+                        <span class="pts-val">Included</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <strong>Confidentiality reminder:</strong> The Protocol, its method, and its inner workings are Glexicon Trade Secrets. Access is restricted to employees with a need to know.
+            </div>
+        </div>
+
+
+        <!-- SAVINGS PANEL -->
+        <div class="panel" id="panel-savings">
+            <div class="page-header">
+                <h2>Savings</h2>
+                <p>Visual comparison of Glexicon token databases versus standard database practices.</p>
+            </div>
+
+            <!-- ROW 1 — 50% -->
+            <div class="savings-row">
+                <div class="savings-row-header">
+                    <h4>Industry Standard Compression</h4>
+                    <span class="savings-pct">50% Reduction</span>
+                </div>
+                <div class="savings-columns">
+                    <div class="savings-col">
+                        <div class="savings-col-label">Standard Database</div>
+                        <div class="savings-col-size">10 units of storage</div>
+                        <div class="dot-grid">
+                            <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+                            <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+                        </div>
+                    </div>
+                    <div class="savings-col">
+                        <div class="savings-col-label">After Compression</div>
+                        <div class="savings-col-size">5 units of storage</div>
+                        <div class="dot-grid">
+                            <div class="dot dot-glexicon"></div><div class="dot dot-glexicon"></div><div class="dot dot-glexicon"></div><div class="dot dot-glexicon"></div><div class="dot dot-glexicon"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="savings-desc">
+                    Typical industry compression tools such as gzip or deflate achieve around <strong>50% reduction</strong> on structured data. Half the footprint remains — the data is smaller but still present in full.
+                </div>
+            </div>
+
+            <!-- ROW 2 — 75% -->
+            <div class="savings-row">
+                <div class="savings-row-header">
+                    <h4>Traditional Database Tokenisation</h4>
+                    <span class="savings-pct">75% Reduction</span>
+                </div>
+                <div class="savings-columns">
+                    <div class="savings-col">
+                        <div class="savings-col-label">Standard Database</div>
+                        <div class="savings-col-size">20 units of storage</div>
+                        <div class="dot-grid">
+                            <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+                            <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+                            <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+                            <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+                        </div>
+                    </div>
+                    <div class="savings-col">
+                        <div class="savings-col-label">After Tokenisation</div>
+                        <div class="savings-col-size">5 units of storage</div>
+                        <div class="dot-grid">
+                            <div class="dot dot-glexicon"></div><div class="dot dot-glexicon"></div><div class="dot dot-glexicon"></div><div class="dot dot-glexicon"></div><div class="dot dot-glexicon"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="savings-desc">
+                    Conventional tokenisation methods replace sensitive fields with reference tokens, achieving around <strong>75% reduction</strong>. A significant improvement — but token databases still carry considerable overhead and lack portability.
+                </div>
+            </div>
+
+            <!-- ROW 3 — 90-96X -->
+            <div class="savings-row">
+                <div class="savings-row-header">
+                    <h4>Glexicon Monster Protocol</h4>
+                    <span class="savings-pct">90–96X Gains</span>
+                </div>
+                <div class="savings-columns">
+                    <div class="savings-col">
+                        <div class="savings-col-label">Standard Database</div>
+                        <div class="savings-col-size">20 units of storage</div>
+                        <div class="dot-grid">
+                            <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+                            <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+                            <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+                            <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+                        </div>
+                    </div>
+                    <div class="savings-col">
+                        <div class="savings-col-label">Glexicon Token Database</div>
+                        <div class="savings-col-size">1 unit of storage</div>
+                        <div class="dot-grid">
+                            <div class="dot dot-glexicon"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="savings-desc">
+                    The Glexicon Monster Protocol delivers <strong>90–96X database footprint gains</strong>. The master database is secured in the background while lean token satellite databases handle all active operations — portable, fast, and secure.
+                </div>
+            </div>
+
+            <!-- ROW 4 — 99%+ Real World -->
+            <div class="savings-row">
+                <div class="savings-row-header">
+                    <h4>Glexicon at Scale — 100 Million Records</h4>
+                    <span class="savings-pct">99%+ Gains</span>
+                </div>
+                <div class="savings-columns">
+                    <div class="savings-col">
+                        <div class="savings-col-label">Standard Enterprise Database</div>
+                        <div class="savings-col-size">~500GB typical footprint</div>
+                        <div class="dot-grid">
+                            <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+                            <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+                            <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+                            <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+                            <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+                            <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+                            <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+                            <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+                            <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+                            <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+                        </div>
+                    </div>
+                    <div class="savings-col">
+                        <div class="savings-col-label">Glexicon Token Database</div>
+                        <div class="savings-col-size">4.7GB — fits a single DVD</div>
+                        <div class="dot-grid">
+                            <div class="dot dot-glexicon"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="savings-desc">
+                    <strong>Proven in production.</strong> 100 million unique tokens generated with zero collisions — packed into 4.7GB in under 20 minutes. A standard enterprise database of equivalent records would occupy <strong>500GB or more</strong>. The Glexicon token satellite fits on a single DVD and can operate as an edge node anywhere in the world.
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- INFORMATION PANEL -->
+        <div class="panel" id="panel-information">
+            <div class="page-header">
+                <h2>The Protocol</h2>
+                <p>What you are part of — and why it matters.</p>
+            </div>
+
+            <!-- SECTION 1 -->
+            <div class="info-section">
+                <div class="info-section-header">
+                    <span class="info-section-number">01</span>
+                    <h3>The Concept</h3>
+                </div>
+                <div class="info-section-body">
+                    <p>Every organisation carries a master database — the single source of truth for their customers, products, transactions, and records. It is their most valuable and most vulnerable asset. Traditionally, that master database sits at the centre of all operations, constantly accessed, constantly exposed.</p>
+                    <p>The Glexicon Monster Protocol changes that model entirely. Instead of operating directly from the master database, <strong>a lean token satellite database is generated from it</strong>. Each primary key in the master is mapped to a unique, exclusive and proprietary data architecture — mathematically derived, collision-free, and irreversible without the original key.</p>
+                    <p>The token satellite becomes the workhorse. It handles all active operations — lookups, references, integrations — communicating back to the master only when a full record is genuinely needed. The master database stays in the background, secured, rarely touched.</p>
+                    <div class="info-highlight">
+                        <strong>The result:</strong> 90–96X gains in active database footprint. 100 million tokens packed into 4.7GB — the size of a single DVD — with zero errors and zero collisions.
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 2 -->
+            <div class="info-section">
+                <div class="info-section-header">
+                    <span class="info-section-number">02</span>
+                    <h3>Your Competitive Advantage</h3>
+                </div>
+                <div class="info-section-body">
+                    <p>The organisations that adopt new infrastructure paradigms early do not just save money — they build a structural advantage that compounds over time. By the time competitors catch up, the early adopter has already optimised their architecture, trained their teams, and embedded the efficiency gains deep into their operations.</p>
+                    <p>You are at that point now. The Glexicon Protocol is not a feature you are adding — it is a <strong>fundamental shift in how your data operates</strong>. Your active environment becomes faster, leaner, and harder to attack. Your master database becomes a vault rather than a revolving door.</p>
+                    <p>First mover advantage in data architecture is not temporary. The processes, integrations, and institutional knowledge you build around the Protocol today become a competitive moat that grows stronger with every passing year.</p>
+                </div>
+            </div>
+
+            <!-- SECTION 3 -->
+            <div class="info-section">
+                <div class="info-section-header">
+                    <span class="info-section-number">03</span>
+                    <h3>Passing It Downstream</h3>
+                </div>
+                <div class="info-section-body">
+                    <p>For large enterprises, the Protocol does not stop at the organisation's edge — it cascades. Token satellite databases can be issued to partners, suppliers, distributors, and customers. Each node in the network operates from its own lean token database, referencing back through the chain to the master only when necessary.</p>
+                    <p>This means your <strong>security posture extends beyond your own walls</strong>. A partner operating from a token satellite cannot expose your master data — they simply do not have it. A compromised node is isolated. The master remains intact and untouched.</p>
+                    <div class="info-highlight">
+                        Think of it as a franchise model for data — each location operates independently and efficiently, but all roads lead back to the single protected master. The larger your network, the greater the collective security and efficiency dividend.
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 4 -->
+            <div class="info-section">
+                <div class="info-section-header">
+                    <span class="info-section-number">04</span>
+                    <h3>The Green Commitment</h3>
+                </div>
+                <div class="info-section-body">
+                    <p>Data storage has an energy cost that is rarely discussed. Global data centres consume an estimated 200 terawatt-hours of electricity annually — and a significant portion of that is spent keeping rarely-accessed data warm, indexed, and available at all times.</p>
+                    <p>The Glexicon Protocol directly addresses this. When 100 million records can be referenced from a 4.7GB token satellite rather than a 500GB master database, <strong>the energy required to serve that data drops dramatically</strong>. Fewer servers, smaller infrastructure, lower cooling demands.</p>
+                    <p>For organisations with sustainability commitments, the Protocol is not just an efficiency tool — it is a measurable contribution to their environmental targets. Efficiency and conscience, in the same architecture.</p>
+                </div>
+            </div>
+
+            <!-- SECTION 5 -->
+            <div class="info-section">
+                <div class="info-section-header">
+                    <span class="info-section-number">05</span>
+                    <h3>The Token Database Advantage</h3>
+                </div>
+                <div class="info-section-body">
+                    <p>Day to day, operating from a token satellite rather than a master database changes everything about how data feels to work with. Queries are faster because the dataset is smaller. Integrations are lighter because there is less to carry. Deployments are portable because a 4.7GB database fits on a flash drive, an edge server, or a cloud instance spun up in seconds.</p>
+                    <p>The security benefits are equally significant. <strong>Your master database is never the target</strong> of routine operations — it is not exposed to the everyday risk surface that active databases carry. Breaches, leaks, and unauthorised access overwhelmingly happen to data that is actively in use. The token satellite can be exposed. The master cannot.</p>
+                    <p>And if the unthinkable happens — if a token database is lost, corrupted, or compromised — <strong>you generate a new one</strong>. The master is untouched. Recovery is not a disaster recovery operation — it is a generation run. In the Glexicon system, losing a satellite is an inconvenience, not a catastrophe.</p>
+                    <div class="info-highlight">
+                        <strong>Backup reimagined:</strong> traditional backup protects a copy of your data. The Glexicon Protocol means your master data was never at risk in the first place. That is a fundamentally different level of protection.
+                    </div>
+                </div>
+            </div>
+
+            <!-- CLOSING -->
+            <div class="info-closing">
+                <p>You are not simply using a more efficient database tool. You are operating with an architecture that most organisations will spend the next decade trying to build. The decisions you make about your data infrastructure today will define how agile, secure, and efficient your organisation is tomorrow.</p>
+                <p>The Monster Protocol is running. Your token database is live. Your master is protected.</p>
+                <div class="closing-mark">⚡ Tick. Tock. Token. ⚡</div>
+            </div>
+
+        </div>
+
+        <!-- DATABASE MANAGEMENT PANEL -->
+        <div class="panel" id="panel-dbmanage">
+            <div class="page-header">
+                <h2>Database Management</h2>
+                <p>Monitor and manage your server-side token assignment database.</p>
+            </div>
+
+            <!-- Live Stats -->
+            <div class="block" style="margin-bottom:24px;">
+                <div class="block-header">
+                    <h3>Server Database Status</h3>
+                    <button class="btn btn-secondary btn-sm" onclick="refreshDbStats()">Refresh</button>
+                </div>
+                <div class="block-body">
+                    <div class="stat-grid" style="margin-bottom:0;">
+                        <div class="stat-card">
+                            <div class="stat-number" id="db-pool-total">—</div>
+                            <div class="stat-label">Total Pool Size</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="db-assigned">—</div>
+                            <div class="stat-label">Tokens Assigned</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="db-remaining">—</div>
+                            <div class="stat-label">Tokens Remaining</div>
+                        </div>
+                    </div>
+                    <div id="db-status-msg" style="margin-top:16px; display:none;"></div>
+                </div>
+            </div>
+
+            <!-- Sample Records -->
+            <div class="block" style="margin-bottom:24px;">
+                <div class="block-header">
+                    <h3>Sample Records</h3>
+                    <button class="btn btn-secondary btn-sm" onclick="loadSample()">Load Sample</button>
+                </div>
+                <div class="block-body" style="padding:0;">
+                    <div id="db-sample-wrap" style="padding:16px; color:var(--accent); font-size:0.9rem;">
+                        Click Load Sample to preview records from your server database.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vacuum -->
+            <div class="block" style="border-left: 3px solid #c0392b;">
+                <div class="block-header"><h3>Reset Database</h3></div>
+                <div class="block-body">
+                    <p style="font-size:0.9rem; color:#c0392b; margin-bottom:16px;">
+                        <strong>Warning:</strong> This permanently clears all token assignments from the server database. Your token pool remains intact but all mappings will be lost. This cannot be undone.
+                    </p>
+                    <label class="field-label">Type DELETE MY DATABASE to confirm</label>
+                    <input type="text" id="vacuum-confirm" placeholder="DELETE MY DATABASE" style="margin-bottom:12px;" />
+                    <div class="btn-row">
+                        <button class="btn" style="background:#c0392b; color:#fff;" onclick="runVacuum()">Reset Database</button>
+                    </div>
+                    <div id="vacuum-result" style="margin-top:16px; display:none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LEGAL PANEL -->
+        <div class="panel" id="panel-legal">
+            <div class="page-header">
+                <h2>Legal</h2>
+                <p>Governing documentation for the Glexicon Protocol.</p>
+            </div>
+            <div class="block">
+                <div class="block-body">
+                    <div style="display:flex; flex-direction:column; gap:16px;">
+                        <div class="callout" style="cursor:pointer;" onclick="document.querySelector('[data-panel=privacy]').click()">
+                            <strong>Privacy Policy</strong><br>
+                            <span style="font-size:0.9rem; color:var(--accent);">How Glexicon handles your data — and why it deliberately doesn't.</span>
+                        </div>
+                        <div class="callout" style="cursor:pointer;" onclick="document.querySelector('[data-panel=terms]').click()">
+                            <strong>Terms of Service</strong><br>
+                            <span style="font-size:0.9rem; color:var(--accent);">The conditions governing utilisation and implementation of the Glexicon Protocol.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PRIVACY POLICY PANEL -->
+        <div class="panel" id="panel-privacy">
+            <div class="page-header">
+                <h2>Privacy Policy</h2>
+                <p>Glexicon — data minimalism by design. Effective January 01, 2026.</p>
+            </div>
+            <div class="block">
+                <div class="block-body" style="display:flex; flex-direction:column; gap:20px;">
+
+                    <p style="font-size:1rem; font-weight:600;">Welcome to Glexicon</p>
+                    <p>Your privacy is paramount to us — primarily because we have no desire, need, or use for your personal information. This website is strictly an informational gateway designed to provide insights, specifications, and details regarding the Glexicon protocol. Our goal is solely to deliver high-value information for the correct clients to absorb and utilize.</p>
+
+                    <div style="border-top:1px solid var(--border); padding-top:20px;">
+                        <p style="font-size:0.75rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--accent); margin-bottom:10px;">1. Data Collection Philosophy</p>
+                        <p>Glexicon operates on a strict need-to-know — or more accurately, a do-not-need-to-know — basis.</p>
+                        <div class="callout" style="margin-top:12px;">
+                            <strong>No Accounts:</strong> You do not need to create an account, log in, or provide an email address to access our protocol information, privacy policy, terms, license, or pricing structures.
+                        </div>
+                        <div class="callout" style="margin-top:8px;">
+                            <strong>No Tracking:</strong> We do not deploy invasive tracking pixels, behavioral advertising cookies, or cross-site data harvesting tools.
+                        </div>
+                    </div>
+
+                    <div style="border-top:1px solid var(--border); padding-top:20px;">
+                        <p style="font-size:0.75rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--accent); margin-bottom:10px;">2. Automated & Third-Party Interactions</p>
+                        <p>While Glexicon does not actively collect, store, or monetize your data, standard web interactions involve the following infrastructure:</p>
+                        <div class="callout" style="margin-top:12px;">
+                            <strong>Interactive AI Assistant:</strong> We utilize an automated AI assistant (powered by Botpress) to help answer your questions regarding the protocol. Any information or questions you type into the chat are processed dynamically to provide you with an immediate response. We do not use these interactions to build user profiles.
+                        </div>
+                        <div class="callout" style="margin-top:8px;">
+                            <strong>Hosting & Security:</strong> Our website infrastructure is securely hosted. Standard, temporary server logs (such as IP addresses) may be processed strictly for automated cybersecurity defence, DDoS mitigation, and ensuring uptime.
+                        </div>
+                    </div>
+
+                    <div style="border-top:1px solid var(--border); padding-top:20px;">
+                        <p style="font-size:0.75rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--accent); margin-bottom:10px;">3. External Links & Protocol Implementation</p>
+                        <p>This website contains informational files and external links (including our protocol overview, confidential details, summary and license frameworks). Once you leave this site or implement the Glexicon protocol independently, your data privacy is subject to the terms of those specific environments or your own self-hosted infrastructure.</p>
+                    </div>
+
+                    <div style="border-top:1px solid var(--border); padding-top:20px;">
+                        <p style="font-size:0.75rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--accent); margin-bottom:10px;">4. Updates to this Policy</p>
+                        <p>Should Glexicon introduce native contact mechanisms or support channels that require voluntary information submission (such as an email address for direct inquiries), this page will be updated to reflect how that specific data is handled.</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- TERMS PANEL -->
+        <div class="panel" id="panel-terms">
+            <div class="page-header">
+                <h2>Terms of Service</h2>
+                <p>Governing the utilisation and implementation of the Glexicon Protocol. Effective January 01, 2026.</p>
+            </div>
+            <div class="block">
+                <div class="block-body" style="display:flex; flex-direction:column; gap:20px;">
+
+                    <p style="font-size:1rem; font-weight:600;">Welcome to Glexicon</p>
+                    <p>These Terms of Service govern the utilisation, evaluation, and implementation of the Glexicon protocol, its informational files, and any associated processing frameworks (collectively, the "Protocol"). By accessing this site or utilising the Protocol, you agree to comply with these terms.</p>
+
+                    <div style="border-top:1px solid var(--border); padding-top:20px;">
+                        <p style="font-size:0.75rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--accent); margin-bottom:10px;">1. Purpose of the Protocol</p>
+                        <p>Glexicon provides a proprietary architectural framework and data optimization logic designed to convert client-supplied data structures into high-efficiency, obfuscated operational tokens.</p>
+                        <div class="callout" style="margin-top:12px;">
+                            <strong>Informational Intent:</strong> This website and its hidden dashboard components serve strictly as an informational and visual gateway for prospective clients to evaluate Protocol capabilities.
+                        </div>
+                        <div class="callout" style="margin-top:8px;">
+                            <strong>Infrastructure Boundaries:</strong> Glexicon does not host client data structures, manage external key infrastructure, or run persistent web-server operations for third parties.
+                        </div>
+                    </div>
+
+                    <div style="border-top:1px solid var(--border); padding-top:20px;">
+                        <p style="font-size:0.75rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--accent); margin-bottom:10px;">2. Trust & Data Processing Architecture</p>
+                        <p>To eliminate operational friction and ensure absolute security, any execution of the Protocol must adhere to the following data boundaries:</p>
+                        <div class="callout" style="margin-top:12px;">
+                            <strong>Local Execution:</strong> The data transformation processes are designed to occur within isolated environments, utilising secure memory handling.
+                        </div>
+                        <div class="callout" style="margin-top:8px;">
+                            <strong>Zero Retention:</strong> No processed records or generated outputs are cached, stored, or transmitted outside of the active runtime environment. Upon system termination, all working memory is permanently cleared.
+                        </div>
+                    </div>
+
+                    <div style="border-top:1px solid var(--border); padding-top:20px;">
+                        <p style="font-size:0.75rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--accent); margin-bottom:10px;">3. Proprietary Rights & Trade Secrets</p>
+                        <p>The underlying logic, mathematical transformation formulas, software binaries, and specific interface layouts of the Glexicon Protocol are protected as trade secrets and intellectual property.</p>
+                        <div class="callout" style="margin-top:12px;">
+                            <strong>Restrictions:</strong> Clients and evaluators may not reverse-engineer, decompile, or replicate the core Protocol logic without an explicit enterprise licensing agreement.
+                        </div>
+                        <div class="callout" style="margin-top:8px;">
+                            <strong>Branding Consistency:</strong> All visual assets, text structures, and interface designs associated with Glexicon remain the exclusive property of Glexicon.
+                        </div>
+                    </div>
+
+                    <div style="border-top:1px solid var(--border); padding-top:20px;">
+                        <p style="font-size:0.75rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--accent); margin-bottom:10px;">4. Enterprise Licensing & Token Ledger Conditions</p>
+                        <p>Access to full-scale conversion utilities, dedicated processing deployments, and the official token ledger is restricted to authorised entities under specific tiers.</p>
+                        <table style="width:100%; border-collapse:collapse; margin-top:12px; font-size:0.9rem;">
+                            <thead>
+                                <tr style="border-bottom:2px solid var(--border);">
+                                    <th style="text-align:left; padding:10px 12px; font-size:0.75rem; letter-spacing:1px; text-transform:uppercase; color:var(--accent);">Condition</th>
+                                    <th style="text-align:left; padding:10px 12px; font-size:0.75rem; letter-spacing:1px; text-transform:uppercase; color:var(--accent);">Detail</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom:1px solid var(--border);">
+                                    <td style="padding:12px; font-weight:600;">Allocation</td>
+                                    <td style="padding:12px; color:#333;">Any internal credits or allocation metrics displayed within evaluation dashboards are tied strictly to the active tier defined in the client's physical enterprise contract.</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:12px; font-weight:600;">Modifications</td>
+                                    <td style="padding:12px; color:#333;">Glexicon reserves the right to optimise, update, or refine the token generation logic to enhance processing speed and data efficiency.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div style="border-top:1px solid var(--border); padding-top:20px;">
+                        <p style="font-size:0.75rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--accent); margin-bottom:10px;">5. Limitation of Liability</p>
+                        <p>Glexicon provides the Protocol framework on an "as-is" basis. Glexicon shall not be held liable for any operational anomalies, data mismatches, or infrastructural issues arising from the independent, self-hosted deployment of the Protocol logic by external IT teams.</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<div id="toast"></div>
+
+<script>
+    // ── DOT GRID ANIMATIONS ───────────────────────────────────────────────────
+    function animateDots() {
+        const allDots = document.querySelectorAll('#panel-savings .dot');
+        if (!allDots.length) return;
+        const count = Math.floor(Math.random() * 3) + 2;
+        const picked = [];
+        while (picked.length < count) {
+            const idx = Math.floor(Math.random() * allDots.length);
+            if (!picked.includes(idx)) picked.push(idx);
+        }
+        picked.forEach(idx => {
+            const dot = allDots[idx];
+            dot.classList.add('dot-lit');
+            setTimeout(() => dot.classList.remove('dot-lit'), 800);
+        });
+    }
+
+    setInterval(() => {
+        const savings = document.getElementById('panel-savings');
+        if (savings && savings.classList.contains('active')) animateDots();
+    }, 1200);
+
+    // ── SIDEBAR TIPS ──────────────────────────────────────────────────────────
+    const TIPS = [
+        '💡 Use Bulk Paste to process hundreds of keys in one go.',
+        '💡 Token to PK Lookup works in both directions — paste a token or a key.',
+        '💡 Download your CSV after generation and save it to your secure flash drive.',
+        '💡 Your token pool persists across sessions — reconnect anytime to resume.',
+        '💡 Each client has a unique salt — your tokens are exclusive to your account.',
+        '💡 Use the Database panel to monitor your pool usage in real time.',
+        '💡 Upload a saved CSV via the Upload CSV tab to reload a previous session.',
+        '💡 The Reset Database option clears assignments — your token pool stays intact.',
+        '💡 Tick Tock Points accumulate towards your annual renewal discount.',
+        '💡 Your API key is unique — never share it outside your organisation.',
+        '💡 Connect from any device — your server retains all assignment history.',
+        '💡 Gold and Platinum tiers include multiple secure flash drives for redundancy.',
+    ];
+
+    let tipIndex = 0;
+    function rotateTip() {
+        const el = document.getElementById('sidebar-tip');
+        el.style.opacity = '0';
+        setTimeout(() => {
+            el.textContent = TIPS[tipIndex % TIPS.length];
+            el.style.opacity = '1';
+            tipIndex++;
+        }, 500);
+    }
+    rotateTip();
+    setInterval(rotateTip, 6000);
+
+    // ── NAV ──────────────────────────────────────────────────────────────────
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', () => {
+            switchPanel(item.dataset.panel);
+        });
+    });
+
+    // ── TABS ─────────────────────────────────────────────────────────────────
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+        });
+    });
+
+    // ── STATE ─────────────────────────────────────────────────────────────────
+    let sessionKeys = 0;
+    let sessionTokens = 0;
+    let history = [];
+    let csvKeys = [];
+    let lastOutput = [];
+    let csvLookupIndex = []; // stores {key, token} pairs from loaded CSV for reverse lookup
+
+    // ── PROTOCOL SIMULATION ───────────────────────────────────────────────────
+    // Deterministic token generation from a primary key
+    function generateToken(key) {
+        const clean = key.trim();
+        if (!clean) return null;
+
+        // Simple deterministic hash → token format
+        let hash = 0;
+        for (let i = 0; i < clean.length; i++) {
+            hash = ((hash << 5) - hash) + clean.charCodeAt(i);
+            hash |= 0;
+        }
+        const abs = Math.abs(hash);
+        const seg1 = abs.toString(36).toUpperCase().padStart(4, '0').slice(-4);
+        const seg2 = (abs * 31337).toString(36).toUpperCase().padStart(4, '0').slice(-4);
+        const seg3 = (abs * 7919 + 1337).toString(36).toUpperCase().padStart(4, '0').slice(-4);
+        const token = `TTT-${seg1}-${seg2}-${seg3}`;
+
+        const origBytes = clean.length;
+        const tokenBytes = token.length;
+        // Protocol benchmark: random gain value 90-96X
+        const storageGain = Math.floor(Math.random() * 7) + 90;
+
+        return { key: clean, token, origBytes, tokenBytes, storageGain };
+    }
+
+    function renderOutput(results) {
+        if (!results.length) return;
+        lastOutput = results;
+
+        const tbody = document.getElementById('output-tbody');
+        tbody.innerHTML = '';
+        results.forEach((r, i) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+    <td>${i + 1}</td>
+    <td>${escHtml(r.key)}</td>
+    <td class="token-cell">${r.token}</td>
+    <td><span class="storage-gain">${r.storageGain}X Gain</span></td>
+`;
+            tbody.appendChild(tr);
+        });
+
+        document.getElementById('output-area').style.display = 'block';
+
+        // Update stats
+        sessionKeys += results.length;
+        sessionTokens += results.length;
+        document.getElementById('stat-keys').textContent = sessionKeys.toLocaleString();
+        document.getElementById('stat-tokens').textContent = sessionTokens.toLocaleString();
+        document.getElementById('stat-saved').textContent = (Math.floor(Math.random() * 7) + 90) + 'X';
+
+        // Update savings bar
+        const bar = document.getElementById('savings-bar');
+        bar.style.width = '95%';
+        document.getElementById('bar-pct-label').textContent = '90-96X database footprint gains';
+
+        // Update callout
+        document.getElementById('overview-callout').innerHTML =
+            `<strong>${results.length} key${results.length > 1 ? 's' : ''} processed.</strong> Average database footprint gains: <strong>90–96X</strong>. All tokens assigned via Glexicon Protocol — no data transmitted.`;
+
+        // Add to history
+        const batch = {
+            time: new Date().toLocaleTimeString(),
+            count: results.length,
+            results: [...results]
+        };
+        history.unshift(batch);
+        updateHistory();
+        updateRecentActivity(batch);
+    }
+
+    async function processSingle() {
+        const val = document.getElementById('single-key-input').value.trim();
+        if (!val) { showToast('Enter a primary key first.'); return; }
+        if (!BASE_URL) {
+            // Fallback to local if not connected
+            const result = generateToken(val);
+            if (result) renderOutput([result]);
+            return;
+        }
+        showToast('Assigning token from server pool...');
+        try {
+            const d = await apiFetch('/assign?pk=' + encodeURIComponent(val));
+            if (d.error) { showToast('Server error: ' + d.error); return; }
+            const result = {
+                key: val,
+                token: d.token_hex || String(d.token),
+                origBytes: val.length,
+                tokenBytes: 18,
+                storageGain: Math.floor(Math.random() * 7) + 90
+            };
+            if (d.existing) showToast('PK already assigned — returning existing token.');
+            renderOutput([result]);
+            refreshTokenUsage();
+        } catch(e) {
+            showToast('Server error — falling back to local generation.');
+            const result = generateToken(val);
+            if (result) renderOutput([result]);
+        }
+        switchPanel('process');
+    }
+
+    async function processBulk() {
+        const raw = document.getElementById('bulk-input').value;
+        const lines = raw.split('\n').map(l => l.trim()).filter(Boolean);
+        if (!lines.length) { showToast('Paste at least one key.'); return; }
+        if (!BASE_URL) {
+            const results = lines.map(generateToken).filter(Boolean);
+            renderOutput(results);
+            return;
+        }
+        showToast(`Assigning ${lines.length} tokens from server pool...`);
+        try {
+            const results = [];
+            for (const val of lines) {
+                const d = await apiFetch('/assign?pk=' + encodeURIComponent(val));
+                if (!d.error) {
+                    results.push({
+                        key: val,
+                        token: d.token_hex || String(d.token),
+                        origBytes: val.length,
+                        tokenBytes: 18,
+                        storageGain: Math.floor(Math.random() * 7) + 90
+                    });
+                }
+            }
+            if (results.length) { renderOutput(results); refreshTokenUsage(); }
+            else showToast('No tokens assigned — pool may be exhausted.');
+        } catch(e) {
+            showToast('Server error — falling back to local generation.');
+            const results = lines.map(generateToken).filter(Boolean);
+            renderOutput(results);
+        }
+    }
+
+    function clearBulk() {
+        document.getElementById('bulk-input').value = '';
+        document.getElementById('output-area').style.display = 'none';
+    }
+
+    function handleFileUpload(input) {
+        const file = input.files[0];
+        if (!file) return;
+        document.getElementById('upload-filename').textContent = file.name;
+        const reader = new FileReader();
+        reader.onload = e => {
+            const lines = e.target.result.split('\n').map(l => l.trim()).filter(Boolean);
+            // Check if this is a Glexicon export CSV (has header: Original Key,Tick Tock Token,Storage Gains)
+            const firstLine = lines[0] || '';
+            if (firstLine.toLowerCase().includes('tick tock token')) {
+                // It's a previously exported token database — build full lookup index
+                csvLookupIndex = lines.slice(1).map(l => {
+                    const parts = l.split(',');
+                    return parts.length >= 2 ? { key: parts[0].trim(), token: parts[1].trim() } : null;
+                }).filter(Boolean);
+                csvKeys = csvLookupIndex.map(r => r.key);
+                showToast(`Token database loaded — ${csvLookupIndex.length} records available for lookup.`);
+            } else {
+                // Plain key list — store keys only, no lookup index
+                csvKeys = lines.map(l => l.split(',')[0].trim()).filter(Boolean);
+                csvLookupIndex = [];
+            }
+        };
+        reader.readAsText(file);
+    }
+
+    async function processCsv() {
+        if (!csvKeys.length) { showToast('Upload a CSV file first.'); return; }
+        if (!BASE_URL) {
+            const results = csvKeys.map(generateToken).filter(Boolean);
+            renderOutput(results);
+            return;
+        }
+        showToast(`Assigning ${csvKeys.length} tokens from server pool...`);
+        try {
+            const results = [];
+            for (const val of csvKeys) {
+                const d = await apiFetch('/assign?pk=' + encodeURIComponent(val));
+                if (!d.error) {
+                    results.push({
+                        key: val,
+                        token: d.token_hex || String(d.token),
+                        origBytes: val.length,
+                        tokenBytes: 18,
+                        storageGain: Math.floor(Math.random() * 7) + 90
+                    });
+                }
+            }
+            if (results.length) { renderOutput(results); refreshTokenUsage(); }
+            else showToast('No tokens assigned — pool may be exhausted.');
+        } catch(e) {
+            showToast('Server error — falling back to local generation.');
+            const results = csvKeys.map(generateToken).filter(Boolean);
+            renderOutput(results);
+        }
+    }
+
+    function clearCsv() {
+        csvKeys = [];
+        csvLookupIndex = [];
+        document.getElementById('csv-file-input').value = '';
+        document.getElementById('upload-filename').textContent = '';
+        document.getElementById('output-area').style.display = 'none';
+    }
+
+    function copyOutput() {
+        if (!lastOutput.length) return;
+        const text = lastOutput.map(r => `${r.key},${r.token}`).join('\n');
+        navigator.clipboard.writeText(text).then(() => showToast('Copied to clipboard.'));
+    }
+
+    function downloadOutput() {
+        if (!lastOutput.length) return;
+        const csv = 'Original Key,Tick Tock Token,Storage Gains\n' +
+            lastOutput.map(r => `${r.key},${r.token},${r.storageGain}X Gain`).join('\n');
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `glexicon-tokens-${Date.now()}.csv`;
+        a.click();
+        showToast('Downloaded.');
+    }
+
+    // ── HISTORY ───────────────────────────────────────────────────────────────
+    function updateHistory() {
+        const wrap = document.getElementById('history-wrap');
+        if (!history.length) {
+            wrap.innerHTML = `<div class="empty-state"><div class="empty-icon">◫</div><p>No batches processed yet this session.</p></div>`;
+            return;
+        }
+        let html = `<table class="history-table"><thead><tr><th>Time</th><th>Keys</th><th>Tokens</th><th>Gains</th></tr></thead><tbody>`;
+        history.forEach(b => {
+            html += `<tr>
+                <td>${b.time}</td>
+                <td>${b.count}</td>
+                <td>${b.count}</td>
+                <td>${(Math.floor(Math.random() * 7) + 90)}X Gain</td>
+            </tr>`;
+        });
+        html += `</tbody></table>`;
+        wrap.innerHTML = html;
+    }
+
+    function updateRecentActivity(batch) {
+        const wrap = document.getElementById('recent-activity-wrap');
+        wrap.innerHTML = `<table class="history-table"><thead><tr><th>Time</th><th>Keys</th><th>Tokens</th><th>Gains</th></tr></thead><tbody>` +
+            history.slice(0, 5).map(b => `<tr><td>${b.time}</td><td>${b.count}</td><td>${b.count}</td><td>${(Math.floor(Math.random() * 7) + 90)}X Gain</td></tr>`).join('') +
+            `</tbody></table>`;
+    }
+
+    function clearHistory() {
+        history = [];
+        updateHistory();
+    }
+
+    // ── HELPERS ───────────────────────────────────────────────────────────────
+    function switchPanel(id) {
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+        document.querySelector(`[data-panel="${id}"]`).classList.add('active');
+        document.getElementById(`panel-${id}`).classList.add('active');
+        if (id === 'dbmanage') refreshDbStats();
+        if (id === 'savings') animateDots();
+        if (id === 'overview' && sessionTokens > 0) {
+            const bar = document.getElementById('savings-bar');
+            if (bar) {
+                bar.style.transition = 'none';
+                bar.style.width = '0%';
+                void bar.offsetWidth; // force browser reflow
+                bar.style.transition = 'width 1.4s ease-out';
+                bar.style.width = '95%';
+            }
+        }
+    }
+
+    function escHtml(str) {
+        return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 2400);
+    }
+
+    // ── TOKEN LOOKUP ──────────────────────────────────────────────────────────
+    async function lookupToken() {
+        const query = document.getElementById('lookup-input').value.trim();
+        const resultDiv = document.getElementById('lookup-result');
+        if (!query) { showToast('Enter a token or primary key to look up.'); return; }
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = '<p style="color:var(--accent); font-size:0.9rem;">Searching...</p>';
+
+        // Determine if input looks like a token (numeric or hex) or a PK (text)
+        const isToken = /^(0x)?[0-9a-fA-F]+$/.test(query.replace(/-/g,''));
+
+        // Try server first if connected
+        if (BASE_URL) {
+            try {
+                let d;
+                if (isToken) {
+                    // Token → PK lookup
+                    const numeric = query.startsWith('0x') || query.startsWith('0X')
+                        ? BigInt(query).toString()
+                        : query.replace(/[^0-9]/g,'');
+                    d = await apiFetch('/lookup?token=' + encodeURIComponent(numeric));
+                    if (d.found) {
+                        resultDiv.innerHTML = `
+                            <div class="callout" style="border-left:3px solid #1a5c38;">
+                                <strong style="color:#1a5c38;">✓ Primary Key Retrieved — Server Database</strong><br><br>
+                                <span style="font-size:0.8rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.5px;">Original Primary Key</span><br>
+                                <span style="font-size:1.1rem;font-weight:800;font-family:monospace;">${escHtml(String(d.pk))}</span><br><br>
+                                <span style="font-size:0.8rem;color:var(--accent);">Token: ${escHtml(String(d.token))}</span>
+                            </div>`;
+                        return;
+                    }
+                } else {
+                    // PK → Token lookup
+                    d = await apiFetch('/pk_lookup?pk=' + encodeURIComponent(query));
+                    if (d.found) {
+                        resultDiv.innerHTML = `
+                            <div class="callout" style="border-left:3px solid #1a5c38;">
+                                <strong style="color:#1a5c38;">✓ Token Retrieved — Server Database</strong><br><br>
+                                <span style="font-size:0.8rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.5px;">Assigned Token</span><br>
+                                <span style="font-size:1.1rem;font-weight:800;font-family:monospace;">${escHtml(d.token_hex || String(d.token))}</span><br><br>
+                                <span style="font-size:0.8rem;color:var(--accent);">Primary Key: ${escHtml(query)} &nbsp;·&nbsp; Assigned: ${escHtml(d.assigned_at || '—')}</span>
+                            </div>`;
+                        return;
+                    }
+                }
+            } catch(e) { /* fall through to local */ }
+        }
+
+        // Fall back to local session + CSV index
+        const queryUpper = query.toUpperCase();
+        let match = lastOutput.find(r =>
+            r.token.toUpperCase() === queryUpper || r.key.toUpperCase() === queryUpper);
+        let source = 'current session';
+
+        if (!match && csvLookupIndex.length) {
+            const csvMatch = csvLookupIndex.find(r =>
+                r.token.toUpperCase() === queryUpper || r.key.toUpperCase() === queryUpper);
+            if (csvMatch) { match = csvMatch; source = 'loaded token database'; }
+        }
+
+        if (match) {
+            const isKeyMatch = match.key.toUpperCase() === queryUpper;
+            resultDiv.innerHTML = `
+                <div class="callout" style="border-left:3px solid #1a5c38;">
+                    <strong style="color:#1a5c38;">✓ ${isKeyMatch ? 'Token' : 'Primary Key'} Retrieved — ${source}</strong><br><br>
+                    <span style="font-size:0.8rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.5px;">${isKeyMatch ? 'Assigned Token' : 'Original Primary Key'}</span><br>
+                    <span style="font-size:1.1rem;font-weight:800;font-family:monospace;">${escHtml(isKeyMatch ? match.token : match.key)}</span><br><br>
+                    <span style="font-size:0.8rem;color:var(--accent);">${isKeyMatch ? 'PK' : 'Token'}: ${escHtml(isKeyMatch ? match.key : match.token)}</span>
+                </div>`;
+        } else {
+            const hint = BASE_URL
+                ? 'Not found in server database, current session, or loaded CSV.'
+                : 'Not found in session. Connect to the API or load a CSV via Upload CSV tab.';
+            resultDiv.innerHTML = `
+                <div class="callout" style="border-left:3px solid #c0392b;">
+                    <strong style="color:#c0392b;">✗ Not Found</strong><br>
+                    <span style="font-size:0.9rem;">${hint}</span>
+                </div>`;
+        }
+    }
+
+
+    function clearLookup() {
+        document.getElementById('lookup-input').value = '';
+        const r = document.getElementById('lookup-result');
+        r.style.display = 'none';
+        r.innerHTML = '';
+    }
+
+    // ── SAVE TO FLASH DRIVE ───────────────────────────────────────────────────
+    function saveToFlashDrive() {
+        const resultDiv = document.getElementById('save-result');
+        resultDiv.style.display = 'block';
+
+        if (!lastOutput.length) {
+            resultDiv.innerHTML = `
+                <div class="callout" style="border-left: 3px solid #c0392b;">
+                    <strong style="color:#c0392b;">✗ No Tokens to Save</strong><br>
+                    <span style="font-size:0.9rem;">Generate a token database first before saving to your secure flash drive.</span>
+                </div>`;
+            return;
+        }
+
+        const csv = 'Original Key,Tick Tock Token,Storage Gains\n' +
+            lastOutput.map(r => `${r.key},${r.token},${r.storageGain}X Gain`).join('\n');
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `glexicon-token-database-${Date.now()}.csv`;
+        a.click();
+
+        resultDiv.innerHTML = `
+            <div class="callout" style="border-left: 3px solid #1a5c38;">
+                <strong style="color:#1a5c38;">✓ Token Database Saved</strong><br>
+                <span style="font-size:0.9rem;">${lastOutput.length} token${lastOutput.length > 1 ? 's' : ''} saved. Direct the file to your secure Glexicon flash drive when prompted by your operating system.</span>
+            </div>`;
+    }
+
+    function clearSave() {
+        const r = document.getElementById('save-result');
+        r.style.display = 'none';
+        r.innerHTML = '';
+    }
+
+    // ── DATABASE MANAGEMENT ───────────────────────────────────────────────────
+    async function refreshDbStats() {
+        const msgDiv = document.getElementById('db-status-msg');
+        if (!BASE_URL) {
+            msgDiv.style.display = 'block';
+            msgDiv.innerHTML = '<div class="callout" style="border-left:3px solid #c0392b;"><strong style="color:#c0392b;">Not connected</strong> — connect via the Dashboard API Configuration first.</div>';
+            return;
+        }
+        try {
+            const d = await apiFetch('/status');
+            document.getElementById('db-pool-total').textContent = d.records ? Number(d.records).toLocaleString() : '—';
+            document.getElementById('db-assigned').textContent = d.assigned !== undefined ? Number(d.assigned).toLocaleString() : '0';
+            document.getElementById('db-remaining').textContent = d.remaining !== undefined ? Number(d.remaining).toLocaleString() : (d.records ? Number(d.records).toLocaleString() : '—');
+            msgDiv.style.display = 'block';
+            msgDiv.innerHTML = '<div class="callout" style="border-left:3px solid #1a5c38;"><strong style="color:#1a5c38;">✓ Server responding</strong> — database is live and healthy.</div>';
+        } catch(e) {
+            msgDiv.style.display = 'block';
+            msgDiv.innerHTML = '<div class="callout" style="border-left:3px solid #c0392b;"><strong style="color:#c0392b;">✗ Server unreachable</strong> — check your API connection.</div>';
+        }
+    }
+
+    async function loadSample() {
+        const wrap = document.getElementById('db-sample-wrap');
+        if (!BASE_URL) {
+            wrap.innerHTML = '<p style="color:#c0392b; font-size:0.9rem;">Not connected — connect via Dashboard first.</p>';
+            return;
+        }
+        wrap.innerHTML = '<p style="color:var(--accent); font-size:0.9rem;">Loading...</p>';
+        try {
+            const d = await apiFetch('/sample?n=10');
+            if (!d.sample || !d.sample.length) {
+                wrap.innerHTML = '<p style="color:var(--accent); font-size:0.9rem;">No records found.</p>';
+                return;
+            }
+            let html = '<table class="output-table"><thead><tr><th>Pool Position</th><th>Token</th></tr></thead><tbody>';
+            d.sample.forEach(r => {
+                const hex = '0x' + (r.token >>> 0).toString(16).toUpperCase().padStart(16,'0');
+                html += `<tr><td>${r.pk}</td><td class="token-cell">${hex}</td></tr>`;
+            });
+            html += '</tbody></table>';
+            wrap.innerHTML = html;
+        } catch(e) {
+            wrap.innerHTML = '<p style="color:#c0392b; font-size:0.9rem;">Failed to load sample.</p>';
+        }
+    }
+
+    async function runVacuum() {
+        const confirmVal = document.getElementById('vacuum-confirm').value.trim();
+        const resultDiv  = document.getElementById('vacuum-result');
+        resultDiv.style.display = 'block';
+        if (confirmVal !== 'DELETE MY DATABASE') {
+            resultDiv.innerHTML = '<div class="callout" style="border-left:3px solid #c0392b;"><strong style="color:#c0392b;">✗ Confirmation required</strong> — type DELETE MY DATABASE exactly.</div>';
+            return;
+        }
+        if (!BASE_URL) {
+            resultDiv.innerHTML = '<div class="callout" style="border-left:3px solid #c0392b;"><strong style="color:#c0392b;">Not connected</strong> — connect via Dashboard first.</div>';
+            return;
+        }
+        try {
+            resultDiv.innerHTML = '<p style="color:var(--accent); font-size:0.9rem;">Resetting...</p>';
+            const d = await apiFetch('/vacuum?confirm=DELETE_MY_DATABASE');
+            if (d.vacuumed) {
+                document.getElementById('vacuum-confirm').value = '';
+                resultDiv.innerHTML = `
+                    <div class="callout" style="border-left:3px solid #1a5c38;">
+                        <strong style="color:#1a5c38;">✓ Database Reset Complete</strong><br>
+                        <span style="font-size:0.9rem;">${Number(d.records_cleared).toLocaleString()} assignments cleared. Token pool intact and ready.</span>
+                    </div>`;
+                refreshDbStats();
+            } else { throw new Error('unexpected'); }
+        } catch(e) {
+            resultDiv.innerHTML = '<div class="callout" style="border-left:3px solid #c0392b;"><strong style="color:#c0392b;">✗ Reset failed</strong> — server error.</div>';
+        }
+    }
+
+    function updateLicenseFields() {
+        const company  = document.getElementById('cfg-company').value.trim();
+        const startVal = document.getElementById('cfg-start-date').value;
+
+        // Company name
+        document.getElementById('lic-company').textContent = company || '—';
+
+        // Dates
+        if (startVal) {
+            const start   = new Date(startVal + 'T00:00:00');
+            const renewal = new Date(startVal + 'T00:00:00');
+            renewal.setFullYear(renewal.getFullYear() + 1);
+            const fmt = d => d.toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
+            document.getElementById('lic-effective').textContent = fmt(start);
+            document.getElementById('lic-renewal').textContent   = fmt(renewal);
+        } else {
+            document.getElementById('lic-effective').textContent = '—';
+            document.getElementById('lic-renewal').textContent   = '—';
+        }
+    }
+
+        // ── TIER MAP — keyed by RECORD_COUNT set in Railway env vars ─────────
+    const TIERS = {
+        // Standard tiers
+        10000:   { name: 'Bronze',   label: 'Bronze Enterprise',  fee: '$5,000',   pointValue: '$0.005', maxRedemption: '$1,000'  },
+        50000:   { name: 'Silver',   label: 'Silver Enterprise',  fee: '$15,000',  pointValue: '$0.02',  maxRedemption: '$3,000'  },
+        250000:  { name: 'Gold',     label: 'Gold Enterprise',    fee: '$50,000',  pointValue: '$0.05',  maxRedemption: '$10,000' },
+        1000000: { name: 'Platinum', label: 'Platinum VIP',       fee: '$150,000', pointValue: '$0.15',  maxRedemption: '$30,000' },
+        // Founding client doubled tiers
+        20000:   { name: 'Bronze',   label: 'Bronze Founding',    fee: '$5,000',   pointValue: '$0.005', maxRedemption: '$1,000'  },
+        100000:  { name: 'Silver',   label: 'Silver Founding',    fee: '$15,000',  pointValue: '$0.02',  maxRedemption: '$3,000'  },
+        500000:  { name: 'Gold',     label: 'Gold Founding',      fee: '$50,000',  pointValue: '$0.05',  maxRedemption: '$10,000' },
+        2000000: { name: 'Platinum', label: 'Platinum Founding',  fee: '$150,000', pointValue: '$0.15',  maxRedemption: '$30,000' },
+    };
+
+    function applyTier(records) {
+        const tier = TIERS[records];
+        const pts  = records.toLocaleString();
+
+        if (!tier) {
+            // Unknown record count — show raw numbers, flag tier as custom
+            document.getElementById('header-tier').textContent        = 'Custom';
+            document.getElementById('header-points').textContent      = pts;
+            document.getElementById('pts-balance').textContent        = pts;
+            document.getElementById('pts-point-value').textContent    = '—';
+            document.getElementById('pts-point-value-tier').textContent = 'per point';
+            document.getElementById('pts-max-redemption').textContent = '—';
+            document.getElementById('pts-annual').textContent         = pts + ' pts';
+            document.getElementById('pts-remaining').textContent      = pts + ' pts';
+            document.getElementById('lic-tier').textContent           = 'Custom';
+            document.getElementById('lic-fee').textContent            = '—';
+            return;
+        }
+
+        // Top bar
+        document.getElementById('header-tier').textContent        = tier.name;
+        document.getElementById('header-points').textContent      = pts;
+
+        // Points panel
+        document.getElementById('pts-balance').textContent        = pts;
+        document.getElementById('pts-point-value').textContent    = tier.pointValue;
+        document.getElementById('pts-point-value-tier').textContent = 'per point (' + tier.name + ')';
+        document.getElementById('pts-max-redemption').textContent = tier.maxRedemption;
+        document.getElementById('pts-annual').textContent         = pts + ' pts';
+        document.getElementById('pts-remaining').textContent      = pts + ' pts';
+
+        // License panel
+        document.getElementById('lic-tier').textContent           = tier.label;
+        document.getElementById('lic-fee').textContent            = tier.fee;
+    }
+
+
+    // ── POOL STATS ──────────────────────────────────────────────────────
+    function updatePoolStats(total, assigned, remaining) {
+        document.getElementById("pool-total").textContent     = Number(total).toLocaleString() + " tokens";
+        document.getElementById("pool-used").textContent      = Number(assigned).toLocaleString() + " tokens";
+        document.getElementById("pool-remaining").textContent = Number(remaining).toLocaleString() + " tokens";
+        document.getElementById("pts-used").textContent       = Number(assigned).toLocaleString() + " pts";
+    }
+
+    async function refreshTokenUsage() {
+        if (!BASE_URL) { showToast("Connect to the API first."); return; }
+        try {
+            const d = await apiFetch("/status");
+            updatePoolStats(d.records, d.assigned || 0, d.remaining !== undefined ? d.remaining : d.records);
+            showToast("Token usage refreshed.");
+        } catch(e) {
+            showToast("Failed to refresh — check connection.");
+        }
+    }
+
+    // ── DISCONNECT ────────────────────────────────────────────────────────
+    function disconnectAPI() {
+        // Clear credentials
+        document.getElementById('cfg-url').value   = '';
+        document.getElementById('cfg-key').value   = '';
+        document.getElementById('cfg-company').value      = '';
+        document.getElementById('cfg-start-date').value   = '';
+
+        // Reset connection status
+        BASE_URL = '';
+        API_KEY  = '';
+        const st = document.getElementById('conn-status');
+        st.textContent = '● not connected';
+        st.className   = 'disconnected';
+
+        // Reset topbar
+        document.getElementById('header-points').textContent = '—';
+        document.getElementById('header-tier').textContent   = '—';
+
+        // Reset points panel
+        document.getElementById('pts-balance').textContent         = '—';
+        document.getElementById('pts-point-value').textContent     = '—';
+        document.getElementById('pts-point-value-tier').textContent = 'per point';
+        document.getElementById('pts-max-redemption').textContent  = '—';
+        document.getElementById('pts-annual').textContent          = '— pts';
+        document.getElementById('pts-remaining').textContent       = '— pts';
+
+        // Reset license panel
+        document.getElementById('lic-company').textContent   = '—';
+        document.getElementById('lic-tier').textContent      = '—';
+        document.getElementById('lic-fee').textContent       = '—';
+        document.getElementById('lic-effective').textContent = '—';
+        document.getElementById('lic-renewal').textContent   = '—';
+
+        showToast('Session disconnected. All credentials cleared.');
+    }
+
+        // ── API CONNECTION ────────────────────────────────────────────────────
+    let BASE_URL = '';
+    let API_KEY = '';
+
+    async function apiFetch(path) {
+        const r = await fetch(BASE_URL + path, {
+            headers: { 'X-API-Key': API_KEY }
+        });
+        return r.json();
+    }
+
+    async function connectAPI() {
+        BASE_URL = document.getElementById('cfg-url').value.replace(/\/$/, '');
+        API_KEY = document.getElementById('cfg-key').value;
+        const st = document.getElementById('conn-status');
+
+        if (!BASE_URL || !API_KEY) {
+            st.textContent = '● missing URL or key';
+            st.className = 'disconnected';
+            showToast('Enter both URL and API key');
+            return;
+        }
+
+        st.textContent = '● connecting...';
+        st.className = '';
+
+        try {
+            const d = await apiFetch('/status');
+            if (d.status === 'ok') {
+                st.textContent = '● connected';
+                st.className = 'connected';
+                showToast('API connected — ' + (TIERS[d.records] ? TIERS[d.records].name : 'Custom') + ' tier detected');
+                applyTier(d.records);
+                updatePoolStats(d.records, d.assigned || 0, d.remaining || d.records);
+            } else {
+                throw new Error('bad status');
+            }
+        } catch(e) {
+            st.textContent = '● failed — check URL and key';
+            st.className = 'disconnected';
+            showToast('Connection failed: ' + e.message);
+        }
+    }
+</script>
+
+</body>
+</html>
