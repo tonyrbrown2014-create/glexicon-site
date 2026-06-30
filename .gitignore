@@ -1,0 +1,12 @@
+# Node modules and build output
+node_modules/
+dist/
+build/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Environment variables (Crucial for security!)
+.env
+.env.local
