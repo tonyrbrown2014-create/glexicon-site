@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glexicon Monster — Contact</title>
+<style>
+  :root { 
+    --black:#0a0a0a; 
+    --white:#f5f4f0; 
+    --signal:#00e5a0; 
+    --rule:#2a2a2a; 
+    --panel:#111111; 
+    --mid:#181818; 
+    --muted:#a0a0a0; 
+    --mono: Arial, sans-serif; 
+    --sans: Arial, sans-serif; 
+  }
+  
+  * { 
+    box-sizing:border-box; 
+    margin:0; 
+    padding:0; 
+    font-family: var(--sans);
+  }
+  html { scroll-behavior:smooth; height: 100%; }
+  
+  body { 
+    font-family:var(--sans); 
+    background:var(--black); 
+    color:var(--white); 
+    line-height:1.6;
+    position: relative;
+    min-height: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .site-nav { 
+    position:sticky; 
+    top:0; 
+    z-index:100; 
+    background:rgba(10,10,10,0.97); 
+    backdrop-filter:blur(8px); 
+    border-bottom:1px solid var(--rule); 
+    padding:28px 56px 0; 
+    height:100px; 
+    display:flex; 
+    align-items:center; 
+    justify-content:space-between; 
+  }
+  .nav-brand { display:flex; align-items:flex-end; gap:16px; text-decoration:none; padding-bottom:6px; }
+  .nav-brand-meta { display:flex; flex-direction:column; justify-content:center; }
+  .nav-brand-text { font-family:var(--mono); font-size:24px; letter-spacing:0.15em; color:var(--white); text-transform:uppercase; line-height:1.1; font-weight:700; }
+  .nav-tagline { font-family:var(--mono); font-size:15px; letter-spacing:0.05em; color:var(--muted); line-height:1.3; margin-top:4px; }
+  
+  .nav-links { display:flex; align-items:center; gap:6px; }
+  .nav-links a { font-family:var(--mono); font-size:13px; letter-spacing:0.05em; text-transform:uppercase; color:#888; text-decoration:none; padding:8px 12px; transition:color 0.15s; white-space:nowrap; }
+  .nav-links a:hover { color:var(--signal); }
+
+  .page-wrap { max-width:1040px; margin:0 auto; padding:36px 56px 380px; }
+  .page-header { padding-bottom:48px; border-bottom:1px solid var(--rule); margin-bottom:48px; }
+  
+  .page-eyebrow { font-family:var(--mono); font-size:16px; letter-spacing:0.15em; text-transform:uppercase; color:var(--signal); margin-bottom:16px; display:flex; align-items:center; gap:12px; font-weight:600; }
+  .page-eyebrow::after { content:''; flex:1; height:1px; background:var(--rule); }
+  
+  .page-title { 
+    font-family: var(--sans) !important;
+    font-size:clamp(32px,5vw,48px); 
+    font-weight:700; 
+    letter-spacing:-0.03em; 
+    line-height:1.1; 
+    color:var(--white); 
+    margin-bottom:14px; 
+  }
+  .page-sub { 
+    font-family: var(--sans) !important; 
+    font-size:17px; 
+    color:var(--muted); 
+    max-width:680px; 
+    font-weight:400; 
+  }
+
+  /* ── CONTACT SPECIFIC ROWS ── */
+  .contact-list { margin-bottom: 48px; }
+  .contact-row { border:1px solid var(--rule); margin-bottom:16px; background:var(--panel); }
+  .contact-row-header { padding:18px 24px; background:var(--mid); border-bottom:1px solid var(--rule); display:flex; justify-content:space-between; align-items:center; }
+  .contact-row-header h4 { font-family: var(--sans) !important; font-size:16px; font-weight:600; color:var(--white); letter-spacing:-0.01em; }
+  .contact-label { font-family:var(--mono); font-size:14px; font-weight:700; text-transform:uppercase; color:var(--signal); letter-spacing:0.05em; }
+  
+  .contact-body { padding: 24px 24px 28px; display: flex; flex-direction: column; gap: 8px; }
+  .contact-link { color: var(--white); text-decoration: none; font-size: 20px; font-weight: 700; transition: color 0.15s; display: inline-block; width: fit-content; }
+  .contact-link:hover { color: var(--signal); }
+  .contact-desc { font-family: var(--sans) !important; font-size: 15px; color: #999; line-height: 1.6; }
+
+  /* ── CALLOUT BLOCK ── */
+  .callout-block {
+    padding:40px; background:var(--panel);
+    border:1px solid var(--rule); display:flex; flex-direction: column; gap:16px;
+  }
+  .callout-title { font-family: var(--sans) !important; font-size:22px; font-weight:700; color:var(--white); letter-spacing:-0.02em; }
+  .callout-text { font-family: var(--sans) !important; font-size:15px; color:#999; max-width:760px; line-height:1.7; }
+  .callout-text a { color: var(--white); font-weight: 600; text-decoration: none; border-bottom: 1px dotted var(--muted); }
+  .callout-text a:hover { color: var(--signal); border-bottom-color: var(--signal); }
+
+  /* ── FOOTER STACK ── */
+  footer { 
+    width: 100%; 
+    position: absolute; 
+    bottom: 40px; 
+    left: 0; 
+    padding: 0 56px;
+  }
+  .footer-inner { 
+    max-width:1040px; 
+    margin:0 auto; 
+    display:flex; 
+    flex-direction:column;
+    align-items:center; 
+    justify-content:center;
+    text-align:center;
+    gap:12px; 
+  }
+  
+  .footer-top-link {
+    text-decoration:none;
+    margin-bottom:8px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  .footer-top-link span {
+    font-family:var(--mono);
+    font-size:15px;
+    color:#777;
+    transition:color 0.15s;
+  }
+  .footer-top-link:hover span {
+    color:var(--signal);
+  }
+  
+  .footer-rule {
+    width: 100%;
+    height: 1px;
+    background-color: var(--rule);
+    margin-bottom: 12px;
+  }
+  
+  .footer-copy { font-family:var(--mono); font-size:15px; color:#666; line-height:1.7; }
+  .footer-policy-links { font-family:var(--mono); font-size:15px; color:#666; margin-bottom:4px; }
+  .footer-policy-links a { color:#777; text-decoration:none; transition:color 0.15s; }
+  .footer-policy-links a:hover { color:var(--signal); }
+  
+  .bolt-svg {
+    width: 14px;
+    height: 14px;
+    vertical-align: middle;
+    margin: 0 6px;
+  }
+
+  @media(max-width:900px) {
+    .site-nav { height: auto; padding: 32px 24px 16px; flex-direction: column; gap: 16px; align-items: flex-start; }
+    .nav-links { width: 100%; justify-content: flex-start; gap: 12px; }
+    .nav-links a { padding: 6px 0; font-size: 14px; }
+  }
+
+  @media(max-width:700px) {
+    .page-wrap { padding-left:24px; padding-right:24px; padding-bottom:420px; }
+    footer { padding: 0 24px; bottom: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a class="nav-brand" href="index.html">
+    <svg width="52" height="52" viewBox="0 0 60 60" fill="none" style="margin-top:10px; flex-shrink:0;"><circle cx="30" cy="12" r="4.5" fill="#00e5a0"/><circle cx="8" cy="52" r="4.5" fill="#00e5a0"/><circle cx="52" cy="52" r="4.5" fill="#00e5a0"/><text x="30" y="38" font-family="Arial, sans-serif" font-size="30" font-weight="900" text-anchor="middle" dominant-baseline="central" fill="#f5f4f0">G</text></svg>
+    <div class="nav-brand-meta">
+      <span class="nav-brand-text">Glexicon Monster</span>
+      <span class="nav-tagline">The Architecture of Next-Generation Data Efficiency</span>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="information.html">Information</a>
+    <a href="license.html">License</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-eyebrow">Get in Touch</div>
+    <div class="page-title">Contact Glexicon</div>
+    <div class="page-sub">No forms. No data collection. Direct lines to the right people.</div>
+  </div>
+
+  <div class="contact-list">
+    <div class="contact-row">
+      <div class="contact-row-header">
+        <h4>Official Domain</h4>
+        <span class="contact-label">Website</span>
+      </div>
+      <div class="contact-body">
+        <a href="https://glexicon.uk" target="_blank" class="contact-link">glexicon.uk</a>
+        <div class="contact-desc">Protocol information, pricing metrics, and reference documentation.</div>
+      </div>
+    </div>
+
+    <div class="contact-row">
+      <div class="contact-row-header">
+        <h4>Technical Operations</h4>
+        <span class="contact-label">Support</span>
+      </div>
+      <div class="contact-body">
+        <a href="mailto:support@glexicon.uk" class="contact-link">support@glexicon.uk</a>
+        <div class="contact-desc">Dashboard credentials, upgrades, integrations, and active system queries.</div>
+      </div>
+    </div>
+
+    <div class="contact-row">
+      <div class="contact-row-header">
+        <h4>Corporate Communications</h4>
+        <span class="contact-label">General</span>
+      </div>
+      <div class="contact-body">
+        <a href="mailto:info@glexicon.uk" class="contact-link">info@glexicon.uk</a>
+        <div class="contact-desc">Strategic partnerships, token node licensing setups, and generalized asset options.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout-block">
+    <div class="callout-title">Secure & Private Communications</div>
+    <div class="callout-text">
+      We typically respond within 24 hours on standard business operational windows. For urgent credential issues or node access disruptions, contact <a href="mailto:support@glexicon.uk">support@glexicon.uk</a> immediately with your designated company profile reference ID.
+    </div>
+    <div class="callout-text">
+      Glexicon explicitly does not operate a public support forum ecosystem. All client configuration logistics and system inquiries are managed privately and are completely confidential.
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <button onclick="scrollToTop()" class="footer-top-link"><span>↑ Return to Top</span></button>
+    
+    <div class="footer-rule"></div>
+    
+    <div class="footer-policy-links">
+      <a href="privacy.html">Privacy Policy</a> &nbsp;|&nbsp; <a href="terms.html">Terms of Service</a>
+    </div>
+    
+    <div class="footer-copy">
+      © 2026 Glexicon. All rights reserved.<br>
+      Trade Secret — Confidential Intellectual Property — Global Licensing Available<br>
+      <svg class="bolt-svg" viewBox="0 0 24 24" fill="#FFD700"><path d="M11 21h-1l1.5-6.5h-4.5c-.3 0-.5-.2-.6-.4-.1-.2 0-.5.2-.7l7.5-9.5h1l-1.5 6.5h4.5c.3 0 .5.2.6.4.1.2 0 .5-.2.7l-7.5 9.5z"/></svg>Tick. Tock. Token.<svg class="bolt-svg" viewBox="0 0 24 24" fill="#FFD700"><path d="M11 21h-1l1.5-6.5h-4.5c-.3 0-.5-.2-.6-.4-.1-.2 0-.5.2-.7l7.5-9.5h1l-1.5 6.5h4.5c.3 0 .5.2.6.4.1.2 0 .5-.2.7l-7.5 9.5z"/></svg>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>

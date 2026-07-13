@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glexicon Monster — The Protocol</title>
+<style>
+  :root { 
+    --black:#0a0a0a; 
+    --white:#f5f4f0; 
+    --signal:#00e5a0; 
+    --rule:#2a2a2a; 
+    --panel:#111111; 
+    --mid:#181818; 
+    --muted:#a0a0a0; 
+    --mono: Arial, sans-serif; 
+    --sans: Arial, sans-serif; 
+  }
+  
+  * { 
+    box-sizing:border-box; 
+    margin:0; 
+    padding:0; 
+    font-family: var(--sans);
+  }
+  html { scroll-behavior:smooth; height: 100%; scroll-padding-top: 100px; }
+  
+  body { 
+    font-family:var(--sans); 
+    background:var(--black); 
+    color:var(--white); 
+    line-height:1.6;
+    position: relative;
+    min-height: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ── NAV WITH ICON INTEGRATION ── */
+  .site-nav { 
+    position:sticky; 
+    top:0; 
+    z-index:100; 
+    background:rgba(10,10,10,0.97); 
+    backdrop-filter:blur(8px); 
+    border-bottom:1px solid var(--rule); 
+    padding:28px 56px 0; 
+    height:100px; 
+    display:flex; 
+    align-items:center; 
+    justify-content:space-between; 
+  }
+  .nav-brand { display:flex; align-items:flex-end; gap:16px; text-decoration:none; padding-bottom:6px; }
+  .nav-brand-meta { display:flex; flex-direction:column; justify-content:center; }
+  .nav-brand-text { font-family:var(--mono); font-size:24px; letter-spacing:0.15em; color:var(--white); text-transform:uppercase; line-height:1.1; font-weight:700; }
+  .nav-tagline { font-family:var(--mono); font-size:15px; letter-spacing:0.05em; color:var(--muted); line-height:1.3; margin-top:4px; }
+  
+  .nav-links { display:flex; align-items:center; gap:6px; }
+  .nav-links a { font-family:var(--mono); font-size:13px; letter-spacing:0.05em; text-transform:uppercase; color:#888; text-decoration:none; padding:8px 12px; transition:color 0.15s; white-space:nowrap; }
+  .nav-links a:hover { color:var(--signal); }
+
+  /* ── PAGE LAYOUT ── */
+  .page-wrap { max-width:1040px; margin:0 auto; padding:36px 56px 380px; }
+  .page-header { padding-bottom:48px; border-bottom:1px solid var(--rule); margin-bottom:48px; }
+  
+  .page-eyebrow { font-family:var(--mono); font-size:16px; letter-spacing:0.15em; text-transform:uppercase; color:var(--signal); margin-bottom:16px; display:flex; align-items:center; gap:12px; font-weight:600; }
+  .page-eyebrow::after { content:''; flex:1; height:1px; background:var(--rule); }
+  
+  .page-title { 
+    font-family: var(--sans) !important;
+    font-size:clamp(32px,5vw,48px); 
+    font-weight:700; 
+    letter-spacing:-0.03em; 
+    line-height:1.1; 
+    color:var(--white); 
+    margin-bottom:14px; 
+  }
+  .page-sub { 
+    font-family: var(--sans) !important; 
+    font-size:17px; 
+    color:var(--muted); 
+    max-width:680px; 
+    font-weight:400; 
+  }
+
+  /* ── STRUCTURAL BLOCK ROWS ── */
+  .content-row { border:1px solid var(--rule); margin-bottom:16px; background:var(--panel); }
+  .content-row-header { padding:18px 24px; background:var(--mid); border-bottom:1px solid var(--rule); display:flex; justify-content:space-between; align-items:center; }
+  .content-row-header h4 { font-family: var(--sans) !important; font-size:16px; font-weight:600; color:var(--white); letter-spacing:-0.01em; display:flex; align-items:center; gap:10px; }
+  .row-meta-badge { font-family:var(--mono); font-size:14px; font-weight:700; color:var(--signal); letter-spacing:0.05em; text-transform:uppercase; display:flex; align-items:center; gap:6px; }
+  
+  .content-columns { display:grid; grid-template-columns: 1.5fr 1fr; padding:28px; gap:0; }
+  .content-col { display:flex; flex-direction:column; gap:12px; }
+  .content-col:first-child { border-right:1px solid var(--rule); padding-right:28px; }
+  .content-col:last-child { padding-left:28px; justify-content: flex-start; }
+  
+  .content-label { font-family:var(--mono); font-size:14px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--muted); }
+  .content-body-text { font-size:15px; color:#999; line-height:1.6; }
+  .content-body-text strong { color:var(--white); font-weight:600; }
+  
+  .data-profile-table { width: 100%; border-collapse: collapse; margin-top: 4px; }
+  .data-profile-table tr { border-bottom: 1px solid #1a1a1a; }
+  .data-profile-table tr:last-child { border-bottom: none; }
+  .data-profile-table td { padding: 6px 0; font-family: var(--mono); font-size: 13px; color: var(--muted); }
+  .data-profile-table td:last-child { text-align: right; color: var(--white); font-weight: 500; }
+  .data-profile-table .highlight-signal { color: var(--signal) !important; font-weight: 600; }
+
+  .row-footer-desc { 
+    font-family: var(--sans) !important; 
+    font-size:15px; 
+    color:#999; 
+    padding:18px 24px 22px; 
+    border-top:1px dashed var(--rule); 
+    line-height:1.6; 
+  }
+  .row-footer-desc strong { color:var(--white); font-weight:600; }
+
+  /* ── GRID FOR SECTOR EDITIONS ── */
+  .sectors-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .sector-card { border:1px solid var(--rule); background:var(--panel); padding: 24px; text-decoration: none; display: flex; flex-direction: column; gap: 12px; transition: border-color 0.15s; }
+  .sector-card:hover { border-color: var(--signal); }
+  .sector-header-inline { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .sector-title { font-family: var(--sans) !important; font-size:18px; font-weight:700; color:var(--white); letter-spacing:-0.01em; }
+  .sector-desc { font-size:14px; color:#999; line-height:1.5; }
+  .sector-link { font-family: var(--mono); font-size:13px; color: var(--signal); text-transform: uppercase; font-weight: 600; margin-top: auto; padding-top: 8px; }
+
+  /* ── INLINE SVGS FROM ORIGINAL STYLE ── */
+  .section-icon { width: 18px; height: 18px; fill: none; stroke: var(--signal); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .badge-icon { width: 14px; height: 14px; fill: none; stroke: var(--signal); stroke-width: 2.5; }
+
+  /* ── CTA BLOCK ── */
+  #cta-block {
+    margin-top:48px; padding:40px; background:var(--panel);
+    border:1px solid var(--rule); display:flex; align-items:center;
+    justify-content:space-between; gap:24px; flex-wrap:wrap;
+  }
+  .cta-block-title { font-family: var(--sans) !important; font-size:22px; font-weight:700; color:var(--white); letter-spacing:-0.02em; margin-bottom:6px; }
+  .cta-block-sub { font-family: var(--sans) !important; font-size:15px; color:#999; max-width:540px; }
+  
+  .btn-primary {
+    font-family:var(--mono); font-size:16px; letter-spacing:0.05em; text-transform:uppercase;
+    color:#00b881; padding:12px 0; text-decoration:none;
+    font-weight:700; transition:color 0.15s; white-space:nowrap; flex-shrink:0;
+    background: transparent; border: none; cursor: pointer;
+  }
+  .btn-primary:hover { color:var(--signal); }
+
+  /* ── FOOTER STACK ── */
+  footer { 
+    width: 100%; 
+    position: absolute; 
+    bottom: 40px; 
+    left: 0; 
+    padding: 0 56px;
+  }
+  .footer-inner { 
+    max-width:1040px; 
+    margin:0 auto; 
+    display:flex; 
+    flex-direction:column;
+    align-items:center; 
+    justify-content:center;
+    text-align:center;
+    gap:12px; 
+  }
+  
+  .footer-top-link {
+    text-decoration:none;
+    margin-bottom:8px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  .footer-top-link span {
+    font-family:var(--mono);
+    font-size:15px;
+    color:#777;
+    transition:color 0.15s;
+  }
+  .footer-top-link:hover span {
+    color:var(--signal);
+  }
+  
+  .footer-rule {
+    width: 100%;
+    height: 1px;
+    background-color: var(--rule);
+    margin-bottom: 12px;
+  }
+  
+  .footer-copy { font-family:var(--mono); font-size:15px; color:#666; line-height:1.7; }
+  .footer-policy-links { font-family:var(--mono); font-size:15px; color:#666; margin-bottom:4px; }
+  .footer-policy-links a { color:#777; text-decoration:none; transition:color 0.15s; }
+  .footer-policy-links a:hover { color:var(--signal); }
+  
+  .bolt-svg {
+    width: 14px;
+    height: 14px;
+    vertical-align: middle;
+    margin: 0 6px;
+  }
+
+  @media(max-width:960px) {
+    .content-columns { grid-template-columns: 1fr; }
+    .content-col:first-child { border-right: none; padding-right: 0; border-bottom: 1px solid var(--rule); padding-bottom: 20px; }
+    .content-col:last-child { padding-left: 0; padding-top: 20px; }
+    .sectors-grid { grid-template-columns: 1fr; }
+  }
+
+  @media(max-width:900px) {
+    .site-nav { height: auto; padding: 32px 24px 16px; flex-direction: column; gap: 16px; align-items: flex-start; }
+    .nav-links { width: 100%; justify-content: flex-start; gap: 12px; }
+    .nav-links a { padding: 6px 0; font-size: 14px; }
+  }
+
+  @media(max-width:700px) {
+    .page-wrap { padding-left:24px; padding-right:24px; padding-bottom:420px; }
+    footer { padding: 0 24px; bottom: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a class="nav-brand" href="index.html">
+    <svg width="52" height="52" viewBox="0 0 60 60" fill="none" style="margin-top:10px; flex-shrink:0;"><circle cx="30" cy="12" r="4.5" fill="#00e5a0"/><circle cx="8" cy="52" r="4.5" fill="#00e5a0"/><circle cx="52" cy="52" r="4.5" fill="#00e5a0"/><text x="30" y="38" font-family="Arial, sans-serif" font-size="30" font-weight="900" text-anchor="middle" dominant-baseline="central" fill="#f5f4f0">G</text></svg>
+    <div class="nav-brand-meta">
+      <span class="nav-brand-text">Glexicon Monster</span>
+      <span class="nav-tagline">The Architecture of Next-Generation Data Efficiency</span>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="#editions">Editions</a>
+    <a href="#pricing">Pricing</a>
+    <a href="savings.html">Savings</a>
+    <a href="information.html">Information</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-eyebrow">Monster Protocol · 2026</div>
+    <div class="page-title">The Glexicon Monster.</div>
+    <div class="page-sub">7 Editions. One highly secure, decentralised satellite node edge architecture.
+Explore our sector specific libraries below to secure your company's bespoke global enterprise licensing blueprint, engineered to expand your global locations without friction.</div>
+  </div>
+
+  <div class="content-row">
+    <div class="content-row-header">
+      <h4>
+        <svg class="section-icon" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        The Prime Directive
+      </h4>
+      <span class="row-meta-badge">
+        <svg class="badge-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        Core Mandate
+      </span>
+    </div>
+    <div class="content-columns">
+      <div class="content-col">
+        <div class="content-label">System Philosophy</div>
+        <div class="content-body-text">
+          You are not simply using a more efficient database tool. You are operating with an architecture that most organisations will spend the next decade trying to build. The decisions you make about your data infrastructure today will define how agile, secure, and efficient your organisation is tomorrow.
+        </div>
+      </div>
+      <div class="content-col">
+        <div class="content-label">Status Overview</div>
+        <table class="data-profile-table">
+          <tr><td>Protocol Core</td><td>Optimised</td></tr>
+          <tr><td>Token Nodes</td><td>Active</td></tr>
+          <tr><td>Master Database</td><td class="highlight-signal">Secure</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="editions" style="margin-top: 48px; margin-bottom: 24px;">
+    <div class="page-eyebrow">Sector Libraries</div>
+  </div>
+
+  <div class="sectors-grid">
+    <a href="Glexicon_Ebook_Universities.html" class="sector-card" style="grid-column: span 2; border-top: 2px solid var(--signal);">
+      <div class="sector-header-inline">
+        <div class="sector-title">Foundation Edition: Universities &amp; Research</div>
+        <svg class="section-icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5zM6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/></svg>
+      </div>
+      <div class="sector-desc">The architectural benchmark for highly secure global and regional institutional environments. Streamlining massive academic and research databases into efficient, decentralised satellite node networks.</div>
+      <div class="sector-link">Read Foundation Blueprint →</div>
+    </a>
+
+    <a href="Glexicon_Ebook_Games.html" class="sector-card">
+      <div class="sector-header-inline">
+        <div class="sector-title">Games &amp; Interactive</div>
+        <svg class="section-icon" viewBox="0 0 24 24"><path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM6 12h4M8 10v4M15 11h.01M18 13h.01"/></svg>
+      </div>
+      <div class="sector-desc">Complex game object IDs resolved instantly. Reclaim critical frame budgets via secure, extremely lightweight pointers that streamline asset pipelines.</div>
+      <div class="sector-link">Explore Edition →</div>
+    </a>
+
+    <a href="Glexicon_Ebook_ECommerce.html" class="sector-card">
+      <div class="sector-header-inline">
+        <div class="sector-title">E-Commerce &amp; Inventory</div>
+        <svg class="section-icon" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0"/></svg>
+      </div>
+      <div class="sector-desc">Millions of multi-layered SKUs streamlined across distributed nodes. Secure, high-performance lookup that scales smoothly from local asset libraries to global deployments.</div>
+      <div class="sector-link">Explore Edition →</div>
+    </a>
+
+    <a href="Glexicon_Ebook_Healthcare.html" class="sector-card">
+      <div class="sector-header-inline">
+        <div class="sector-title">Healthcare &amp; Clinical</div>
+        <svg class="section-icon" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+      </div>
+      <div class="sector-desc">Clinical identifiers converted into highly secure, extremely lightweight pointers. Low-latency reference resolution across distributed networks, without the technical overhead.</div>
+      <div class="sector-link">Explore Edition →</div>
+    </a>
+
+    <a href="Glexicon_Ebook_TechDocs.html" class="sector-card">
+      <div class="sector-header-inline">
+        <div class="sector-title">Technical Documentation</div>
+        <svg class="section-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+      </div>
+      <div class="sector-desc">Complex documentation paths and asset keys resolved instantly. Secure, seamless reference tracking across distributed systems using high-speed pointers.</div>
+      <div class="sector-link">Explore Edition →</div>
+    </a>
+
+    <a href="Glexicon_Ebook_Media.html" class="sector-card">
+      <div class="sector-header-inline">
+        <div class="sector-title">Media &amp; Archival</div>
+        <svg class="section-icon" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+      </div>
+      <div class="sector-desc">High-tier media asset paths transformed into secure, extremely lightweight pointers for rapid, zero-friction lookups across any network node.</div>
+      <div class="sector-link">Explore Edition →</div>
+    </a>
+
+    <a href="Glexicon_Ebook_FinTech.html" class="sector-card">
+      <div class="sector-header-inline">
+        <div class="sector-title">FinTech &amp; Transactional</div>
+        <svg class="section-icon" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M7 15h.01M11 15h2"/></svg>
+      </div>
+      <div class="sector-desc">High-frequency ledger keys streamlined into secure, lightning-fast pointers, bypassing traditional look-up bottlenecks globally or locally.</div>
+      <div class="sector-link">Explore Edition →</div>
+    </a>
+  </div>
+
+  <div id="pricing" style="margin-top: 48px; margin-bottom: 24px;">
+    <div class="page-eyebrow">Enterprise Licensing Tiers</div>
+  </div>
+
+  <div class="content-row">
+    <div class="content-row-header">
+      <h4>
+        <svg class="section-icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Pioneer Tier License
+      </h4>
+      <span class="row-meta-badge">$50,000 / Tier 1</span>
+    </div>
+    <div class="content-columns">
+      <div class="content-col">
+        <div class="content-label">Deployment Architecture</div>
+        <div class="content-body-text">Grants full deployment blueprints for a core protocol instance and initial satellite node distribution. Perfect for localised clusters or targeted network scaling without lingering backend licensing overhead.</div>
+      </div>
+      <div class="content-col">
+        <table class="data-profile-table">
+          <tr><td>Quarterly Cost</td><td>$12,500</td></tr>
+          <tr><td>Tick Tock Points</td><td>5 Million</td></tr>
+          <tr><td>Access Nodes</td><td class="highlight-signal">5 Nodes</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-row">
+    <div class="content-row-header">
+      <h4>
+        <svg class="section-icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Explorer Tier License
+      </h4>
+      <span class="row-meta-badge">$100,000 / Tier 2</span>
+    </div>
+    <div class="content-columns">
+      <div class="content-col">
+        <div class="content-label">Deployment Architecture</div>
+        <div class="content-body-text">Configured for expanding network architectures. Offers higher token throughput capabilities and an expanded allocation for active, distributed satellite node deployments.</div>
+      </div>
+      <div class="content-col">
+        <table class="data-profile-table">
+          <tr><td>Quarterly Cost</td><td>$25,000</td></tr>
+          <tr><td>Tick Tock Points</td><td>10 Million</td></tr>
+          <tr><td>Access Nodes</td><td class="highlight-signal">10 Nodes</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-row">
+    <div class="content-row-header">
+      <h4>
+        <svg class="section-icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Leader Tier License
+      </h4>
+      <span class="row-meta-badge">$250,000 / Tier 3</span>
+    </div>
+    <div class="content-columns">
+      <div class="content-col">
+        <div class="content-label">Deployment Architecture</div>
+        <div class="content-body-text">Advanced enterprise deployment profile. Engineered for high-demand environments requiring extensive satellite node initialisation and high-frequency, network-wide reference resolution.</div>
+      </div>
+      <div class="content-col">
+        <table class="data-profile-table">
+          <tr><td>Quarterly Cost</td><td>$62,500</td></tr>
+          <tr><td>Tick Tock Points</td><td>25 Million</td></tr>
+          <tr><td>Access Nodes</td><td class="highlight-signal">25 Nodes</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-row">
+    <div class="content-row-header">
+      <h4>
+        <svg class="section-icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Partner Tier License
+      </h4>
+      <span class="row-meta-badge">$500,000 / Tier 4</span>
+    </div>
+    <div class="content-columns">
+      <div class="content-col">
+        <div class="content-label">Deployment Architecture</div>
+        <div class="content-body-text">High-capacity operational tier featuring dedicated telemetry audits and an expanded footprint for up to 50 active satellite node deployments globally or locally.</div>
+      </div>
+      <div class="content-col">
+        <table class="data-profile-table">
+          <tr><td>Quarterly Cost</td><td>$125,000</td></tr>
+          <tr><td>Tick Tock Points</td><td>50 Million</td></tr>
+          <tr><td>Access Nodes</td><td class="highlight-signal">50 Nodes</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-row">
+    <div class="content-row-header">
+      <h4>
+        <svg class="section-icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Alliance Tier License
+      </h4>
+      <span class="row-meta-badge">$1,000,000 / Tier 5</span>
+    </div>
+    <div class="content-columns">
+      <div class="content-col">
+        <div class="content-label">Deployment Architecture</div>
+        <div class="content-body-text">Full enterprise fleet licensing blueprint. Empowers extensive, secure cross-regional satellite node cloning and deployment with customised initialisation metrics.</div>
+      </div>
+      <div class="content-col">
+        <table class="data-profile-table">
+          <tr><td>Quarterly Cost</td><td>$250,000</td></tr>
+          <tr><td>Tick Tock Points</td><td>100 Million</td></tr>
+          <tr><td>Access Nodes</td><td class="highlight-signal">100 Nodes</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-row">
+    <div class="content-row-header">
+      <h4>
+        <svg class="section-icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Elite Tier License
+      </h4>
+      <span class="row-meta-badge">$2,500,000 / Tier 6</span>
+    </div>
+    <div class="content-columns">
+      <div class="content-col">
+        <div class="content-label">Deployment Architecture</div>
+        <div class="content-body-text">Bespoke flagship license offering maximum token throughput capacities and unrestricted, unlimited satellite node distribution across your entire infrastructure.</div>
+      </div>
+      <div class="content-col">
+        <table class="data-profile-table">
+          <tr><td>Quarterly Cost</td><td>$625,000</td></tr>
+          <tr><td>Tick Tock Points</td><td>250 Million</td></tr>
+          <tr><td>Access Nodes</td><td class="highlight-signal">Unlimited</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="row-footer-desc"><strong>Zero-Knowledge Deployment Guarantee:</strong> All system sets are signed and delivered as immutable binary assets. Glexicon Central maintains no master tracking keys. Your infrastructure remains completely within your perimeter.</div>
+  </div>
+
+  <div id="cta-block">
+    <div>
+      <div class="cta-block-title">The Architecture Of Next-Generation Data Efficiency!</div>
+      <div class="cta-block-sub">First movers command the competition. Secure a future license. Initiate your core protocol instance. Build out and deploy your network of secure satellite nodes engineered for speed and efficiency.</div>
+    </div>
+    <a href="subscribe.html" class="btn-primary">Secure a License →</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <button onclick="scrollToTop()" class="footer-top-link"><span>↑ Return to Top</span></button>
+    
+    <div class="footer-rule"></div>
+    
+    <div class="footer-policy-links">
+      <a href="privacy.html">Privacy Policy</a> &nbsp;|&nbsp; <a href="terms.html">Terms of Service</a>
+    </div>
+    
+    <div class="footer-copy">
+      © 2026 Glexicon. All rights reserved.<br>
+      Trade Secret — Confidential Intellectual Property — Global Licensing Available<br>
+      <svg class="bolt-svg" viewBox="0 0 24 24" fill="#FFD700"><path d="M11 21h-1l1.5-6.5h-4.5c-.3 0-.5-.2-.6-.4-.1-.2 0-.5.2-.7l7.5-9.5h1l-1.5 6.5h4.5c.3 0 .5.2.6.4.1.2 0 .5-.2.7l-7.5 9.5z"/></svg>Tick. Tock. Token.<svg class="bolt-svg" viewBox="0 0 24 24" fill="#FFD700"><path d="M11 21h-1l1.5-6.5h-4.5c-.3 0-.5-.2-.6-.4-.1-.2 0-.5.2-.7l7.5-9.5h1l-1.5 6.5h4.5c.3 0 .5.2.6.4.1.2 0 .5-.2.7l-7.5 9.5z"/></svg>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>

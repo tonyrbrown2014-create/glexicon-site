@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glexicon — The Pitch</title>
+<style>
+  :root { 
+    --black:#0a0a0a; 
+    --white:#f5f4f0; 
+    --signal:#00e5a0; 
+    --rule:#2a2a2a; 
+    --panel:#111111; 
+    --mid:#181818; 
+    --muted:#a0a0a0; 
+    --mono: Arial, sans-serif; 
+    --sans: Arial, sans-serif; 
+  }
+  
+  * { 
+    box-sizing:border-box; 
+    margin:0; 
+    padding:0; 
+    font-family: var(--sans);
+  }
+  html { scroll-behavior:smooth; height: 100%; }
+  
+  body { 
+    font-family:var(--sans); 
+    background:var(--black); 
+    color:var(--white); 
+    line-height:1.6;
+    position: relative;
+    min-height: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .site-nav { 
+    position:sticky; 
+    top:0; 
+    z-index:100; 
+    background:rgba(10,10,10,0.97); 
+    backdrop-filter:blur(8px); 
+    border-bottom:1px solid var(--rule); 
+    padding:28px 56px 0; 
+    height:100px; 
+    display:flex; 
+    align-items:center; 
+    justify-content:space-between; 
+  }
+  .nav-brand { display:flex; align-items:flex-end; gap:16px; text-decoration:none; padding-bottom:6px; }
+  .nav-brand-meta { display:flex; flex-direction:column; justify-content:center; }
+  .nav-brand-text { font-family:var(--mono); font-size:24px; letter-spacing:0.15em; color:var(--white); text-transform:uppercase; line-height:1.1; font-weight:700; }
+  .nav-tagline { font-family:var(--mono); font-size:15px; letter-spacing:0.05em; color:var(--muted); line-height:1.3; margin-top:4px; }
+  
+  .nav-links { display:flex; align-items:center; gap:6px; }
+  .nav-links a { font-family:var(--mono); font-size:13px; letter-spacing:0.05em; text-transform:uppercase; color:#888; text-decoration:none; padding:8px 12px; transition:color 0.15s; white-space:nowrap; }
+  .nav-links a:hover { color:var(--signal); }
+
+  .page-wrap { max-width:1040px; margin:0 auto; padding:36px 56px 380px; }
+  .page-header { padding-bottom:48px; border-bottom:1px solid var(--rule); margin-bottom:48px; }
+  
+  .page-eyebrow { font-family:var(--mono); font-size:16px; letter-spacing:0.15em; text-transform:uppercase; color:var(--signal); margin-bottom:16px; display:flex; align-items:center; gap:12px; font-weight:600; }
+  .page-eyebrow::after { content:''; flex:1; height:1px; background:var(--rule); }
+  
+  .page-title { 
+    font-family: var(--sans) !important;
+    font-size:clamp(32px,5vw,48px); 
+    font-weight:700; 
+    letter-spacing:-0.03em; 
+    line-height:1.1; 
+    color:var(--white); 
+    margin-bottom:14px; 
+  }
+  .page-sub { 
+    font-family: var(--sans) !important; 
+    font-size:17px; 
+    color:var(--muted); 
+    max-width:680px; 
+    font-weight:400; 
+  }
+
+  /* ── PITCH SPECIFIC ELEMENTS ── */
+  .pitch-section { border:1px solid var(--rule); margin-bottom:32px; background:var(--panel); }
+  .pitch-section-header { padding:18px 24px; background:var(--mid); border-bottom:1px solid var(--rule); }
+  .pitch-section-header h2 { font-family: var(--sans) !important; font-size:18px; font-weight:600; color:var(--white); letter-spacing:-0.01em; text-transform: uppercase; }
+  
+  .pitch-body { padding:28px; }
+  .pitch-body p { font-size:16px; color:#d4d3cd; margin-bottom:16px; }
+  .pitch-body p:last-child { margin-bottom:0; }
+  
+  .hero-statement { font-size:clamp(22px, 3.5vw, 28px); font-weight:800; line-height:1.2; letter-spacing:-0.02em; color:var(--white); }
+  .hero-statement span { color:var(--signal); }
+
+  .callout { border-left:3px solid var(--signal); background:var(--mid); padding:20px 24px; }
+  .callout p { font-family: var(--sans) !important; font-size:16px; color:var(--white); line-height:1.7; font-style: italic; }
+
+  /* ── TABLES ── */
+  .data-profile-table { width: 100%; border-collapse: collapse; margin-top: 4px; }
+  .data-profile-table th { padding: 12px 16px; font-family: var(--mono); font-size: 13px; color: var(--white); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; text-align: left; background: var(--mid); border-bottom: 1px solid var(--rule); }
+  .data-profile-table tr { border-bottom: 1px solid #1a1a1a; }
+  .data-profile-table tr:last-child { border-bottom: none; }
+  .data-profile-table td { padding: 14px 16px; font-family: var(--sans); font-size: 15px; color: #d4d3cd; }
+  .data-profile-table td strong { color: var(--white); font-weight: 600; }
+  .data-profile-table td:last-child { color: var(--white); }
+  .data-profile-table .highlight-signal { color: var(--signal) !important; font-weight: 600; }
+
+  /* ── FEATURE LISTS ── */
+  .feature-list { display: flex; flex-direction: column; }
+  .feature-item { padding: 20px 0; border-bottom: 1px dashed var(--rule); display: flex; gap: 32px; }
+  .feature-item:first-child { padding-top: 0; }
+  .feature-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .feature-item-title { font-family: var(--mono); font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--signal); min-width: 220px; flex-shrink: 0; }
+  .feature-item-desc { font-size: 15px; color: #d4d3cd; }
+
+  /* ── CTA BLOCK ── */
+  #cta-block {
+    margin-top:48px; padding:40px; background:var(--panel);
+    border:1px solid var(--rule); display:flex; align-items:center;
+    justify-content:space-between; gap:24px; flex-wrap:wrap;
+  }
+  .cta-block-title { font-family: var(--sans) !important; font-size:22px; font-weight:700; color:var(--white); letter-spacing:-0.02em; margin-bottom:6px; }
+  .cta-block-sub { font-family: var(--sans) !important; font-size:15px; color:#999; max-width:540px; }
+  
+  .btn-primary {
+    font-family:var(--mono); font-size:16px; letter-spacing:0.05em; text-transform:uppercase;
+    color:#00b881; padding:12px 0; text-decoration:none;
+    font-weight:700; transition:color 0.15s; white-space:nowrap; flex-shrink:0;
+    background: transparent; border: none;
+  }
+  .btn-primary:hover { color:var(--signal); }
+
+  /* ── FOOTER STACK ── */
+  footer { 
+    width: 100%; 
+    position: absolute; 
+    bottom: 40px; 
+    left: 0; 
+    padding: 0 56px;
+  }
+  .footer-inner { 
+    max-width:1040px; 
+    margin:0 auto; 
+    display:flex; 
+    flex-direction:column;
+    align-items:center; 
+    justify-content:center;
+    text-align:center;
+    gap:12px; 
+  }
+  
+  .footer-top-link {
+    text-decoration:none;
+    margin-bottom:8px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  .footer-top-link span {
+    font-family:var(--mono);
+    font-size:15px;
+    color:#777;
+    transition:color 0.15s;
+  }
+  .footer-top-link:hover span {
+    color:var(--signal);
+  }
+  
+  .footer-rule {
+    width: 100%;
+    height: 1px;
+    background-color: var(--rule);
+    margin-bottom: 12px;
+  }
+  
+  .footer-copy { font-family:var(--mono); font-size:15px; color:#666; line-height:1.7; }
+  .footer-policy-links { font-family:var(--mono); font-size:15px; color:#666; margin-bottom:4px; }
+  .footer-policy-links a { color:#777; text-decoration:none; transition:color 0.15s; }
+  .footer-policy-links a:hover { color:var(--signal); }
+  
+  .bolt-svg {
+    width: 14px;
+    height: 14px;
+    vertical-align: middle;
+    margin: 0 6px;
+  }
+
+  @media(max-width:900px) {
+    .site-nav { height: auto; padding: 32px 24px 16px; flex-direction: column; gap: 16px; align-items: flex-start; }
+    .nav-links { width: 100%; justify-content: flex-start; gap: 12px; }
+    .nav-links a { padding: 6px 0; font-size: 14px; }
+  }
+
+  @media(max-width:700px) {
+    .page-wrap { padding-left:24px; padding-right:24px; padding-bottom:420px; }
+    footer { padding: 0 24px; bottom: 24px; }
+    .feature-item { flex-direction: column; gap: 8px; }
+    .feature-item-title { min-width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a class="nav-brand" href="index.html">
+    <svg width="52" height="52" viewBox="0 0 60 60" fill="none" style="margin-top:10px; flex-shrink:0;"><circle cx="30" cy="12" r="4.5" fill="#00e5a0"/><circle cx="8" cy="52" r="4.5" fill="#00e5a0"/><circle cx="52" cy="52" r="4.5" fill="#00e5a0"/><text x="30" y="38" font-family="Arial, sans-serif" font-size="30" font-weight="900" text-anchor="middle" dominant-baseline="central" fill="#f5f4f0">G</text></svg>
+    <div class="nav-brand-meta">
+      <span class="nav-brand-text">Glexicon Monster</span>
+      <span class="nav-tagline">The Architecture of Next-Generation Data Efficiency</span>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="information.html">Information</a>
+    <a href="license.html">License</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-eyebrow">Enterprise Overview Blueprint</div>
+    <div class="page-title">The Protocol — The Pitch</div>
+    <div class="page-sub">Why put your Master Database on the frontline?
+Our exclusive, proprietary data optimisation protocol protected as a trade secret. Engineered for near-instantaneous token execution and data retrieval, decentralised satellite database deployment—dramatically reduces institutional enterprise infrastructure overhead.</div>
+  </div>
+
+  <div class="pitch-section" id="one-sentence">
+    <div class="pitch-section-header"><h2>One Sentence</h2></div>
+    <div class="pitch-body">
+      <div class="hero-statement">Glexicon unlocks <span>90-96x</span> operational DB capacity.</div>
+    </div>
+  </div>
+
+  <div class="pitch-section" id="summary">
+    <div class="pitch-section-header"><h2>Summary</h2></div>
+    <div class="pitch-body">
+      <div class="callout">
+        <p>"Glexicon Monster is an exclusive, proprietary data optimisation protocol protected as a trade secret. The protocol unlocks 90–96X operational database deployment gains, Engineered for near-instantaneous record retrieval. Engineered architectural isolation. No blockchain. No cloud dependency. No encryption overhead. The method is not disclosed. The results are staggering. Licensing available."</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pitch-section" id="problem">
+    <div class="pitch-section-header"><h2>The Problem</h2></div>
+    <div class="pitch-body">
+      <p style="margin-bottom: 20px;">What enterprise customers feel every day:</p>
+      <table class="data-profile-table">
+        <thead>
+          <tr>
+            <th>Pain Point</th>
+            <th>Why It Hurts</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Storage costs rising</strong></td><td>Databases grow 20–30% year over year</td></tr>
+          <tr><td><strong>Backups are huge</strong></td><td>Expensive, slow, and inefficient</td></tr>
+          <tr><td><strong>Slow queries</strong></td><td>Large indexes, full text search overhead</td></tr>
+          <tr><td><strong>Data breaches</strong></td><td class="highlight-signal">Plain text data is a direct liability</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="pitch-section" id="solution">
+    <div class="pitch-section-header"><h2>The Solution</h2></div>
+    <div class="pitch-body">
+      <p style="margin-bottom: 24px;">What Glexicon delivers:</p>
+      <div class="feature-list">
+        <div class="feature-item">
+          <div class="feature-item-title">90–96X Deployment gain</div>
+          <div class="feature-item-desc">Dramatically lowering the cost of infrastructure overhead.</div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-item-title">Near-instant retrieval</div>
+          <div class="feature-item-desc">Accelerated queries, enhanced performance, frictionless data flow.</div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-item-title">Data security</div>
+          <div class="feature-item-desc">Zero frontline exposure, contained breach impact, lower enterprise liability.</div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-item-title">Turnkey Solution</div>
+          <div class="feature-item-desc">No installation required. No network risk. No cloud dependency.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pitch-section" id="different">
+    <div class="pitch-section-header"><h2>Why It's Different</h2></div>
+    <div class="pitch-body">
+      <table class="data-profile-table">
+        <thead>
+          <tr>
+            <th>Aspect</th>
+            <th>Traditional</th>
+            <th>Glexicon</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Reduction</strong></td><td>30–50%</td><td class="highlight-signal">90-96X Deployment gain</td></tr>
+          <tr><td><strong>Speed</strong></td><td>Decompression overhead</td><td>Near-instantaneous retrieval</td></tr>
+          <tr><td><strong>Security</strong></td><td>Encryption required</td><td>Engineered architectural isolation</td></tr>
+          <tr><td><strong>Deployment</strong></td><td>Software install</td><td>Turnkey Local Execution</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="pitch-section" id="customers">
+    <div class="pitch-section-header"><h2>The Target Customers</h2></div>
+    <div class="pitch-body">
+      <p style="margin-bottom: 20px;">Annual licensing tiers structured for institutional enterprise scale:</p>
+      <table class="data-profile-table">
+        <thead>
+          <tr>
+            <th>Sovereign Tiers</th>
+            <th>Annual License</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Pioneer</strong></td><td>$50,000</td></tr>
+          <tr><td><strong>Explorer</strong></td><td>$100,000</td></tr>
+          <tr><td><strong>Leader</strong></td><td>$250,000</td></tr>
+          <tr><td><strong>Partner</strong></td><td>$500,000</td></tr>
+          <tr><td><strong>Alliance</strong></td><td>$1 Million</td></tr>
+          <tr><td><strong>Elite</strong></td><td class="highlight-signal">$2.5 Million</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="pitch-section" id="closing">
+    <div class="pitch-section-header"><h2>The Closing Statement</h2></div>
+    <div class="pitch-body">
+      <p class="hero-statement" style="font-size: 19px; font-weight: 500; color: #f5f4f0; line-height: 1.6;">
+        Glexicon Monster Protocol works. Our subscription-licensed protocol is efficient, fast, and engineered for absolute architectural isolation. Our 90–96x frontline deployment gains are real.
+      </p>
+    </div>
+  </div>
+
+  <div id="cta-block">
+    <div>
+      <div class="cta-block-title">Ready to transition to Sovereign status?</div>
+Eliminate traditional infrastructure constraints. Use this initiative to insulate your growing institutional enterprise with a turnkey, zero-dependency architecture. <span style="color:var(--signal); font-size:1.1em; font-weight:700;">First Movers Command The Competition!</span>
+    </div>
+    <a href="subscribe.html" class="btn-primary">Secure a License →</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <button onclick="scrollToTop()" class="footer-top-link"><span>↑ Return to Top</span></button>
+    
+    <div class="footer-rule"></div>
+    
+    <div class="footer-policy-links">
+      <a href="privacy.html">Privacy Policy</a> &nbsp;|&nbsp; <a href="terms.html">Terms of Service</a>
+    </div>
+    
+    <div class="footer-copy">
+      © 2026 Glexicon. All rights reserved.<br>
+      Trade Secret — Confidential Intellectual Property — Global Licensing Available<br>
+      <svg class="bolt-svg" viewBox="0 0 24 24" fill="#FFD700"><path d="M11 21h-1l1.5-6.5h-4.5c-.3 0-.5-.2-.6-.4-.1-.2 0-.5.2-.7l7.5-9.5h1l-1.5 6.5h4.5c.3 0 .5.2.6.4.1.2 0 .5-.2.7l-7.5 9.5z"/></svg>Tick. Tock. Token.<svg class="bolt-svg" viewBox="0 0 24 24" fill="#FFD700"><path d="M11 21h-1l1.5-6.5h-4.5c-.3 0-.5-.2-.6-.4-.1-.2 0-.5.2-.7l7.5-9.5h1l-1.5 6.5h4.5c.3 0 .5.2.6.4.1.2 0 .5-.2.7l-7.5 9.5z"/></svg>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
