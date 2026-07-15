@@ -191,10 +191,12 @@
             flex-direction: column;
         }
         .stripe-body p {
-            font-size: 15px;
-            color: #d4d3cd;
-            margin-bottom: 12px;
+           font-size: 15px;
+           color: #d4d3cd;
+           margin-bottom: 12px;
+           min-height: 48px; /* Force paragraphs to occupy identical vertical space */
         }
+        
         .product-list {
             display: flex;
             flex-wrap: wrap;
@@ -219,12 +221,12 @@
         }
         .stripe-wrapper {
             width: 100%;
-            min-height: 320px;
+            height: 340px; /* Force an identical height on both table wrappers */
             background: var(--black);
             border: 1px solid var(--rule);
             padding: 12px;
-            margin-top: 4px;
-            flex: 1;
+            margin-top: auto; /* Push both wrappers perfectly to the bottom */
+            flex: none; /* Keep them from stretching unevenly */
         }
         .stripe-wrapper stripe-pricing-table {
             display: block;
