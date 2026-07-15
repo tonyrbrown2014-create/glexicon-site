@@ -142,18 +142,18 @@
 
         /* ── SIDE-BY-SIDE PRICING SPLIT ── */
         .pricing-split {
-            display: flex;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 28px;
             margin-bottom: 32px;
-            align-items: stretch;
+            align-items: start;
         }
         .pricing-split .stripe-container {
-            flex: 1;
-            min-width: 0;
             border: 1px solid var(--rule);
             background: var(--panel);
             display: flex;
             flex-direction: column;
+            height: 100%;
         }
         .stripe-container-header {
             padding: 18px 24px;
@@ -228,6 +228,7 @@
             flex: 1;
             display: flex;
             flex-direction: column;
+            min-height: 400px;
         }
         .stripe-wrapper stripe-pricing-table {
             display: block;
@@ -349,14 +350,12 @@
         /* ── responsive ── */
         @media (max-width: 960px) {
             .pricing-split {
-                flex-direction: column;
-                align-items: center;
+                grid-template-columns: 1fr;
                 gap: 32px;
             }
             .pricing-split .stripe-container {
-                flex: 0 1 100%;
-                min-width: 0;
                 max-width: 600px;
+                margin: 0 auto;
                 width: 100%;
             }
             .site-nav {
@@ -387,6 +386,9 @@
             }
             .stripe-body {
                 padding: 16px;
+            }
+            .stripe-wrapper {
+                min-height: 350px;
             }
         }
     </style>
@@ -426,10 +428,10 @@
         </div>
 
         <!-- ─── SIDE-BY-SIDE PRICING ─── -->
-        <div class="pricing-split">
+        <div class="pricing-split" id="pricingGrid">
 
             <!-- ENTERPRISE (LEFT) -->
-            <div class="stripe-container">
+            <div class="stripe-container" id="enterpriseContainer">
                 <div class="stripe-container-header">
                     <h3>⚡ Enterprise</h3>
                     <span class="tier-badge">Pioneer · Explorer · Leader</span>
@@ -451,7 +453,7 @@
         </div>
 
         <!-- SOVEREIGN (RIGHT) -->
-        <div class="stripe-container">
+        <div class="stripe-container" id="sovereignContainer">
             <div class="stripe-container-header">
                 <h3>👑 Sovereign</h3>
                 <span class="tier-badge">Partner · Alliance · Elite</span>
@@ -515,39 +517,49 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Wait for Stripe tables to load, then sync their heights
-    document.addEventListener('DOMContentLoaded', function() {
-        // Check periodically for Stripe tables to render
-        let attempts = 0;
-        const maxAttempts = 20;
+    // Force both containers to equal height after Stripe renders
+    function alignContainers() {
+        const left = document.getElementById('enterpriseContainer');
+        const right = document.getElementById('sovereignContainer');
         
-        function syncHeights() {
-            const containers = document.querySelectorAll('.stripe-container');
-            if (containers.length === 2) {
-                // Remove any fixed heights first
-                containers.forEach(c => c.style.height = '');
-                
-                // Get natural heights after a small delay
-                setTimeout(() => {
-                    const leftHeight = containers[0].offsetHeight;
-                    const rightHeight = containers[1].offsetHeight;
-                    const maxHeight = Math.max(leftHeight, rightHeight);
-                    
-                    // Set both to the max height
-                    containers.forEach(c => {
-                        c.style.height = maxHeight + 'px';
-                    });
-                }, 100);
-            }
+        if (left && right) {
+            // Reset heights first
+            left.style.height = '';
+            right.style.height = '';
             
-            attempts++;
-            if (attempts < maxAttempts) {
-                setTimeout(syncHeights, 300);
+            // Get the max height
+            const leftHeight = left.offsetHeight;
+            const rightHeight = right.offsetHeight;
+            const maxHeight = Math.max(leftHeight, rightHeight);
+            
+            // Apply the max height to both
+            if (maxHeight > 0) {
+                left.style.height = maxHeight + 'px';
+                right.style.height = maxHeight + 'px';
             }
         }
-        
-        // Start syncing after page loads
-        setTimeout(syncHeights, 500);
+    }
+
+    // Run multiple times to catch Stripe's async rendering
+    let alignCount = 0;
+    const alignInterval = setInterval(function() {
+        alignContainers();
+        alignCount++;
+        if (alignCount > 15) {
+            clearInterval(alignInterval);
+        }
+    }, 400);
+
+    // Also run on window resize
+    let resizeTimeout;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(alignContainers, 200);
+    });
+
+    // Run after DOM is ready
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(alignContainers, 600);
     });
 </script>
 
