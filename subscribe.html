@@ -145,7 +145,7 @@
             display: flex;
             gap: 28px;
             margin-bottom: 32px;
-            align-items: stretch; /* ← KEY: forces both containers to same height */
+            align-items: flex-start; /* Align to top */
         }
         .pricing-split .stripe-container {
             flex: 0 1 520px;
@@ -154,6 +154,8 @@
             background: var(--panel);
             display: flex;
             flex-direction: column;
+            /* Fixed height to force alignment */
+            height: 720px;
         }
         .stripe-container-header {
             padding: 18px 24px;
@@ -164,7 +166,7 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 8px;
-            flex-shrink: 0; /* prevents header from shrinking */
+            flex-shrink: 0;
         }
         .stripe-container-header h3 {
             font-family: var(--sans) !important;
@@ -189,11 +191,13 @@
             flex: 1;
             display: flex;
             flex-direction: column;
+            height: 100%;
         }
         .stripe-body p {
             font-size: 15px;
             color: #d4d3cd;
             margin-bottom: 12px;
+            flex-shrink: 0;
         }
         .product-list {
             display: flex;
@@ -220,7 +224,6 @@
         }
         .stripe-wrapper {
             width: 100%;
-            min-height: 320px;
             background: var(--black);
             border: 1px solid var(--rule);
             padding: 12px;
@@ -228,12 +231,14 @@
             flex: 1;
             display: flex;
             flex-direction: column;
+            min-height: 0;
+            overflow: hidden;
         }
         .stripe-wrapper stripe-pricing-table {
             display: block;
             width: 100%;
-            min-height: 280px;
             flex: 1;
+            min-height: 0;
         }
 
         /* ── callout & activation ── */
@@ -359,6 +364,8 @@
                 min-width: 0;
                 max-width: 600px;
                 width: 100%;
+                height: auto;
+                min-height: 620px;
             }
             .site-nav {
                 height: auto;
@@ -391,6 +398,8 @@
             }
             .pricing-split .stripe-container {
                 min-width: 0;
+                height: auto;
+                min-height: 500px;
             }
         }
     </style>
@@ -439,7 +448,7 @@
                     <span class="tier-badge">Pioneer · Explorer · Leader</span>
                 </div>
                 <div class="stripe-body">
-                    <p>Scale your operations. Increase satellite node license deployments.</p>
+                    <p>Scale your operations. Increase satellite node deployments.</p>
                     <ul class="product-list">
                         <li>Pioneer</li>
                         <li>Explorer</li>
