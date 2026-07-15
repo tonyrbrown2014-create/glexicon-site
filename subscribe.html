@@ -145,11 +145,10 @@
             display: flex;
             gap: 28px;
             margin-bottom: 32px;
-            align-items: stretch;
-            justify-content: center;
+            align-items: stretch; /* ← KEY: forces both containers to same height */
         }
         .pricing-split .stripe-container {
-            flex: 0 1 520px; /* fixed max width, won't grow beyond 520px */
+            flex: 0 1 520px;
             min-width: 380px;
             border: 1px solid var(--rule);
             background: var(--panel);
@@ -165,6 +164,7 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 8px;
+            flex-shrink: 0; /* prevents header from shrinking */
         }
         .stripe-container-header h3 {
             font-family: var(--sans) !important;
@@ -202,6 +202,7 @@
             margin: 4px 0 16px 0;
             padding: 0;
             list-style: none;
+            flex-shrink: 0;
         }
         .product-list li {
             font-family: var(--mono);
@@ -225,11 +226,14 @@
             padding: 12px;
             margin-top: 4px;
             flex: 1;
+            display: flex;
+            flex-direction: column;
         }
         .stripe-wrapper stripe-pricing-table {
             display: block;
             width: 100%;
             min-height: 280px;
+            flex: 1;
         }
 
         /* ── callout & activation ── */
@@ -343,7 +347,7 @@
             margin: 0 6px;
         }
 
-        /* ── responsive: only stacks on smaller screens ── */
+        /* ── responsive ── */
         @media (max-width: 960px) {
             .pricing-split {
                 flex-direction: column;
@@ -435,7 +439,7 @@
                     <span class="tier-badge">Pioneer · Explorer · Leader</span>
                 </div>
                 <div class="stripe-body">
-                    <p>Scale your operations. Increase satellite node deployments.</p>
+                    <p>Scale your operations. Increasing Tick Tock Points &amp; node capacity.</p>
                     <ul class="product-list">
                         <li>Pioneer</li>
                         <li>Explorer</li>
@@ -457,7 +461,7 @@
                 <span class="tier-badge">Partner · Alliance · Elite</span>
             </div>
             <div class="stripe-body">
-                <p>Highest control throughput. Premium token pool allocations.</p>
+                <p>Highest control &amp; throughput. Premium token pools &amp; dedicated nodes.</p>
                 <ul class="product-list">
                     <li>Partner</li>
                     <li>Alliance</li>
