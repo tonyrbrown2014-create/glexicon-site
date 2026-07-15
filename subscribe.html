@@ -145,7 +145,7 @@
             display: flex;
             gap: 28px;
             margin-bottom: 32px;
-            align-items: flex-start; /* Align to top */
+            align-items: flex-start;
         }
         .pricing-split .stripe-container {
             flex: 0 1 520px;
@@ -154,8 +154,7 @@
             background: var(--panel);
             display: flex;
             flex-direction: column;
-            /* Fixed height to force alignment */
-            height: 720px;
+            height: 860px; /* Increased to show all 3 tiers */
         }
         .stripe-container-header {
             padding: 18px 24px;
@@ -232,7 +231,7 @@
             display: flex;
             flex-direction: column;
             min-height: 0;
-            overflow: hidden;
+            overflow: visible; /* Changed from hidden to show all content */
         }
         .stripe-wrapper stripe-pricing-table {
             display: block;
@@ -365,7 +364,7 @@
                 max-width: 600px;
                 width: 100%;
                 height: auto;
-                min-height: 620px;
+                min-height: 700px;
             }
             .site-nav {
                 height: auto;
@@ -399,7 +398,7 @@
             .pricing-split .stripe-container {
                 min-width: 0;
                 height: auto;
-                min-height: 500px;
+                min-height: 600px;
             }
         }
     </style>
