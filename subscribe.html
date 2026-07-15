@@ -145,16 +145,15 @@
             display: flex;
             gap: 28px;
             margin-bottom: 32px;
-            align-items: flex-start;
+            align-items: stretch;
         }
         .pricing-split .stripe-container {
-            flex: 0 1 520px;
-            min-width: 380px;
+            flex: 1;
+            min-width: 0;
             border: 1px solid var(--rule);
             background: var(--panel);
             display: flex;
             flex-direction: column;
-            height: 860px; /* Increased to show all 3 tiers */
         }
         .stripe-container-header {
             padding: 18px 24px;
@@ -190,7 +189,6 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            height: 100%;
         }
         .stripe-body p {
             font-size: 15px;
@@ -230,14 +228,11 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            min-height: 0;
-            overflow: visible; /* Changed from hidden to show all content */
         }
         .stripe-wrapper stripe-pricing-table {
             display: block;
             width: 100%;
             flex: 1;
-            min-height: 0;
         }
 
         /* ── callout & activation ── */
@@ -363,8 +358,6 @@
                 min-width: 0;
                 max-width: 600px;
                 width: 100%;
-                height: auto;
-                min-height: 700px;
             }
             .site-nav {
                 height: auto;
@@ -394,11 +387,6 @@
             }
             .stripe-body {
                 padding: 16px;
-            }
-            .pricing-split .stripe-container {
-                min-width: 0;
-                height: auto;
-                min-height: 600px;
             }
         }
     </style>
@@ -526,6 +514,41 @@
     function scrollToTop() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+
+    // Wait for Stripe tables to load, then sync their heights
+    document.addEventListener('DOMContentLoaded', function() {
+        // Check periodically for Stripe tables to render
+        let attempts = 0;
+        const maxAttempts = 20;
+        
+        function syncHeights() {
+            const containers = document.querySelectorAll('.stripe-container');
+            if (containers.length === 2) {
+                // Remove any fixed heights first
+                containers.forEach(c => c.style.height = '');
+                
+                // Get natural heights after a small delay
+                setTimeout(() => {
+                    const leftHeight = containers[0].offsetHeight;
+                    const rightHeight = containers[1].offsetHeight;
+                    const maxHeight = Math.max(leftHeight, rightHeight);
+                    
+                    // Set both to the max height
+                    containers.forEach(c => {
+                        c.style.height = maxHeight + 'px';
+                    });
+                }, 100);
+            }
+            
+            attempts++;
+            if (attempts < maxAttempts) {
+                setTimeout(syncHeights, 300);
+            }
+        }
+        
+        // Start syncing after page loads
+        setTimeout(syncHeights, 500);
+    });
 </script>
 
 </body>
