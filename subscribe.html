@@ -140,7 +140,7 @@
             font-weight: 400;
         }
 
-        /* ── SIDE-BY-SIDE PRICING SPLIT ── */
+/* ── SIDE-BY-SIDE PRICING SPLIT ── */
         .pricing-split {
             display: flex;
             gap: 28px;
@@ -194,7 +194,8 @@
             font-size: 15px;
             color: #d4d3cd;
             margin-bottom: 12px;
-            min-height: 48px; /* Standardizes text height to line up elements below it */
+            height: 48px; /* Strict height lock so text wrapping never causes shifts */
+            overflow: hidden;
         }
         
         .product-list {
@@ -221,17 +222,16 @@
         }
         .stripe-wrapper {
             width: 100%;
-            min-height: 320px;
+            height: 380px; /* Locked uniform height to force both tables into alignment */
             background: var(--black);
             border: 1px solid var(--rule);
             padding: 12px;
-            margin-top: auto; /* Push the table wrapper to the very bottom */
-            flex: 1; /* Allow them to grow naturally together */
+            margin-top: auto; /* Aligns wrappers to the bottom of the stretch container */
         }
         .stripe-wrapper stripe-pricing-table {
             display: block;
             width: 100%;
-            min-height: 280px;
+            height: 100%; /* Force the Stripe iframe component to fill the wrapper completely */
         }
 
         /* ── callout & activation ── */
