@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glexicon Monster — Savings Visualised</title>
+<style>
+  :root { 
+    --black:#0a0a0a; 
+    --white:#f5f4f0; 
+    --signal:#00b881; 
+    --rule:#2a2a2a; 
+    --panel:#111111; 
+    --mid:#181818; 
+    --muted:#a0a0a0; 
+    --mono: Arial, sans-serif; 
+    --sans: Arial, sans-serif; 
+  }
+  
+  * { 
+    box-sizing:border-box; 
+    margin:0; 
+    padding:0; 
+    font-family: var(--sans);
+  }
+  html { scroll-behavior:smooth; height: 100%; }
+  
+  body { 
+    font-family:var(--sans); 
+    background:var(--black); 
+    color:var(--white); 
+    line-height:1.6;
+    position: relative;
+    min-height: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .site-nav { 
+    position:sticky; 
+    top:0; 
+    z-index:100; 
+    background:rgba(10,10,10,0.97); 
+    backdrop-filter:blur(8px); 
+    border-bottom:1px solid var(--rule); 
+    padding:28px 56px 0; 
+    height:100px; 
+    display:flex; 
+    align-items:center; 
+    justify-content:space-between; 
+  }
+  .nav-brand { display:flex; align-items:flex-end; gap:16px; text-decoration:none; padding-bottom:6px; }
+  .nav-brand-meta { display:flex; flex-direction:column; justify-content:center; }
+  .nav-brand-text { font-family:var(--mono); font-size:24px; letter-spacing:0.15em; color:var(--white); text-transform:uppercase; line-height:1.1; font-weight:700; }
+  .nav-tagline { font-family:var(--mono); font-size:15px; letter-spacing:0.05em; color:var(--muted); line-height:1.3; margin-top:4px; }
+  
+  .nav-links { display:flex; align-items:center; gap:6px; }
+  .nav-links a { font-family:var(--mono); font-size:13px; letter-spacing:0.05em; text-transform:uppercase; color:#888; text-decoration:none; padding:8px 12px; transition:color 0.15s; white-space:nowrap; }
+  .nav-links a:hover { color:var(--signal); }
+
+  .page-wrap { max-width:1040px; margin:0 auto; padding:36px 56px 380px; }
+  .page-header { padding-bottom:48px; border-bottom:1px solid var(--rule); margin-bottom:48px; }
+  
+  .page-eyebrow { font-family:var(--mono); font-size:16px; letter-spacing:0.15em; text-transform:uppercase; color:var(--signal); margin-bottom:16px; display:flex; align-items:center; gap:12px; font-weight:600; }
+  .page-eyebrow::after { content:''; flex:1; height:1px; background:var(--rule); }
+  
+.page-title { 
+  font-family: var(--sans) !important;
+  font-size:clamp(28px, 4.2vw, 38px); 
+  font-weight:700; 
+  letter-spacing:-0.03em; 
+  line-height:1.2; 
+  color:var(--white); 
+  margin-bottom:20px;
+
+  }
+  .page-sub { 
+    font-family: var(--sans) !important; 
+    font-size:17px; 
+    color:var(--muted); 
+    max-width:680px; 
+    font-weight:400; 
+  }
+
+  /* ── SAVINGS ROWS ── */
+  .savings-row { border:1px solid var(--rule); margin-bottom:16px; background:var(--panel); }
+  .savings-row-header { padding:18px 24px; background:var(--mid); border-bottom:1px solid var(--rule); display:flex; justify-content:space-between; align-items:center; }
+  .savings-row-header h4 { font-family: var(--sans) !important; font-size:16px; font-weight:600; color:var(--white); letter-spacing:-0.01em; }
+  .savings-pct { font-family:var(--mono); font-size:18px; font-weight:700; color:var(--signal); letter-spacing:0.02em; }
+  
+  .savings-columns { display:grid; grid-template-columns: 1.2fr 1.2fr 1fr; padding:28px; gap:0; }
+  .savings-col { display:flex; flex-direction:column; gap:12px; }
+  .savings-col:first-child { border-right:1px solid var(--rule); padding-right:28px; }
+  .savings-col:nth-child(2) { border-right:1px solid var(--rule); padding-left:28px; padding-right:28px; }
+  .savings-col:last-child { padding-left:28px; justify-content: flex-start; }
+  
+  .savings-col-label { font-family:var(--mono); font-size:14px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--muted); }
+  .savings-col-size { font-family:var(--mono); font-size:16px; font-weight:600; color:var(--white); }
+  .dot-grid { display:flex; flex-wrap:wrap; gap:4px; max-width:220px; }
+  .dot { width:11px; height:11px; border-radius:1px; }
+  .dot-standard { background:#222; border:1px solid #333; transition:background 0.4s, border-color 0.4s; }
+  .dot-glexicon { background:#004d35; transition:background 0.4s, box-shadow 0.4s; }
+  .dot-standard.dot-lit { background:#555; border-color:#666; }
+  .dot-glexicon.dot-lit { background:var(--signal); box-shadow:0 0 6px rgba(0,229,160,0.7); }
+  @keyframes dot-pulse { 0%{opacity:1}50%{opacity:0.4}100%{opacity:1} }
+  .dot-lit { animation:dot-pulse 0.8s ease-in-out; }
+  
+  .data-profile-table { width: 100%; border-collapse: collapse; margin-top: 4px; }
+  .data-profile-table tr { border-bottom: 1px solid #1a1a1a; }
+  .data-profile-table tr:last-child { border-bottom: none; }
+  .data-profile-table td { padding: 6px 0; font-family: var(--mono); font-size: 13px; color: var(--muted); }
+  .data-profile-table td:last-child { text-align: right; color: var(--white); font-weight: 500; }
+  .data-profile-table .highlight-signal { color: var(--signal) !important; font-weight: 600; }
+
+  .savings-desc { 
+    font-family: var(--sans) !important; 
+    font-size:15px; 
+    color:#999; 
+    padding:18px 24px 22px; 
+    border-top:1px dashed var(--rule); 
+    line-height:1.6; 
+  }
+  .savings-desc strong { color:var(--white); font-weight:600; }
+
+.cta-inner { display:flex; flex-direction:column; gap:16px; }
+.cta-eyebrow { font-family:var(--mono); font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:var(--signal); }
+.cta-heading { font-size:22px; font-weight:700; color:var(--white); letter-spacing:-0.02em; line-height:1.2; }
+.cta-subheading { font-size:18px; font-weight:600; color:var(--white); letter-spacing:-0.01em; line-height:1.3; }
+.cta-body { font-size:15px; color:#999; line-height:1.7; max-width:760px; }
+.cta-closer { font-size:15px; font-weight:700; color:var(--white); letter-spacing:0.02em; padding-top:8px; border-top:1px solid var(--rule); }
+.cta-link { font-family:var(--mono); font-size:13px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--signal); text-decoration:none; width:fit-content; }
+.cta-link:hover { opacity:0.75; }
+  /* ── FOOTER STACK ── */
+  footer { 
+    width: 100%; 
+    position: absolute; 
+    bottom: 40px; 
+    left: 0; 
+    padding: 0 56px;
+  }
+  .footer-inner { 
+    max-width:1040px; 
+    margin:0 auto; 
+    display:flex; 
+    flex-direction:column;
+    align-items:center; 
+    justify-content:center;
+    text-align:center;
+    gap:12px; 
+  }
+  
+  .footer-top-link {
+    text-decoration:none;
+    margin-bottom:8px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  .footer-top-link span {
+    font-family:var(--mono);
+    font-size:15px;
+    color:#777;
+    transition:color 0.15s;
+  }
+  .footer-top-link:hover span {
+    color:var(--signal);
+  }
+  
+  .footer-rule {
+    width: 100%;
+    height: 1px;
+    background-color: var(--rule);
+    margin-bottom: 12px;
+  }
+  
+  .footer-copy { font-family:var(--mono); font-size:15px; color:#666; line-height:1.7; }
+  .footer-policy-links { font-family:var(--mono); font-size:15px; color:#666; margin-bottom:4px; }
+  .footer-policy-links a { color:#777; text-decoration:none; transition:color 0.15s; }
+  .footer-policy-links a:hover { color:var(--signal); }
+  
+  .bolt-svg {
+    width: 14px;
+    height: 14px;
+    vertical-align: middle;
+    margin: 0 6px;
+  }
+
+  @media(max-width:960px) {
+    .savings-columns { grid-template-columns: 1fr 1fr; gap: 24px; }
+    .savings-col:nth-child(2) { border-right: none; padding-right: 0; }
+    .savings-col:last-child { grid-column: span 2; padding-left: 0; border-top: 1px solid var(--rule); padding-top: 20px; }
+  }
+
+  @media(max-width:900px) {
+    .site-nav { height: auto; padding: 32px 24px 16px; flex-direction: column; gap: 16px; align-items: flex-start; }
+    .nav-links { width: 100%; justify-content: flex-start; gap: 12px; }
+    .nav-links a { padding: 6px 0; font-size: 14px; }
+  }
+
+  @media(max-width:700px) {
+    .page-wrap { padding-left:24px; padding-right:24px; padding-bottom:420px; }
+    footer { padding: 0 24px; bottom: 24px; }
+    .savings-columns { grid-template-columns:1fr; gap:20px; }
+    .savings-col:first-child { border-right:none; padding-right:0; border-bottom:1px solid var(--rule); padding-bottom:20px; }
+    .savings-col:nth-child(2) { border-right:none; padding-left:0; padding-right:0; border-bottom:1px solid var(--rule); padding-bottom:20px; }
+    .savings-col:last-child { grid-column: span 1; border-top: none; padding-top: 0; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a class="nav-brand" href="index.html">
+    <svg width="52" height="52" viewBox="0 0 60 60" fill="none" style="margin-top:10px; flex-shrink:0;"><circle cx="30" cy="12" r="4.5" fill="#00b881"/><circle cx="8" cy="52" r="4.5" fill="#00b881"/><circle cx="52" cy="52" r="4.5" fill="#00b881"/><text x="30" y="38" font-family="Arial, sans-serif" font-size="30" font-weight="900" text-anchor="middle" dominant-baseline="central" fill="#f5f4f0">G</text></svg>
+    <div class="nav-brand-meta">
+      <span class="nav-brand-text">Glexicon Monster</span>
+      <span class="nav-tagline">The Architecture of Next-Generation Data Efficiency</span>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="information.html">Information</a>
+    <a href="license.html">License</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-eyebrow">Live Protocol Comparison</div>
+    <div class="page-title">Savings - Visualised.</div>
+    <div class="page-sub">Every square represents a unit of database footprint. Watch what happens when the Glexicon Monster Protocol completely replaces conventional storage architecture—delivering massive infrastructure relief at every scale, up to 100 million records.</div>
+  </div>
+
+  <div class="savings-row">
+    <div class="savings-row-header"><h4>Industry Standard Compression</h4><span class="savings-pct">50% Reduction</span></div>
+    <div class="savings-columns">
+      <div class="savings-col">
+        <div class="savings-col-label">Standard Database</div>
+        <div class="savings-col-size">10 units of storage</div>
+        <div class="dot-grid">
+          <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+          <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+        </div>
+      </div>
+      <div class="savings-col">
+        <div class="savings-col-label">After Compression</div>
+        <div class="savings-col-size">5 units of storage</div>
+        <div class="dot-grid">
+          <div class="dot dot-glexicon"></div><div class="dot dot-glexicon"></div><div class="dot dot-glexicon"></div><div class="dot dot-glexicon"></div><div class="dot dot-glexicon"></div>
+        </div>
+      </div>
+      <div class="savings-col">
+        <div class="savings-col-label">Metrics Profile</div>
+        <table class="data-profile-table">
+          <tr><td>Efficiency</td><td>1.2 MB/s</td></tr>
+          <tr><td>Overhead</td><td>50.0%</td></tr>
+          <tr><td>Status</td><td class="highlight-signal">Optimized</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="savings-desc">Typical industry compression tools such as gzip or deflate achieve around <strong>50% reduction</strong> on structured data assets. Exactly half the footprint remains active, requiring ongoing server memory.</div>
+  </div>
+
+  <div class="savings-row">
+    <div class="savings-row-header"><h4>Traditional Database Tokenisation</h4><span class="savings-pct">75% Reduction</span></div>
+    <div class="savings-columns">
+      <div class="savings-col">
+        <div class="savings-col-label">Standard Database</div>
+        <div class="savings-col-size">20 units of storage</div>
+        <div class="dot-grid">
+          <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+          <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+          <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+          <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+        </div>
+      </div>
+      <div class="savings-col">
+        <div class="savings-col-label">After Tokenisation</div>
+        <div class="savings-col-size">5 units of storage</div>
+        <div class="dot-grid">
+          <div class="dot dot-glexicon"></div><div class="dot dot-glexicon"></div><div class="dot dot-glexicon"></div><div class="dot dot-glexicon"></div><div class="dot dot-glexicon"></div>
+        </div>
+      </div>
+      <div class="savings-col">
+        <div class="savings-col-label">Metrics Profile</div>
+        <table class="data-profile-table">
+          <tr><td>Dictionary</td><td>Static</td></tr>
+          <tr><td>Index Lag</td><td>High</td></tr>
+          <tr><td>Status</td><td class="highlight-signal">Staged</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="savings-desc">Conventional tokenisation systems achieve around <strong>75% reduction</strong>. Significant—but legacy token databases still carry noticeable internal management overhead and lack portability.</div>
+  </div>
+
+  <div class="savings-row">
+    <div class="savings-row-header"><h4>Glexicon Monster Protocol</h4><span class="savings-pct">90–96× Gains</span></div>
+    <div class="savings-columns">
+      <div class="savings-col">
+        <div class="savings-col-label">Standard Database</div>
+        <div class="savings-col-size">20 units of storage</div>
+        <div class="dot-grid">
+          <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+          <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+          <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+          <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+        </div>
+      </div>
+      <div class="savings-col">
+        <div class="savings-col-label">Glexicon Sovereign Node</div>
+        <div class="savings-col-size">1 unit of storage</div>
+        <div class="dot-grid"><div class="dot dot-glexicon"></div></div>
+      </div>
+      <div class="savings-col">
+        <div class="savings-col-label">Metrics Profile</div>
+        <table class="data-profile-table">
+          <tr><td>Collision</td><td>Zero</td></tr>
+          <tr><td>Portability</td><td>Autonomous</td></tr>
+          <tr><td>Status</td><td class="highlight-signal">Sovereign</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="savings-desc">The Glexicon Monster Protocol reliably delivers <strong>90–96× satellite token database footprint gains</strong>. The master database stays secure, while the sovereign token satellite nodes handle active edge operations.</div>
+  </div>
+
+  <div class="savings-row">
+    <div class="savings-row-header"><h4>Glexicon at Scale — 100 Million Records</h4><span class="savings-pct">99%+ Gains</span></div>
+    <div class="savings-columns">
+      <div class="savings-col">
+        <div class="savings-col-label">Standard Enterprise Database</div>
+        <div class="savings-col-size">~500GB typical footprint</div>
+        <div class="dot-grid">
+          <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+          <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+          <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+          <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+          <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+          <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+          <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+          <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+          <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+          <div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div><div class="dot dot-standard"></div>
+        </div>
+      </div>
+      <div class="savings-col">
+        <div class="savings-col-label">Glexicon Sovereign Node</div>
+        <div class="savings-col-size">4.7GB — fits a single DVD</div>
+        <div class="dot-grid"><div class="dot dot-glexicon"></div></div>
+      </div>
+      <div class="savings-col">
+        <div class="savings-col-label">Metrics Profile</div>
+        <table class="data-profile-table">
+          <tr><td>Pack Time</td><td>&lt; 30 Mins</td></tr>
+          <tr><td>Form Factor</td><td>ISO Image</td></tr>
+          <tr><td>Status</td><td class="highlight-signal">Production</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="savings-desc"><strong>Proven in live enterprise production environments.</strong> 100 million unique tokens—zero collisions—packed cleanly into 4.7GB in under 30 minutes. A standard database of records can occupy <strong>500GB or more</strong> of high-tier storage space. The Glexicon satellite nodes safely drop into any database system architecture.</div>
+  </div>
+
+ <div id="cta-block">
+  <div>
+    <div class="cta-block-title">Harness the power of the Glexicon Protocol.</div>
+    <div style="font-size: 18px; font-weight: 600; color: var(--white); margin-bottom: 8px;">
+      Embrace these gains across your own sovereign satellite node network.
+    </div>
+    <p style="color: var(--muted); font-size: 15px; margin-bottom: 12px; line-height: 1.7;">
+      Every comparison above is verified in live production. Sovereign Node satellites occupy a fraction of the footprint of conventional database infrastructure. Deploying a node is fast, cost-effective, and scales linearly — whether you are running a single localised instance or distributing an entire fleet across a global network.</div>
+    <div class="cta-closer">First Movers Command The Competition.</div>
+    <a href="subscribe.html" class="btn-primary" style="display: inline-block; margin-top: 16px; color: var(--signal) !important; text-transform: uppercase; text-decoration: none;">Secure a License →</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <button onclick="scrollToTop()" class="footer-top-link"><span>↑ Return to Top</span></button>
+    
+    <div class="footer-rule"></div>
+    
+    <div class="footer-policy-links">
+      <a href="privacy.html">Privacy Policy</a> &nbsp;|&nbsp; <a href="terms.html">Terms of Service</a>
+    </div>
+    
+    <div class="footer-copy">
+      © 2026 Glexicon. All rights reserved.<br>
+      Trade Secret — Confidential Intellectual Property — Global Licensing Available<br>
+      <svg class="bolt-svg" viewBox="0 0 24 24" fill="#FFD700"><path d="M11 21h-1l1.5-6.5h-4.5c-.3 0-.5-.2-.6-.4-.1-.2 0-.5.2-.7l7.5-9.5h1l-1.5 6.5h4.5c.3 0 .5.2.6.4.1.2 0 .5-.2.7l-7.5 9.5z"/></svg>Tick. Tock. Token.<svg class="bolt-svg" viewBox="0 0 24 24" fill="#FFD700"><path d="M11 21h-1l1.5-6.5h-4.5c-.3 0-.5-.2-.6-.4-.1-.2 0-.5.2-.7l7.5-9.5h1l-1.5 6.5h4.5c.3 0 .5.2.6.4.1.2 0 .5-.2.7l-7.5 9.5z"/></svg>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function animateDots() {
+    const allDots = document.querySelectorAll('.dot');
+    if (!allDots.length) return;
+    const count = Math.floor(Math.random() * 4) + 3;
+    const picked = [];
+    while (picked.length < count) {
+      const idx = Math.floor(Math.random() * allDots.length);
+      if (!picked.includes(idx)) picked.push(idx);
+    }
+    picked.forEach(idx => {
+      const dot = allDots[idx];
+      dot.classList.add('dot-lit');
+      setTimeout(() => dot.classList.remove('dot-lit'), 800);
+    });
+  }
+  setInterval(animateDots, 1100);
+</script>
+
+</body>
+</html>

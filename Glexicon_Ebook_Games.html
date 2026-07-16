@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glexicon Monster — Games & Interactive Edition</title>
+<!-- Master stylesheet link -->
+<link rel="stylesheet" href="book.css">
+</head>
+<body>
+
+<!-- SITE NAV BLOCK -->
+<nav class="site-nav">
+  <a class="nav-brand" href="index.html">
+    <svg width="52" height="52" viewBox="0 0 60 60" fill="none" style="margin-top:2px; flex-shrink:0;"><circle cx="30" cy="12" r="4.5" fill="#00b881"/><circle cx="8" cy="52" r="4.5" fill="#00b881"/><circle cx="52" cy="52" r="4.5" fill="#00b881"/><text x="30" y="40" font-family="Arial, sans-serif" font-size="30" font-weight="900" text-anchor="middle" dominant-baseline="central" fill="#f5f4f0">G</text></svg>
+    <div class="nav-brand-meta">
+      <span class="nav-brand-text">Glexicon Monster</span>
+      <span class="nav-tagline">The Architecture of Next-Generation Data Efficiency</span>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="#summary">Summary</a>
+    <a href="#challenges">Challenge</a>
+    <a href="#solution">Solution</a>
+    <a href="#pillars">Pillars</a>
+    <a href="#utility">Utility</a>
+    <a href="#workflow">Workflow</a>
+    <a href="#roi">ROI</a>
+    <a href="#directive">Directive</a>
+  </div>
+</nav>
+
+<!-- WIDER CONTENT WRAPPER CONTAINER (max-width: 1040px) -->
+<div class="page-wrap">
+  
+  <!-- TOP SECTION TYPOGRAPHY -->
+  <div class="page-header">
+    <div class="page-eyebrow">Games &amp; Interactive Edition &nbsp;·&nbsp; Strategic Handbook</div>
+    <div class="page-title">The Architecture of Next-Generation <span>Asset Efficiency.</span></div>
+    <div class="page-sub">Built for game studios and interactive developers that have outgrown legacy asset pipelines. Tokenize your object data storage identifiers, mitigate lookup latency and protect your intellectual property entirely within your development infrastructure.</div>
+  </div>
+
+  <!-- PAGE 2: EXECUTIVE SUMMARY -->
+  <div class="section-block">
+    <div class="content-card">
+      <div class="section-title" id="summary">Section 02 &nbsp;·&nbsp; Executive Summary</div>
+      <h2>Your game engines have hit the <span>Asset Wall.</span></h2>
+      <p>Modern game pipelines — spanning indie studios, mobile platforms, and immersive XR titles — generate object IDs, metadata tags, and asset manifests at a scale that conventional lookup architectures were never designed to handle. Fetch times spike. Build pipelines bloat. Runtime memory pressure compounds every frame.</p>
+      <p>The Glexicon Monster protocol maps every object ID to a unique, high-speed lookup token — collapsing retrieval overhead and restoring frame-budget headroom your team has been quietly losing for years.</p>
+      
+      <!-- STAT MATCH -->
+      <div class="stat-block">
+        <div class="stat-num">90-96×</div>
+        <div class="stat-label">Active network gains achieved via edge layer routing, offloading everyday query traffic from core frameworks.</div>
+      </div>
+      
+      <p>This handbook explains how the protocol works, why it fits interactive development pipelines, and what a transition looks like in practice.</p>
+    </div>
+  </div>
+
+  <!-- PAGE 3: THE CORE CHALLENGE -->
+  <div class="section-block">
+    <div class="content-card">
+      <div class="section-title" id="challenges">Section 03 &nbsp;·&nbsp; The Core Challenge</div>
+      <h2>Three failure modes of interactive asset management.</h2>
+      <ul class="challenge-list">
+        <li>
+          <span class="challenge-label">Latency</span>
+          <div><strong>Runtime lookups stall frame budgets at the most crucial moments.</strong> Object resolution, metadata queries, and asset fetches compete for the same memory bandwidth — the engines lose the race and the player feels it.</div>
+        </li>
+        <li>
+          <span class="challenge-label">Bloat</span>
+          <div><strong>Conventional asset databases are paying rent on empty parking lots.</strong> Redundant object maps, duplicated tags, and deprecated asset entries inflate storage and slow every build cycle.</div>
+        </li>
+        <li>
+          <span class="challenge-label">Portability</span>
+          <div><strong>Cloud-dependent object data pipelines introduce external fragility.</strong> Networked layer tracking and remote asset routing require object data that resolves with predictable performance — not via a latency-prone external API call.</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- PAGE 4: THE SOLUTION -->
+  <div class="section-block">
+    <div class="content-card">
+      <div class="section-title" id="solution">Section 04 &nbsp;·&nbsp; Glexicon Monster Solution</div>
+      <h2>Token-native. Zero middleware. Frame-budget safe.</h2>
+      <p>Glexicon Monster replaces heavyweight asset lookup tables with a unique satellite node token layer that sits directly inside your engine's data pipelines. Object IDs resolve through precision-mapped tokens — no database round-trips, no middleware abstraction, no external dependency.</p>
+      
+      <!-- HIGH RESOLUTION DIAGRAM LAYOUT TRACE -->
+      <div class="arch-box" style="font-size: 14.5px; line-height: 2.5;">
+        <div><span class="hl">[ GAME OBJECT / ASSET SOURCE ]</span></div>
+        <div style="padding-left:32px;">↓ &nbsp;<span class="wh">Glexicon Edge Layer</span> &nbsp;— map, resolve, route (90–96× active network gains)</div>
+        <div style="padding-left:64px;">↓ &nbsp;<span class="wh">Satellite Nodes</span> &nbsp;— complete traffic offloading</div>
+        <div style="padding-left:96px;">↓ &nbsp;<span class="hl">[ Queries ]</span> &nbsp;— ultra-low latency data access</div>
+        <div style="margin-top:20px; color:#959590; font-size:14.5px;">Master Asset Data remains on-premise. No cloud intermediary. No redundant middleware. No data sovereignty risk.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE 5: EFFICIENCY & ARCHITECTURE -->
+  <div class="section-block">
+    <div class="content-card">
+      <div class="section-title" id="pillars">Section 05 &nbsp;·&nbsp; Efficiency &amp; Architecture</div>
+      <h2>Three pillars. One unified protocol.</h2>
+      <p>Decoupling operations from infrastructure constraints relies on shifting systemic logic up front. The framework enforces clarity by tokenizing access routing before a single query hits the master asset database.</p>
+      
+      <div class="grid-layout">
+        <div class="grid-box">
+          <div class="pillar-num">Pillar I</div>
+          <h3>Token Compression</h3>
+          <p>Primary, foreign, or custom keys are converted into unique satellite tokens. The original underlying data structures remain entirely untouched, keeping the master data repository pure while decoupling the retrieval logic.</p>
+        </div>
+        <div class="grid-box">
+          <div class="pillar-num">Pillar II</div>
+          <h3>Edge-Native Resolution</h3>
+          <p>Mapping, resolution, and routing happen directly at the Glexicon edge layer nodes. Because applications query these networked token databases instead of moving heavy datasets across the network, data requests bypass traditional latency bottlenecks entirely.</p>
+        </div>
+        <div class="grid-box">
+          <div class="pillar-num">Pillar III</div>
+          <h3>Memory Optimization</h3>
+          <p>Active network gains scale by 90–96× through tokenized query routing. By removing the need to pass full data footprints across the studio network, throughput maximizes without altering a single byte of on-premise Master data storage.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE 6: GAMES-SPECIFIC UTILITY -->
+  <div class="section-block">
+    <div class="content-card">
+      <div class="section-title" id="utility">Section 06 &nbsp;·&nbsp; Games &amp; Interactive Utility</div>
+      <h2>Built for the way games actually ship.</h2>
+      <p>Game production pipelines distribute assets differently than enterprise software. The protocol engines output topology maps directly onto studio multi-platform target demands.</p>
+      
+      <div class="grid-layout">
+        <div class="grid-box">
+          <div class="pillar-num">Outcome A</div>
+          <h3>Frame-Budget Recovery</h3>
+          <p>Sub-millisecond object resolution reclaims headroom inside every frame cycle. The engine stops waiting on lookups and starts spending budget where it matters: rendering.</p>
+        </div>
+        <div class="grid-box">
+          <div class="pillar-num">Outcome B</div>
+          <h3>Cross-Platform Portability</h3>
+          <p>The satellite node store doesn't magically flatten all your platform assets into a single file system. Instead, it maps routing keys across your existing independent repositories, preventing metadata bottlenecks and cross-contamination when syncing global IDs.</p>
+        </div>
+        <div class="grid-box">
+          <div class="pillar-num">Outcome C</div>
+          <h3>Network &amp; Edge Readiness</h3>
+          <p>All object IDs resolve efficiently via the network satellite nodes. Faster queries to the master data storage. Gatekeeper nodes enhance security between the master repository, satellite nodes and the player. Console certification requirements are satisfied seamlessly without architectural redesign.</p>
+        </div>
+        <div class="grid-box">
+          <div class="pillar-num">Outcome D</div>
+          <h3>Pipeline Velocity</h3>
+          <p>Highly optimized satellite token nodes reduce build times and iteration cycles. Artists and engineers stop waiting on asset database refreshes and spend more time engaging and shipping content.</p>
+        </div>
+        <div class="grid-box">
+          <div class="pillar-num">Outcome E</div>
+          <h3>Memory Footprint Collapse</h3>
+          <p>Massively reduce runtime asset manifest memory allocation. Free up active VRAM and system memory overhead, while allowing for denser scenes and larger asset pools.</p>
+        </div>
+        <div class="grid-box">
+          <div class="pillar-num">Outcome F</div>
+          <h3>Legacy Database Obsolescence</h3>
+          <p>Safely wind down expensive or slow centralized registry databases. The token satellite nodes operate directly at the network architecture layer, completely bypassing legacy middleware bottlenecks.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE 7: IMPLEMENTATION WORKFLOW -->
+  <div class="section-block">
+    <div class="content-card">
+      <div class="section-title" id="workflow">Section 07 &nbsp;·&nbsp; Implementation Workflow</div>
+      <h2>Four stages. Measurable at each.</h2>
+      <p>Transitioning architecture doesn't mandate structural instability. The workflow isolates and scales implementation incrementally, turning months of traditional network setup time into days or weeks. Secure Turnkey Solution.</p>
+      
+      <div class="workflow-stages">
+        <div class="stage-item">
+          <div class="stage-num">01</div>
+          <div class="stage-content">
+            <h3>Asset Baseline</h3>
+            <p>Map existing object ID schemas, measure data footprints, and identify the highest-impact asset categories — characters, environments, audio, UI — for initial satellite node token deployment.</p>
+          </div>
+        </div>
+
+        <div class="stage-item">
+          <div class="stage-num">02</div>
+          <div class="stage-content">
+            <h3>Token Layer Integration</h3>
+            <p>The satellite node network layer integrates with your existing engine pipeline without disrupting live builds. No asset reimport, no pipeline freeze, and no breaking changes to existing object schemas.</p>
+          </div>
+        </div>
+
+        <div class="stage-item">
+          <div class="stage-num">03</div>
+          <div class="stage-content">
+            <h3>Pipeline Calibration</h3>
+            <p>Token parameters are matched to your studio's specific asset data access patterns. Routing logic is tuned for your target platform's memory and frame-rate constraints by your in-house database engineers.</p>
+          </div>
+        </div>
+
+        <div class="stage-item">
+          <div class="stage-num">04</div>
+          <div class="stage-content">
+            <h3>Full Pipeline Rollout</h3>
+            <p>Once validated at the asset category levels, the network satellite nodes extend across the full game build — every system inheriting the same performance gains without additional integration work. Simply duplicate satellite nodes and deploy across your network.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- PAGE 8: DEPLOYMENT ROI -->
+  <div class="section-block">
+    <div class="content-card">
+      <div class="section-title" id="roi">Section 08 &nbsp;·&nbsp; Deployment ROI</div>
+      <h2>The numbers are not close.</h2>
+      <p>Comparative tracking underscores structural waste inherent to multi-tier asset environments. Below is the strict architectural variance:</p>
+      
+      <table class="roi-table">
+        <thead>
+          <tr>
+            <th>METRIC</th>
+            <th>LEGACY SYSTEM</th>
+            <th>GLEXICON MONSTER</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>ACTIVE NETWORK GAINS</td>
+            <td>Baseline</td>
+            <td class="highlight-green">90-96% Increase</td>
+          </tr>
+          <tr>
+            <td>OBJECT RESOLUTION LATENCY</td>
+            <td>High</td>
+            <td class="highlight-green">Sub-Millisecond</td>
+          </tr>
+          <tr>
+            <td>BUILD CYCLE OVERHEAD</td>
+            <td>Variable / High</td>
+            <td class="highlight-green">Predictable & Low</td>
+          </tr>
+          <tr>
+            <td>CLOUD DEPENDENCY</td>
+            <td>External Risk</td>
+            <td class="highlight-green">Fully On-Prem</td>
+          </tr>
+          <tr>
+            <td>MIDDLEWARE LAYERS</td>
+            <td>Heavy</td>
+            <td class="highlight-green">None</td>
+          </tr>
+          <tr>
+            <td>CROSS-PLATFORM SCALABILITY</td>
+            <td>Re-Integration Required</td>
+            <td class="highlight-green">Inherits Automatically</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- PAGE 9: RISK & PRINCIPLES -->
+  <div class="section-block">
+    <div class="content-card">
+      <div class="section-title" id="directive">Section 09 &nbsp;·&nbsp; Risk &amp; Prime Directive</div>
+      <h2>Objective to the data. Loyal to the player experience.</h2>
+      <p>Infrastructure architecture dictates more than simply latency constraints; it impacts studio strategy and operational security.</p>
+      
+      <div class="principle-card">
+        <div class="principle-label">The Glexicon Prime Directive</div>
+        <blockquote>
+          "We remain objective to the Grit — the raw asset data — and subjective to the Anchor: the studio's core creative mission."
+        </blockquote>
+        <p style="font-size:15.5px; color:#b5b4ae; margin:0;">Every protocol engine decision serves the game's purpose. The asset data is the material. The player experience is the measure.</p>
+      </div>
+
+      <p>All asset object IDs remain within your studio's own infrastructure. There is no external dependency introduced at any stage of the protocol operations. The satellite token node layer operates seamlessly over your network architecture under your total control, fully governed by your internal studio IP policies.</p>
+      <p>Risk is not transferred — it is mitigated at the architectural level.</p>
+    </div>
+  </div>
+
+  <!-- CTA BLOCK -->
+  <div id="cta-block">
+    <div>
+      <div class="cta-block-title">The Glexicon Monster protocol is the future of interactive asset infrastructure.</div>
+      <p></p>
+      <div class="cta-block-sub">Studios that adopt early recover frame budget, reduce build times, and ship with a structural performance advantage that compounds across every platform and every title. Visit our subscription page to secure a studio-grade Protocol Engine package today.</div>
+    <br> 
+<p style="color: #00b881; font-weight: bold;">
+    First Movers Command The Competition.
+  </p>
+    </div>
+    <a href="subscribe.html" class="btn-primary">Secure a License →</a>
+  </div>
+
+  <!-- SVG GRAPHIC INSERTED HERE - BELOW CTA BLOCK AND ABOVE RETURN TO TOP -->
+  <div style="width: 100%; max-width: 928px; margin: 40px auto; padding: 24px; border: 1px solid var(--rule, #2a2a2a); background: var(--panel, #0c0c0c); display: flex; flex-direction: column; gap: 24px; align-items: center; border-radius: 8px;">
+    <svg viewBox="0 0 850 340" width="100%" height="100%" style="background: transparent;">
+      <!-- DEFINITIONS FOR REUSABLE TERMINALS -->
+      <defs>
+        <g id="term">
+          <rect x="-11" y="-8" width="22" height="15" rx="2" fill="none" stroke="var(--white, #ffffff)" stroke-width="1.5" style="stroke: var(--white, #ffffff) !important; fill: none !important;"/>
+          <line x1="-4" y1="7" x2="4" y2="7" stroke="var(--white, #ffffff)" stroke-width="1.5" style="stroke: var(--white, #ffffff) !important;"/>
+          <line x1="-7" y1="10" x2="7" y2="10" stroke="var(--white, #ffffff)" stroke-width="1.5" style="stroke: var(--white, #ffffff) !important;"/>
+        </g>
+      </defs>
+
+      <!-- ARCHITECTURAL EXPLANATORY TEXT -->
+      <text x="70" y="35" font-family="var(--sans, Arial)" font-size="12" fill="var(--white, #ffffff)" font-weight="bold" text-anchor="middle" style="fill: var(--white, #ffffff) !important;">SECURE</text>
+      <text x="70" y="53" font-family="var(--sans, Arial)" font-size="11" fill="var(--muted, #aeaeb2)" text-anchor="middle" style="fill: var(--muted, #aeaeb2) !important;">Isolated Perimeter</text>
+
+      <text x="220" y="35" font-family="var(--sans, Arial)" font-size="12" fill="var(--signal, #00875a)" font-weight="bold" text-anchor="middle" style="fill: var(--signal, #00875a) !important;">VERIFY</text>
+      <text x="220" y="53" font-family="var(--sans, Arial)" font-size="11" fill="var(--muted, #aeaeb2)" text-anchor="middle" style="fill: var(--muted, #aeaeb2) !important;">Gatekeepers Validate Requests</text>
+
+      <text x="500" y="35" font-family="var(--sans, Arial)" font-size="12" fill="var(--signal, #00875a)" font-weight="bold" text-anchor="middle" style="fill: var(--signal, #00875a) !important;">TRAFFIC &amp; QUERIES</text>
+      <text x="500" y="53" font-family="var(--sans, Arial)" font-size="11" fill="var(--muted, #aeaeb2)" text-anchor="middle" style="fill: var(--muted, #aeaeb2) !important;">Satellite Nodes Manage Edge Traffic Directly</text>
+
+      <!-- 1. MASTER DATABASE (LEFT) -->
+      <g transform="translate(70, 180)">
+        <text x="0" y="-55" font-family="var(--sans, Arial)" font-size="11" fill="var(--white, #ffffff)" font-weight="bold" text-anchor="middle" style="fill: var(--white, #ffffff) !important;">MASTER DB</text>
+        
+        <rect x="-35" y="-40" width="70" height="80" rx="5" fill="var(--mid, #1c1c1e)" stroke="var(--white, #ffffff)" stroke-width="2" style="fill: var(--mid, #1c1c1e) !important; stroke: var(--white, #ffffff) !important;"/>
+        <ellipse cx="0" cy="-22" rx="28" ry="8" fill="none" stroke="var(--white, #ffffff)" stroke-width="2" style="fill: none !important; stroke: var(--white, #ffffff) !important;"/>
+        <path d="M -28 -5 A 28 8 0 0 0 28 -5" fill="none" stroke="var(--white, #ffffff)" stroke-width="2" style="fill: none !important; stroke: var(--white, #ffffff) !important;"/>
+        <path d="M -28 12 A 28 8 0 0 0 28 12" fill="none" stroke="var(--white, #ffffff)" stroke-width="2" style="fill: none !important; stroke: var(--white, #ffffff) !important;"/>
+      </g>
+
+      <!-- FIXED BACKBONE LINES -->
+      <path d="M 105 180 L 195 180" stroke="var(--rule, #3a3a3c)" stroke-width="2" stroke-dasharray="4 4" style="stroke: var(--rule, #3a3a3c) !important;"/>
+      <path d="M 195 100 L 195 260" stroke="var(--rule, #3a3a3c)" stroke-width="2" stroke-dasharray="4 4" style="stroke: var(--rule, #3a3a3c) !important;"/>
+      
+      <!-- 2. THE GATEKEEPER ARC (SHIELD) -->
+      <path d="M 180 75 A 140 140 0 0 1 180 285" fill="none" stroke="var(--signal, #00875a)" stroke-width="3" stroke-linecap="round" style="fill: none !important; stroke: var(--signal, #00875a) !important;"/>
+
+      <!-- GATEKEEPERS -->
+      <g transform="translate(220, 100)"><circle cx="0" cy="0" r="12" fill="var(--mid, #1c1c1e)" stroke="var(--signal, #00875a)" stroke-width="2" style="fill: var(--mid, #1c1c1e) !important; stroke: var(--signal, #00875a) !important;"/><text x="0" y="4" font-family="var(--sans, Arial)" font-size="11" fill="var(--signal, #00875a)" font-weight="bold" text-anchor="middle" style="fill: var(--signal, #00875a) !important;">G</text></g>
+      <g transform="translate(220, 180)"><circle cx="0" cy="0" r="12" fill="var(--mid, #1c1c1e)" stroke="var(--signal, #00875a)" stroke-width="2" style="fill: var(--mid, #1c1c1e) !important; stroke: var(--signal, #00875a) !important;"/><text x="0" y="4" font-family="var(--sans, Arial)" font-size="11" fill="var(--signal, #00875a)" font-weight="bold" text-anchor="middle" style="fill: var(--signal, #00875a) !important;">G</text></g>
+      <g transform="translate(220, 260)"><circle cx="0" cy="0" r="12" fill="var(--mid, #1c1c1e)" stroke="var(--signal, #00875a)" stroke-width="2" style="fill: var(--mid, #1c1c1e) !important; stroke: var(--signal, #00875a) !important;"/><text x="0" y="4" font-family="var(--sans, Arial)" font-size="11" fill="var(--signal, #00875a)" font-weight="bold" text-anchor="middle" style="fill: var(--signal, #00875a) !important;">G</text></g>
+
+      <!-- DISTRIBUTION LINES FROM GATEKEEPERS TO SATELLITES -->
+      <path d="M 232 100 L 380 90" stroke="var(--rule, #3a3a3c)" stroke-width="1.5" style="stroke: var(--rule, #3a3a3c) !important;"/>
+      <path d="M 232 100 L 380 135" stroke="var(--rule, #3a3a3c)" stroke-width="1.5" style="stroke: var(--rule, #3a3a3c) !important;"/>
+      <path d="M 232 180 L 380 180" stroke="var(--rule, #3a3a3c)" stroke-width="1.5" style="stroke: var(--rule, #3a3a3c) !important;"/>
+      <path d="M 232 260 L 380 225" stroke="var(--rule, #3a3a3c)" stroke-width="1.5" style="stroke: var(--rule, #3a3a3c) !important;"/>
+      <path d="M 232 260 L 380 270" stroke="var(--rule, #3a3a3c)" stroke-width="1.5" style="stroke: var(--rule, #3a3a3c) !important;"/>
+
+      <!-- SATELLITE NODES -->
+      <circle cx="390" cy="90" r="8" fill="var(--signal, #00875a)" stroke="none" style="fill: var(--signal, #00875a) !important;"/>
+      <circle cx="390" cy="135" r="8" fill="var(--signal, #00875a)" stroke="none" style="fill: var(--signal, #00875a) !important;"/>
+      <circle cx="390" cy="180" r="8" fill="var(--signal, #00875a)" stroke="none" style="fill: var(--signal, #00875a) !important;"/>
+      <circle cx="390" cy="225" r="8" fill="var(--signal, #00875a)" stroke="none" style="fill: var(--signal, #00875a) !important;"/>
+      <circle cx="390" cy="270" r="8" fill="var(--signal, #00875a)" stroke="none" style="fill: var(--signal, #00875a) !important;"/>
+
+      <!-- FAN LINES FROM SATELLITES TO USER TERMINALS -->
+      <path d="M 398 90 L 590 85" stroke="var(--rule, #3a3a3c)" stroke-width="1" style="stroke: var(--rule, #3a3a3c) !important;"/>
+      <path d="M 398 90 L 590 115" stroke="var(--rule, #3a3a3c)" stroke-width="1" style="stroke: var(--rule, #3a3a3c) !important;"/>
+      <path d="M 398 135 L 590 145" stroke="var(--rule, #3a3a3c)" stroke-width="1" style="stroke: var(--rule, #3a3a3c) !important;"/>
+      <path d="M 398 180 L 590 175" stroke="var(--rule, #3a3a3c)" stroke-width="1" style="stroke: var(--rule, #3a3a3c) !important;"/>
+      <path d="M 398 225 L 590 205" stroke="var(--rule, #3a3a3c)" stroke-width="1" style="stroke: var(--rule, #3a3a3c) !important;"/>
+      <path d="M 398 225 L 590 235" stroke="var(--rule, #3a3a3c)" stroke-width="1" style="stroke: var(--rule, #3a3a3c) !important;"/>
+      <path d="M 398 270 L 590 265" stroke="var(--rule, #3a3a3c)" stroke-width="1" style="stroke: var(--rule, #3a3a3c) !important;"/>
+
+      <!-- USER TERMINALS -->
+      <use href="#term" x="600" y="85" />
+      <use href="#term" x="600" y="115" />
+      <use href="#term" x="600" y="145" />
+      <use href="#term" x="600" y="175" />
+      <use href="#term" x="600" y="205" />
+      <use href="#term" x="600" y="235" />
+      <use href="#term" x="600" y="265" />
+      
+      <!-- SUBTEXT LABELS -->
+      <text x="220" y="315" font-family="var(--sans, Arial)" font-size="11" fill="var(--muted, #aeaeb2)" text-anchor="middle" style="fill: var(--muted, #aeaeb2) !important;">GATEKEEPERS</text>
+      <text x="390" y="315" font-family="var(--sans, Arial)" font-size="11" fill="var(--muted, #aeaeb2)" text-anchor="middle" style="fill: var(--muted, #aeaeb2) !important;">SATELLITE NODES</text>
+      <text x="600" y="315" font-family="var(--sans, Arial)" font-size="11" fill="var(--muted, #aeaeb2)" text-anchor="middle" style="fill: var(--muted, #aeaeb2) !important;">USER TERMINALS</text>
+    </svg>
+  </div>
+
+<!-- FOOTER STACK -->
+<footer>
+  <div class="footer-inner">
+    <button onclick="scrollToTop()" class="footer-top-link"><span>↑ Return to Top</span></button>
+    
+    <div class="footer-rule"></div>
+    
+    <div class="footer-policy-links">
+      <a href="privacy.html">Privacy Policy</a> &nbsp;|&nbsp; <a href="terms.html">Terms of Service</a>
+    </div>
+    
+    <div class="footer-copy">
+      © 2026 Glexicon. All rights reserved.<br>
+      Trade Secret — Confidential Intellectual Property — Global Licensing Available<br>
+      <svg class="bolt-svg" viewBox="0 0 24 24" fill="#FFD700"><path d="M11 21h-1l1.5-6.5h-4.5c-.3 0-.5-.2-.6-.4-.1-.2 0-.5.2-.7l7.5-9.5h1l-1.5 6.5h4.5c.3 0 .5.2.6.4.1.2 0 .5-.2.7l-7.5 9.5z"/></svg>Tick. Tock. Token.<svg class="bolt-svg" viewBox="0 0 24 24" fill="#FFD700"><path d="M11 21h-1l1.5-6.5h-4.5c-.3 0-.5-.2-.6-.4-.1-.2 0-.5.2-.7l7.5-9.5h1l-1.5 6.5h4.5c.3 0 .5.2.6.4.1.2 0 .5-.2.7l-7.5 9.5z"/></svg>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
