@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glexicon – Secure Access</title>
+<style>
+  :root { 
+    --black:#0a0a0a; 
+    --white:#f5f4f0; 
+    --signal:#00b881; 
+    --rule:#2a2a2a; 
+    --panel:#111111; 
+    --mid:#181818; 
+    --muted:#a0a0a0; 
+    --mono: Arial, sans-serif; 
+    --sans: Arial, sans-serif; 
+  }
+  
+  * { 
+    box-sizing:border-box; 
+    margin:0; 
+    padding:0; 
+    font-family: var(--sans);
+  }
+  html { scroll-behavior:smooth; height: 100%; }
+  
+  body { 
+    font-family:var(--sans); 
+    background:var(--black); 
+    color:var(--white); 
+    line-height:1.6;
+    position: relative;
+    min-height: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .site-nav { 
+    position:sticky; 
+    top:0; 
+    z-index:100; 
+    background:rgba(10,10,10,0.97); 
+    backdrop-filter:blur(8px); 
+    border-bottom:1px solid var(--rule); 
+    padding:28px 56px 0; 
+    height:100px; 
+    display:flex; 
+    align-items:center; 
+    justify-content:space-between; 
+  }
+  .nav-brand { display:flex; align-items:flex-end; gap:16px; text-decoration:none; padding-bottom:6px; }
+  .nav-brand-meta { display:flex; flex-direction:column; justify-content:center; }
+  .nav-brand-text { font-family:var(--mono); font-size:24px; letter-spacing:0.15em; color:var(--white); text-transform:uppercase; line-height:1.1; font-weight:700; }
+  .nav-tagline { font-family:var(--mono); font-size:15px; letter-spacing:0.05em; color:var(--muted); line-height:1.3; margin-top:4px; }
+  
+  .nav-links { display:flex; align-items:center; gap:6px; }
+  .nav-links a { font-family:var(--mono); font-size:13px; letter-spacing:0.05em; text-transform:uppercase; color:#888; text-decoration:none; padding:8px 12px; transition:color 0.15s; white-space:nowrap; }
+  .nav-links a:hover { color:var(--signal); }
+
+  .page-wrap { max-width:1040px; margin:0 auto; padding:36px 56px 380px; }
+  
+  /* ── MAIN HERO STYLING ── */
+  main { text-align: center; padding: 64px 0 48px; border-bottom: 1px solid var(--rule); }
+  
+  .page-eyebrow { font-family:var(--mono); font-size:16px; letter-spacing:0.15em; text-transform:uppercase; color:var(--signal); margin-bottom:16px; display:flex; align-items:center; gap:12px; font-weight:600; }
+  .page-eyebrow::after, .page-eyebrow::before { content:''; flex:1; height:1px; background:var(--rule); }
+  
+  .page-title { 
+   font-family: var(--sans) !important;
+   font-size:clamp(28px, 4.2vw, 38px); 
+   font-weight:700; 
+   letter-spacing:-0.03em; 
+   line-height:1.2; 
+   color:var(--white); 
+   margin-bottom:20px;
+
+  }
+  .page-sub { 
+    font-family: var(--sans) !important; 
+    font-size:17px; 
+    color:var(--muted); 
+    max-width:720px; 
+    margin: 0 auto 24px;
+    font-weight:400; 
+    text-wrap: pretty;
+  }
+  
+  .seal-title { font-family: var(--mono); font-size:13px; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; margin-top:48px; margin-bottom:16px; color:var(--muted); }
+  .hero-img {
+    display: block;
+    margin: 0 auto;
+    max-width: 300px;
+    width: 100%;
+    height: auto;
+    border: 1px dashed var(--rule);
+    padding: 12px;
+    background: var(--panel);
+  }
+
+  /* ── ACCESS & SECURITY CONTENT ── */
+  .section { padding:64px 0; border-bottom:1px solid var(--rule); }
+  .section:last-of-type { border-bottom:none; margin-bottom: 32px; }
+  
+  /* Offsets target position to account for the sticky nav height */
+  #access-security {
+    scroll-margin-top: 120px;
+  }
+  
+  h2 { 
+    font-family: var(--sans) !important; 
+    font-size:24px; 
+    font-weight:600; 
+    color:#00b881; 
+    margin-bottom:16px; 
+    letter-spacing:-0.01em;
+  }
+  
+  .section-intro {
+    color: #b0afa9;
+    font-size: 16px;
+    margin-bottom: 40px;
+    max-width: 780px;
+    line-height: 1.8;
+  }
+  
+  p { 
+    font-size:15px; 
+    color:#b0afa9; 
+    line-height:1.8; 
+    margin-bottom:20px; 
+    max-width:780px; 
+    text-wrap: pretty;
+  }
+  p strong { color:var(--white); font-weight: 600; }
+  p:last-child { margin-bottom:0; }
+  
+  /* ── CLAUSE / STEP LIST SYSTEM ── */
+  .steps-list { margin:36px 0 48px; }
+  
+  .step-item { 
+    display:flex; 
+    gap:24px; 
+    padding:28px 0; 
+    border-bottom:1px solid #1c1c1c; 
+  }
+  .step-item:last-child { border-bottom:none; padding-bottom: 0; }
+  .step-item:first-child { padding-top: 0; border-top: 1px solid #1c1c1c; }
+  
+  .step-num-badge { 
+    color:var(--signal); 
+    font-family:var(--mono); 
+    font-size:14px; 
+    flex-shrink:0; 
+    font-weight: 700;
+    padding-top: 2px;
+    letter-spacing: 0.05em;
+  }
+  
+  .step-content p { 
+    margin-bottom:0; 
+    font-size:15px; 
+    color:#999; 
+    max-width:none; 
+    text-wrap: pretty;
+    line-height:1.8;
+  }
+  
+  .step-content h3 { 
+    font-family: var(--sans) !important;
+    font-size:17px; 
+    font-weight:600; 
+    color:var(--signal); 
+    margin-bottom:8px;
+    letter-spacing: -0.01em;
+  }
+  
+  .step-content a {
+    color: var(--white);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    transition: color 0.15s;
+  }
+  .step-content a:hover { color: var(--signal); }
+
+  /* ── REASSURANCE BLOCK ── */
+  .reassurance { 
+    border:1px solid var(--rule); 
+    background:var(--panel); 
+    padding:40px; 
+    margin:40px 0 0; 
+    border-left: 3px solid var(--signal);
+  }
+  .reassurance h3 { 
+    font-family: var(--mono);
+    font-size:14px; 
+    font-weight:700; 
+    letter-spacing:0.1em; 
+    text-transform:uppercase; 
+    color:var(--signal); 
+    margin-bottom:24px; 
+  }
+  .reassurance ul { list-style: none; display: flex; flex-direction: column; gap: 18px; }
+  .reassurance ul li {
+    font-size: 16px;
+    color: #999;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.7;
+    text-wrap: pretty;
+  }
+  .reassurance ul li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--signal);
+    font-weight: 700;
+  }
+  .reassurance a { color: var(--white); text-decoration: underline; text-underline-offset: 3px; transition: color 0.15s; }
+  .reassurance a:hover { color: var(--signal); }
+
+  /* ── FOOTER STACK ── */
+  footer { 
+    width: 100%; 
+    position: absolute; 
+    bottom: 40px; 
+    left: 0; 
+    padding: 0 56px;
+  }
+  .footer-inner { 
+    max-width:1040px; 
+    margin:0 auto; 
+    display:flex; 
+    flex-direction:column;
+    align-items:center; 
+    justify-content:center;
+    text-align:center;
+    gap:12px; 
+  }
+  
+  .footer-top-link {
+    text-decoration:none;
+    margin-bottom:8px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  .footer-top-link span {
+    font-family:var(--mono);
+    font-size:15px;
+    color:#777;
+    transition:color 0.15s;
+  }
+  .footer-top-link:hover span {
+    color:var(--signal);
+  }
+  
+  .footer-rule {
+    width: 100%;
+    height: 1px;
+    background-color: var(--rule);
+    margin-bottom: 12px;
+  }
+  
+  .footer-copy { font-family:var(--mono); font-size:15px; color:#666; line-height:1.7; }
+  .footer-policy-links { font-family:var(--mono); font-size:15px; color:#666; margin-bottom:4px; }
+  .footer-policy-links a { color:#777; text-decoration:none; transition:color 0.15s; }
+  .footer-policy-links a:hover { color:var(--signal); }
+  
+  .bolt-svg {
+    width: 14px;
+    height: 14px;
+    vertical-align: middle;
+    margin: 0 6px;
+  }
+
+  @media(max-width:900px) {
+    .site-nav { height: auto; padding: 32px 24px 16px; flex-direction: column; gap: 16px; align-items: flex-start; }
+    .nav-links { width: 100%; justify-content: flex-start; gap: 12px; }
+    .nav-links a { padding: 6px 0; font-size: 14px; }
+  }
+
+  @media(max-width:700px) {
+    .page-wrap { padding-left:24px; padding-right:24px; padding-bottom:460px; }
+    .reassurance { padding: 28px 24px; }
+    .step-item { gap: 16px; }
+    footer { padding: 0 24px; bottom: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a class="nav-brand" href="index.html">
+    <svg width="52" height="52" viewBox="0 0 60 60" fill="none" style="margin-top:10px; flex-shrink:0;"><circle cx="30" cy="12" r="4.5" fill="#00b881"/><circle cx="8" cy="52" r="4.5" fill="#00b881"/><circle cx="52" cy="52" r="4.5" fill="#00b881"/><text x="30" y="38" font-family="Arial, sans-serif" font-size="30" font-weight="900" text-anchor="middle" dominant-baseline="central" fill="#f5f4f0">G</text></svg>
+    <div class="nav-brand-meta">
+      <span class="nav-brand-text">Glexicon Monster</span>
+      <span class="nav-tagline">The Architecture of Next-Generation Data Efficiency</span>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="HQ_Dashboard.html">HQ Dashboard</a>
+    <a href="#access-security">Access-Security</a>
+    <a href="information.html">Information</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  
+  <main>
+    <div class="page-eyebrow">Secure Access Endpoint</div>
+    <h1 class="page-title">Welcome to the Sovereign Gateway</h1>
+    <p class="page-sub">You have reached the secure access point for your subscription. Please select the core link above to proceed to your private authorised HQ control dashboard.</p>
+
+    <div class="seal-title">Glexicon Seal of Authenticity</div>
+    <img src="hero.png" alt="Glexicon Seal of Authenticity" class="hero-img">
+  </main>
+
+  <!-- ── ACCESS & SECURITY ── -->
+  <div class="section" id="access-security">
+    <h2>Access &amp; Security</h2>
+    <p class="section-intro">
+      The website and Dashboard HQ you're using now are already yours — configured for your account, ready to use. The one thing still ahead of you is requesting your Protocol Engine, which we issue by hand to protect the trade secret it's built on.
+    </p>
+
+    <div class="steps-list">
+      <div class="step-item">
+        <div class="step-num-badge">01</div>
+        <div class="step-content">
+          <h3>Your environment is ready</h3>
+          <p>Your tier, Tick Tock Points allocation, and node licences are already configured into the Dashboard HQ you're viewing right now. There's nothing further to activate — open your <a href="HQ_Dashboard.html">Dashboard HQ</a> from the navigation above whenever you're ready.</p>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num-badge">02</div>
+        <div class="step-content">
+          <h3>Request your Protocol Engine</h3>
+          <p>The Protocol Engine — the component that actually generates your tokens — is issued separately, and only by hand. Email <a href="mailto:support@glexicon.uk">support@glexicon.uk</a> with the address you used at checkout, and we'll verify your account before releasing it.</p>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num-badge">03</div>
+        <div class="step-content">
+          <h3>Your engine arrives securely</h3>
+          <p>We send your download link directly to your registered email, typically within 48 business hours. From there, the engine runs entirely on your own equipment — how it works, and how you use it, is never visible to Glexicon.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="reassurance">
+      <h3>What This Means For You</h3>
+      <ul>
+        <li>Your Dashboard HQ is already private and pre-configured for your account — there's nothing left to activate to start using it.</li>
+        <li>The Protocol Engine is distributed manually and only as compiled binaries — never as source code — to protect the underlying method as a trade secret.</li>
+        <li>Every node runs entirely on your own equipment. Glexicon has no server, sandbox, or hosted instance handling your data at any point.</li>
+        <li>If you need your engine reissued, or have any access concerns, contact <a href="mailto:support@glexicon.uk">support@glexicon.uk</a> and we'll take care of it directly.</li>
+        <li>Your Protocol Engine, dashboard, and underlying tokenisation method are protected as confidential trade secrets under your subscription agreement.</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <button onclick="scrollToTop()" class="footer-top-link"><span>↑ Return to Top</span></button>
+    
+    <div class="footer-rule"></div>
+    
+    <div class="footer-policy-links">
+      <a href="privacy.html">Privacy Policy</a> &nbsp;|&nbsp; <a href="terms.html">Terms of Service</a>
+    </div>
+    
+    <div class="footer-copy">
+      © 2026 Glexicon. All rights reserved.<br>
+      Trade Secret — Confidential Intellectual Property — Global Licensing Available<br>
+      <svg class="bolt-svg" viewBox="0 0 24 24" fill="#FFD700"><path d="M11 21h-1l1.5-6.5h-4.5c-.3 0-.5-.2-.6-.4-.1-.2 0-.5.2-.7l7.5-9.5h1l-1.5 6.5h4.5c.3 0 .5.2.6.4.1.2 0 .5-.2.7l-7.5 9.5z"/></svg>Tick. Tock. Token.<svg class="bolt-svg" viewBox="0 0 24 24" fill="#FFD700"><path d="M11 21h-1l1.5-6.5h-4.5c-.3 0-.5-.2-.6-.4-.1-.2 0-.5.2-.7l7.5-9.5h1l-1.5 6.5h4.5c.3 0 .5.2.6.4.1.2 0 .5-.2.7l-7.5 9.5z"/></svg>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>

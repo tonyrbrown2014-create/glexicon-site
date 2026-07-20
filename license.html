@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glexicon Monster — Enterprise License Agreement</title>
+<style>
+  :root { 
+    --black:#0a0a0a; 
+    --white:#f5f4f0; 
+    --signal:#00b881; 
+    --rule:#2a2a2a; 
+    --panel:#111111; 
+    --mid:#181818; 
+    --muted:#a0a0a0; 
+    --mono: Arial, sans-serif; 
+    --sans: Arial, sans-serif; 
+  }
+  
+  * { 
+    box-sizing:border-box; 
+    margin:0; 
+    padding:0; 
+    font-family: var(--sans);
+  }
+  html { scroll-behavior:smooth; height: 100%; }
+  
+  body { 
+    font-family:var(--sans); 
+    background:var(--black); 
+    color:var(--white); 
+    line-height:1.6;
+    position: relative;
+    min-height: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .site-nav { 
+    position:sticky; 
+    top:0;
+    z-index:100; 
+    background:rgba(10,10,10,0.97); 
+    backdrop-filter:blur(8px); 
+    border-bottom:1px solid var(--rule); 
+    padding:28px 56px 0; 
+    height:100px; 
+    display:flex; 
+    align-items:center; 
+    justify-content:space-between; 
+  }
+  .nav-brand { display:flex; align-items:flex-end; gap:16px; text-decoration:none; padding-bottom:6px; }
+  .nav-brand-meta { display:flex; flex-direction:column; justify-content:center; }
+  .nav-brand-text { font-family:var(--mono); font-size:24px; letter-spacing:0.15em; color:var(--white); text-transform:uppercase; line-height:1.1; font-weight:700; }
+  .nav-tagline { font-family:var(--mono); font-size:15px; letter-spacing:0.05em; color:var(--muted); line-height:1.3; margin-top:4px; }
+  
+  .nav-links { display:flex; align-items:center; gap:6px; }
+  .nav-links a { font-family:var(--mono); font-size:13px; letter-spacing:0.05em; text-transform:uppercase; color:#888; text-decoration:none; padding:8px 12px; transition:color 0.15s; white-space:nowrap; }
+  .nav-links a:hover { color:var(--signal); }
+
+  .page-wrap { max-width:1040px; margin:0 auto; padding:36px 56px 380px; }
+  .page-header { padding-bottom:48px; border-bottom:1px solid var(--rule); margin-bottom:48px; }
+  
+  .page-eyebrow { font-family:var(--mono); font-size:16px; letter-spacing:0.15em; text-transform:uppercase; color:var(--signal); margin-bottom:16px; display:flex; align-items:center; gap:12px; font-weight:600; }
+  .page-eyebrow::after { content:''; flex:1; height:1px; background:var(--rule); }
+  
+  .page-title { 
+   font-family: var(--sans) !important;
+   font-size:clamp(28px, 4.2vw, 38px); 
+   font-weight:700; 
+   letter-spacing:-0.03em; 
+   line-height:1.2; 
+   color:var(--white); 
+   margin-bottom:20px;
+ 
+  }
+  .page-sub { 
+    font-family: var(--sans) !important; 
+    font-size:17px; 
+    color:var(--muted); 
+    max-width:680px; 
+    font-weight:400; 
+  }
+
+  /* ── LICENSE CONTENT STYLING ── */
+  .section { padding:64px 0; border-bottom:1px solid var(--rule); }
+  .section:last-of-type { border-bottom:none; margin-bottom: 64px; }
+  
+  h2 { 
+    font-family: var(--sans) !important; 
+    font-size:24px; 
+    font-weight:600; 
+    color:#00b881; 
+    margin-bottom:24px; 
+    letter-spacing:-0.01em;
+  }
+  
+  p { 
+    font-size:15px; 
+    color:#b0afa9; 
+    line-height:1.8; 
+    margin-bottom:20px; 
+    max-width:780px; 
+    text-wrap: pretty;
+  }
+  p strong { color:var(--white); font-weight: 600; }
+  p:last-child { margin-bottom:0; }
+  
+  /* ── CLAUSE LIST SYSTEM ── */
+  .clause-list { margin:36px 0 20px; }
+  
+  .clause-item { 
+    display:flex; 
+    gap:18px; 
+    padding:24px 0; 
+    border-bottom:1px solid #1c1c1c; 
+  }
+  .clause-item:last-child { border-bottom:none; padding-bottom: 0; }
+  .clause-item:first-child { padding-top: 0; }
+  
+  .clause-dash { 
+    color:var(--signal); 
+    font-family:var(--mono); 
+    font-size:14px; 
+    flex-shrink:0; 
+    font-weight: 700;
+    padding-top: 2px;
+  }
+  
+  .clause-item p { 
+    margin-bottom:0; 
+    font-size:15px; 
+    color:#999; 
+    max-width:none; 
+    text-wrap: pretty;
+    line-height:1.8;
+  }
+  
+  .clause-item p strong { 
+    color:var(--white); 
+    font-weight: 600; 
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .callout { border:1px solid var(--rule); background:var(--panel); padding:28px; margin:32px 0; }
+  .callout p { font-size:14px; color:#999; line-height:1.7; margin-bottom:8px; text-wrap: pretty; }
+  .callout p:last-child { margin-bottom:0; }
+  .callout strong { color:var(--white); }
+  .callout.signal { border-left:3px solid var(--signal); }
+
+  /* ── TABLE STYLING ── */
+  .table-container { width: 100%; overflow-x: auto; border: 1px solid var(--rule); background: var(--panel); margin: 32px 0; }
+  table { width:100%; border-collapse:collapse; font-size:14px; text-align: left; }
+  th { font-family:var(--mono); font-size:12px; letter-spacing:0.05em; text-transform:uppercase; color:var(--muted); padding:16px 24px; background: var(--mid); border-bottom:1px solid var(--rule); font-weight: 700; }
+  td { padding:18px 24px; border-bottom:1px solid var(--rule); color:#999; vertical-align:middle; font-size: 14px; line-height:1.7; }
+  
+  th:first-child, td:first-child { width: 25%; min-width: 220px; color:var(--white); font-weight:600; font-family: var(--mono); }
+  tr:last-child td { border-bottom:none; }
+
+  /* ── FOOTER STACK ── */
+  footer { 
+    width: 100%; 
+    position: absolute; 
+    bottom: 40px; 
+    left: 0; 
+    padding: 0 56px;
+  }
+  .footer-inner { 
+    max-width:1040px; 
+    margin:0 auto; 
+    display:flex; 
+    flex-direction:column;
+    align-items:center; 
+    justify-content:center;
+    text-align:center;
+    gap:12px; 
+  }
+  
+  .footer-top-link {
+    text-decoration:none;
+    margin-bottom:8px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  .footer-top-link span {
+    font-family:var(--mono);
+    font-size:15px;
+    color:#777;
+    transition:color 0.15s;
+  }
+  .footer-top-link:hover span {
+    color:var(--signal);
+  }
+  
+  .footer-rule {
+    width: 100%;
+    height: 1px;
+    background-color: var(--rule);
+    margin-bottom: 12px;
+  }
+  
+  .footer-copy { font-family:var(--mono); font-size:15px; color:#666; line-height:1.7; }
+  .footer-policy-links { font-family:var(--mono); font-size:15px; color:#666; margin-bottom:4px; }
+  .footer-policy-links a { color:#777; text-decoration:none; transition:color 0.15s; }
+  .footer-policy-links a:hover { color:var(--signal); }
+  
+  .bolt-svg {
+    width: 14px;
+    height: 14px;
+    vertical-align: middle;
+    margin: 0 6px;
+  }
+
+  @media(max-width:900px) {
+    .site-nav { height: auto; padding: 32px 24px 16px; flex-direction: column; gap: 16px; align-items: flex-start; }
+    .nav-links { width: 100%; justify-content: flex-start; gap: 12px; }
+    .nav-links a { padding: 6px 0; font-size: 14px; }
+  }
+
+  @media(max-width:700px) {
+    .page-wrap { padding-left:24px; padding-right:24px; padding-bottom:420px; }
+    footer { padding: 0 24px; bottom: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a class="nav-brand" href="index.html">
+    <svg width="52" height="52" viewBox="0 0 60 60" fill="none" style="margin-top:10px; flex-shrink:0;"><circle cx="30" cy="12" r="4.5" fill="#00b881"/><circle cx="8" cy="52" r="4.5" fill="#00b881"/><circle cx="52" cy="52" r="4.5" fill="#00b881"/><text x="30" y="38" font-family="Arial, sans-serif" font-size="30" font-weight="900" text-anchor="middle" dominant-baseline="central" fill="#f5f4f0">G</text></svg>
+    <div class="nav-brand-meta">
+      <span class="nav-brand-text">Glexicon Monster</span>
+      <span class="nav-tagline">The Architecture of Next-Generation Data Efficiency</span>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="information.html">Information</a>
+    <a href="license.html">License</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-eyebrow">Legal · Version 2.0 · Institutional Edition</div>
+    <div class="page-title">Enterprise License Agreement</div>
+    <div class="page-sub">The hardened agreement governing institutional access to and utilization of the Glexicon Monster Protocol Engine across the Customer's sovereign satellite node architecture.</div>
+  </div>
+
+  <div class="section" id="parties">
+    <h2>1. Parties</h2>
+    <p>This Agreement is entered into between Glexicon ("Licensor") and the subscribing institution ("Customer") as formally identified at the point of enterprise subscription. This Agreement supersedes all prior representations, negotiations, or agreements relating to the subject matter herein.</p>
+  </div>
+
+  <div class="section" id="definitions">
+    <h2>2. Definitions</h2>
+    <div class="table-container">
+      <table>
+        <thead><tr><th>Term</th><th>Definition</th></tr></thead>
+        <tbody>
+          <tr><td>Protocol Engine</td><td>The Glexicon Monster data tokenization framework, its underlying logic, mathematical transformation mechanics, binary components, and associated compiled executable utilities.</td></tr>
+          <tr><td>Protocol Package</td><td>The licensed, downloadable package comprising the advanced engineered protocol engine, private Headquarter (HQ) Dashboard interface, portable website, and unique subscription license credentials.</td></tr>
+          <tr><td>Leaf Satellite Node</td><td>A single satellite leaf node deployed either locally or globally within the Customer's controlled network infrastructure, accounted for via heartbeat activation and status signals relayed back to your local HQ Dashboard.</td></tr>
+          <tr><td>Subscription Scope</td><td>The maximum authorized number of concurrent Leaf Satellite Nodes permitted under the Customer’s active subscription license tier.</td></tr>
+          <tr><td>Tokens</td><td>The unique, mathematically-derived data identifiers generated locally and independently by the Customer utilizing the Protocol Engine within their controlled infrastructure from their self-managed private data keys, over which Licensor maintains zero knowledge or access.</td></tr>
+          <tr><td>Tick Tock Points</td><td>The specific allocation of token processing metrics assigned to the Customer under their active subscription license tier.</td></tr>
+          <tr><td>HQ Dashboard</td><td>The Customer's interface through which the Customer deploys gatekeeper & satellite leaf nodes, verifies their operational status & monitors token allocation/usage, environment metrics plus node registration status.</td></tr>
+          <tr><td>Read-Only Archive State</td><td>The post-term operational mode under which previously indexed tokens remain fully accessible for local retrieval, but all active tokenization and new node registrations are strictly suspended.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section" id="grant">
+    <h2>3. Grant of License &amp; Subscription Scope</h2>
+    <p>Glexicon grants the Customer a non-exclusive, non-transferable subscription license strictly bounded by the Customer's approved Subscription Scope. This license authorizes the Customer to:</p>
+    <div class="clause-list">
+      <div class="clause-item"><span class="clause-dash">—</span><p>Execute and operate the Protocol Engine to power the maximum number of concurrent Leaf Gatekeeper or Satellite Nodes specified in the Customer's active subscription tier.</p></div>
+      <div class="clause-item"><span class="clause-dash">—</span><p>Utilize Protocol Engine operations solely within the parameters and organizational scale identified in the Customer's enterprise contract.</p></div>
+      <div class="clause-item"><span class="clause-dash">—</span><p>Generate, store, and query Tokens for the Customer's internal institutional data using their own secure, self-managed data keys.</p></div>
+      <div class="clause-item"><span class="clause-dash">—</span><p>Maintain access to previously generated tokens via the Read-Only Archive State upon subscription license expiry, subject to Section 5.</p></div>
+    </div>
+    <p style="margin-top:28px;">Customer may <strong>not</strong>:</p>
+    <div class="clause-list">
+      <div class="clause-item"><span class="clause-dash">—</span><p>Exceed the maximum authorized Leaf Gatekeeper or Satellite Node count permitted by their active subscription license tier without securing an immediate tier upgrade.</p></div>
+      <div class="clause-item"><span class="clause-dash">—</span><p>Reverse engineer, decompile, or disassemble the Protocol Engine, binary components, RAM injection mechanics, or any part of the Protocol Package.</p></div>
+      <div class="clause-item"><span class="clause-dash">—</span><p>Duplicate, redistribute, or sublicense the Protocol Package, subscription license credentials, or activation keys beyond the authorized boundaries of this contract.</p></div>
+      <div class="clause-item"><span class="clause-dash">—</span><p>Transfer, share or expose Protocol Engine access or its operational framework to any third party outside the Customer's institution.</p></div>
+      <div class="clause-item"><span class="clause-dash">—</span><p>Disclose the underlying methods, mathematical transformation framework, architectural logic, or inner workings of the Protocol Engine to any outside party.</p></div>
+    </div>
+  </div>
+
+  <div class="section" id="term">
+    <h2>4. Term, Expiry &amp; Read-Only Archive State</h2>
+    <p>This subscription license is granted for an initial annual term commencing on the date of confirmed subscription. Upon expiry:</p>
+    <div class="clause-list">
+      <div class="clause-item"><span class="clause-dash">—</span><p><strong>Active Protocol Access:</strong> The legal right to execute new tokenization processes, deploy new gatekeeper or satellite leaf nodes or receive protocol support ceases automatically upon non-renewal.</p></div>
+      <div class="clause-item"><span class="clause-dash">—</span><p><strong>Read-Only Archive State:</strong> Previously processed tokens remain accessible within the customer's controlled environment strictly for local data retrieval and historical verification purposes under a passive non-active operational state.</p></div>
+      <div class="clause-item"><span class="clause-dash">—</span><p><strong>Contractual Cessation &amp; Legal Boundaries:</strong> Glexicon maintains zero network access, remote commands or backdoor mechanisms to alter, terminate or manipulate the Customer's isolated environment. The Customer retains full ownership of their underlying data files and generated tokens. However, upon subscription expiry, the legal license to execute or utilize the Protocol Engine for any active processes completely terminates. Any continued unauthorized execution of the Protocol Engine software past the active subscription term constitutes a material breach of this Agreement and software copyright infringement.</p></div>
+    </div>
+    <div class="callout signal">
+      <p><strong>Renewal:</strong> This agreement automatically renews for consecutive annual terms unless either party provides sixty (60) days' written notice of non-renewal prior to the end of the current term. Renewal pricing will be confirmed no less than ninety (90) days before the renewal date.</p>
+    </div>
+  </div>
+
+  <div class="section" id="fees">
+    <h2>5. License Tiers &amp; Fees</h2>
+    <p>Standard annual subscription fees and processing bounds are defined below. Fixed promotional allocations or specific institutional contract agreements specified in an executed enterprise rider shall supersede the general schedule below.</p>
+    <div class="table-container">
+      <table>
+        <thead><tr><th>Sovereign Tiers</th><th>Annual Fee</th><th>Tick Tock Points</th><th>Authorized Node Scope</th></tr></thead>
+        <tbody>
+          <tr><td>Pioneer</td><td>$50,000</td><td>250,000</td><td>5 Nodes Limit</td></tr>
+          <tr><td>Explorer</td><td>$100,000</td><td>1 Million</td><td>10 Nodes Limit</td></tr>
+          <tr><td>Leader</td><td>$250,000</td><td>25 Million</td><td>25 Nodes Limit</td></tr>
+          <tr><td>Partner</td><td>$500,000</td><td>50 Million</td><td>50 Nodes Limit</td></tr>
+          <tr><td>Alliance</td><td>$1 Million</td><td>100 Million</td><td>100 Nodes Limit</td></tr>
+          <tr><td>Elite</td><td>$2.5 Million+</td><td>250 Million</td><td>Unlimited Custom Scope</td></tr>
+        </tbody>
+      </table>
+    </div> 
+    <div class="clause-list">
+      <div class="clause-item"><span class="clause-dash">—</span><p><strong>Late Payment:</strong> Overdue invoices accrue interest at 3.5% per month. Glexicon reserves the right to withhold future Protocol Engine Package updates, support provisions or manual package distributions after 30 days of non-payment without prejudice to other contractual remedies.</p></div>
+      <div class="clause-item"><span class="clause-dash">—</span><p><strong>Additional Nodes:</strong> Expansion of Subscription Scope beyond the licensed tier requires written agreement and is subject to pro-rata fee adjustment for the remainder of the active term.</p></div>
+    </div>
+  </div>
+
+  <div class="section" id="delivery">
+    <h2>6. Deployment, Activation &amp; Customer Responsibility</h2>
+    <p>Access is granted immediately upon subscription payment confirmation via a secure download link delivered to the customer's registered email, enabling the initial retrieval of the secure Protocol Package and its portable website and unique licensed credentials.</p>
+    
+    <p><strong>Initial Custody &amp; Environment Autonomy</strong></p>
+    <p>The Customer acquires full custody of the execution packages immediately upon download. Local environment provisioning and Leaf Gatekeeper or Satellite Node cloning may be executed entirely at the Customer's convenience and operational timeline. Project acceptance is deemed absolute upon the initial download of the asset package. From the point of download, <strong>Customer assumes full responsibility</strong> for:</p>
+    
+    <div class="clause-list">
+      <div class="clause-item"><span class="clause-dash">—</span><p><strong>Infrastructure Security:</strong> Each run environment must be configured and operated within infrastructure appropriate to Customer's institutional security classification, including access-controlled environments and standard cybersecurity safeguards.</p></div>
+      <div class="clause-item"><span class="clause-dash">—</span><p><strong>Operational Integrity:</strong> Executable files must be operated within the technical specifications published in the accompanying installation documentation, including supported environments and memory allocation bounds.</p></div>
+      <div class="clause-item"><span class="clause-dash">—</span><p><strong>Credential Custody:</strong> Customer is responsible for safeguarding all license activation credentials. Compromised credentials must be reported immediately so Glexicon can reissue secure verification parameters.</p></div>
+      <div class="clause-item"><span class="clause-dash">—</span><p><strong>Tamper Integrity:</strong> Any attempt to circumvent, modify, or bypass signature validation controls on the Protocol Engine constitutes a material breach of this Agreement and results in immediate license suspension.</p></div>
+    </div>
+  </div>
+
+  <div class="section" id="tokens">
+    <h2>7. Token Allocation (Tick Tock Points)</h2>
+    <p>Customer receives an annual allocation of Tick Tock Points as strictly defined by their approved license tier. Under the terms of this subscription license agreement:</p>
+    <div class="clause-list">
+      <div class="clause-item"><span class="clause-dash">—</span><p><strong>Direct Pool Attachment:</strong> Allocated Tick Tock Points are attached directly and exclusively to the Customer's active local Token pool balance to govern operational processing metrics within the local environment.</p></div>
+      <div class="clause-item"><span class="clause-dash">—</span><p><strong>No Extraneous Benefit Value:</strong> Tick Tock Points provide no external software credits, commercial service upgrades, or third-party benefits, and remain strictly non-transferable outside the assigned core asset package.</p></div>
+      <div class="clause-item"><span class="clause-dash">—</span><p><strong>No Residual Value:</strong> Points carry no cash value, are entirely non-redeemable for currency, and expire completely at the conclusion of each annual term. Re-allocated when a tier renewal is executed.</p></div>
+    </div>
+  </div>
+
+  <div class="section" id="audit">
+    <h2>8. Deployment Audit Rights &amp; Compliance Enforcement</h2>
+    <p>Because Glexicon operates on an absolute zero-knowledge architecture with no central database access to the Customer's on-premise operations. Compliance with licensed node scopes is verified strictly through the automated built in hard-coded Tier limits.</p>
+    <div class="clause-list">
+      <div class="clause-item"><span class="clause-dash">—</span><p><strong>Metric Verification:</strong>The hard-coded HQ Dashboard and protocol usage including gatekeeper and Satellite node deployments control the limits of your allocated subscription Tier Limits.</p></div>
+      <div class="clause-item"><span class="clause-dash">—</span><p><strong>Data Boundaries:</strong> No structural database records, private keys, tokenized contents or local transaction logs will ever be evaluated, accessed or requested during this HQ Dashboard self verification process. All your data and metrics stay On-Premise</p></div>
+      <div class="clause-item"><span class="clause-dash">—</span><p><strong>Discrepancies:</strong> If your private HQ Dashboard log telemetry demonstrates active Gatekeeper or Satellite Leaf Node numbers beyond the licensed tier scope, the Customer agrees to immediately upgrade to the applicable tier and settle any underpaid subscription fees for the period of excess deployment.</p></div>
+    </div>
+  </div>
+
+  <div class="section" id="confidentiality">
+    <h2>9. Confidentiality</h2>
+    <p>The Protocol Engine, its method, mathematics, architecture and inner workings constitute <strong>Glexicon Trade Secrets</strong> of the highest classification. Customer agrees to:</p>
+    <div class="clause-list">
+      <div class="clause-item"><span class="clause-dash">—</span><p>Disclose no aspect of the Protocol Engine to any third party, including external contractors, consultant or institutional partners.</p></div>
+      <div class="clause-item"><span class="clause-dash">—</span><p>Restrict internal access strictly to personnel with a documented, verified operational requirement.</p></div>
+      <div class="clause-item"><span class="clause-dash">—</span><p>Ensure all personnel with Protocol Engine binary access have executed a binding non-disclosure agreement.</p></div>
+      <div class="clause-item"><span class="clause-dash">—</span><p>Notify Glexicon in writing within 24 hours of any known or suspected unauthorized disclosure.</p></div>
+    </div>
+    <div class="callout signal">
+      <p>Breach of this section constitutes irreparable harm for which monetary damages alone are insufficient. Glexicon is entitled to seek immediate injunctive relief in any court of competent jurisdiction without the requirement to post bond or other security.</p>
+    </div>
+  </div>
+
+  <div class="section" id="ip">
+    <h2>10. Proprietary Rights</h2>
+    <div class="clause-list">
+      <div class="clause-item"><span class="clause-dash">—</span><p>All intellectual property in the Protocol Engine — including its logic, mathematics, and underlying binaries — remains exclusively with Glexicon.</p></div>
+      <div class="clause-item"><span class="clause-dash">—</span><p>Customer owns its source data. Customer owns its generated Tokens. Customer does not own and acquires no rights in the structural framework or methods by which those Tokens are created.</p></div>
+      <div class="clause-item"><span class="clause-dash">—</span><p>No license is granted by implication, estoppel or otherwise beyond what is expressly stated herein.</p></div>
+    </div>
+  </div>
+
+  <div class="section" id="liability">
+    <h2>11. Limitation of Liability</h2>
+    <p>Glexicon's total cumulative liability to Customer under or in connection with this Agreement — whether in contract, tort, negligence, or otherwise — shall not exceed <strong>the total annual subscription license fees paid by Customer in the twelve months immediately preceding the event giving rise to the claim</strong>.</p>
+    <div class="callout">
+      <p>Glexicon shall not be liable for any indirect, consequential, special, incidental, or punitive damages, including loss of revenue, data corruption, or loss of business opportunity, arising from the use or inability to use the Protocol Engine, even if advised of the possibility of such damages.</p>
+    </div>
+    <p>Glexicon shall not be held liable for operational anomalies, data mismatches, or localized system issues arising from Customer's independent self-hosted architecture configurations, third-party integrations, or failure to operate within standard technical parameters.</p>
+  </div>
+
+  <div class="section" id="governing">
+    <h2>12. Governing Law &amp; Jurisdiction</h2>
+    <p>This Agreement shall be governed by the laws of England and Wales unless otherwise agreed in writing between the parties for international clients operating under specific jurisdictional requirements. Disputes may be resolved by arbitration under the rules of the London Court of International Arbitration (LCIA) as an alternative to court proceedings.</p>
+  </div>
+
+  <div class="section" id="termination">
+    <h2>13. Termination &amp; Offboarding</h2>
+    <p>Either party may terminate this Agreement by providing 60 days' written notice prior to the annual renewal date. In the event of material breach by Customer, Glexicon may terminate immediately upon written notice.</p>
+    <p>Upon termination, the following <strong>offboarding procedure</strong> applies:</p>
+    <div class="clause-list">
+      <div class="clause-item"><span class="clause-dash">—</span><p><strong>Cessation of Use:</strong> Customer loses the legal right to run the core execution binaries, and all active tracking operations must conclude on the termination date.</p></div>
+      <div class="clause-item"><span class="clause-dash">—</span><p><strong>Protocol Access:</strong> Your HQ Dashboard, Local registry connection and Gatekeeper & Satellite node deployment paths are required to be deactivated on the termination date with due respect.</p></div>
+      <div class="clause-item"><span class="clause-dash">—</span><p><strong>Legal Status:</strong> Upon subscription lapse or termination, all granted access credentials and execution rights legally expire, rendering continued deployment an un-licenced breach of this agreement.</p></div>
+      <div class="clause-item"><span class="clause-dash">—</span><p><strong>Read-Only Archive:</strong> Customer's existing Token index remains accessible within their own environment for 90 days post-termination for data retrieval only.</p></div>
+      <div class="clause-item"><span class="clause-dash">—</span><p><strong>After 90 Days:</strong> All authorization to execute the engine expires completely. Customer's underlying files remain completely intact and accessible through their own independent systems.</p></div>
+      <div class="clause-item"><span class="clause-dash">—</span><p><strong>Confidentiality Survival:</strong> Obligations under Section 9 (Confidentiality) survive termination indefinitely.</p></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <button onclick="scrollToTop()" class="footer-top-link"><span>↑ Return to Top</span></button>
+    
+    <div class="footer-rule"></div>
+    
+    <div class="footer-policy-links">
+      <a href="privacy.html">Privacy Policy</a> &nbsp;|&nbsp; <a href="terms.html">Terms of Service</a>
+    </div>
+    
+    <div class="footer-copy">
+      © 2026 Glexicon. All rights reserved.<br>
+      Trade Secret — Confidential Intellectual Property — Global Licensing Available<br>
+      <svg class="bolt-svg" viewBox="0 0 24 24" fill="#FFD700"><path d="M11 21h-1l1.5-6.5h-4.5c-.3 0-.5-.2-.6-.4-.1-.2 0-.5.2-.7l7.5-9.5h1l-1.5 6.5h4.5c.3 0 .5.2.6.4.1.2 0 .5-.2.7l-7.5 9.5z"/></svg>Tick. Tock. Token.<svg class="bolt-svg" viewBox="0 0 24 24" fill="#FFD700"><path d="M11 21h-1l1.5-6.5h-4.5c-.3 0-.5-.2-.6-.4-.1-.2 0-.5.2-.7l7.5-9.5h1l-1.5 6.5h4.5c.3 0 .5.2.6.4.1.2 0 .5-.2.7l-7.5 9.5z"/></svg>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
