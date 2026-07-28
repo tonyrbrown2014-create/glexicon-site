@@ -1,0 +1,1738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glexicon Monster — Institutional HQ</title>
+<style>
+/* Glexicon Monster HQ Dashboard — local icon set (adapted from Lucide, MIT licence) */
+.icon {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  background-color: currentColor;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+.icon-activity {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Cpath%20d%3D%22M22%2012h-2.48a2%202%200%200%200-1.93%201.46l-2.35%208.36a.25.25%200%200%201-.48%200L9.24%202.18a.25.25%200%200%200-.48%200l-2.35%208.36A2%202%200%200%201%204.49%2012H2%22%20/%3E%20%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Cpath%20d%3D%22M22%2012h-2.48a2%202%200%200%200-1.93%201.46l-2.35%208.36a.25.25%200%200%201-.48%200L9.24%202.18a.25.25%200%200%200-.48%200l-2.35%208.36A2%202%200%200%201%204.49%2012H2%22%20/%3E%20%3C/svg%3E");
+}
+
+.icon-download {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Cpath%20d%3D%22M12%2015V3%22%20/%3E%20%3Cpath%20d%3D%22M21%2015v4a2%202%200%200%201-2%202H5a2%202%200%200%201-2-2v-4%22%20/%3E%20%3Cpath%20d%3D%22m7%2010%205%205%205-5%22%20/%3E%20%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Cpath%20d%3D%22M12%2015V3%22%20/%3E%20%3Cpath%20d%3D%22M21%2015v4a2%202%200%200%201-2%202H5a2%202%200%200%201-2-2v-4%22%20/%3E%20%3Cpath%20d%3D%22m7%2010%205%205%205-5%22%20/%3E%20%3C/svg%3E");
+}
+
+.icon-file-text {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Cpath%20d%3D%22M6%2022a2%202%200%200%201-2-2V4a2%202%200%200%201%202-2h8a2.4%202.4%200%200%201%201.704.706l3.588%203.588A2.4%202.4%200%200%201%2020%208v12a2%202%200%200%201-2%202z%22%20/%3E%20%3Cpath%20d%3D%22M14%202v5a1%201%200%200%200%201%201h5%22%20/%3E%20%3Cpath%20d%3D%22M10%209H8%22%20/%3E%20%3Cpath%20d%3D%22M16%2013H8%22%20/%3E%20%3Cpath%20d%3D%22M16%2017H8%22%20/%3E%20%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Cpath%20d%3D%22M6%2022a2%202%200%200%201-2-2V4a2%202%200%200%201%202-2h8a2.4%202.4%200%200%201%201.704.706l3.588%203.588A2.4%202.4%200%200%201%2020%208v12a2%202%200%200%201-2%202z%22%20/%3E%20%3Cpath%20d%3D%22M14%202v5a1%201%200%200%200%201%201h5%22%20/%3E%20%3Cpath%20d%3D%22M10%209H8%22%20/%3E%20%3Cpath%20d%3D%22M16%2013H8%22%20/%3E%20%3Cpath%20d%3D%22M16%2017H8%22%20/%3E%20%3C/svg%3E");
+}
+
+.icon-hash {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Cline%20x1%3D%224%22%20x2%3D%2220%22%20y1%3D%229%22%20y2%3D%229%22%20/%3E%20%3Cline%20x1%3D%224%22%20x2%3D%2220%22%20y1%3D%2215%22%20y2%3D%2215%22%20/%3E%20%3Cline%20x1%3D%2210%22%20x2%3D%228%22%20y1%3D%223%22%20y2%3D%2221%22%20/%3E%20%3Cline%20x1%3D%2216%22%20x2%3D%2214%22%20y1%3D%223%22%20y2%3D%2221%22%20/%3E%20%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Cline%20x1%3D%224%22%20x2%3D%2220%22%20y1%3D%229%22%20y2%3D%229%22%20/%3E%20%3Cline%20x1%3D%224%22%20x2%3D%2220%22%20y1%3D%2215%22%20y2%3D%2215%22%20/%3E%20%3Cline%20x1%3D%2210%22%20x2%3D%228%22%20y1%3D%223%22%20y2%3D%2221%22%20/%3E%20%3Cline%20x1%3D%2216%22%20x2%3D%2214%22%20y1%3D%223%22%20y2%3D%2221%22%20/%3E%20%3C/svg%3E");
+}
+
+.icon-key-round {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Cpath%20d%3D%22M2.586%2017.414A2%202%200%200%200%202%2018.828V21a1%201%200%200%200%201%201h3a1%201%200%200%200%201-1v-1a1%201%200%200%201%201-1h1a1%201%200%200%200%201-1v-1a1%201%200%200%201%201-1h.172a2%202%200%200%200%201.414-.586l.814-.814a6.5%206.5%200%201%200-4-4z%22%20/%3E%20%3Ccircle%20cx%3D%2216.5%22%20cy%3D%227.5%22%20r%3D%22.5%22%20fill%3D%22currentColor%22%20/%3E%20%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Cpath%20d%3D%22M2.586%2017.414A2%202%200%200%200%202%2018.828V21a1%201%200%200%200%201%201h3a1%201%200%200%200%201-1v-1a1%201%200%200%201%201-1h1a1%201%200%200%200%201-1v-1a1%201%200%200%201%201-1h.172a2%202%200%200%200%201.414-.586l.814-.814a6.5%206.5%200%201%200-4-4z%22%20/%3E%20%3Ccircle%20cx%3D%2216.5%22%20cy%3D%227.5%22%20r%3D%22.5%22%20fill%3D%22currentColor%22%20/%3E%20%3C/svg%3E");
+}
+
+.icon-life-buoy {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%2210%22%20/%3E%20%3Cpath%20d%3D%22m4.93%204.93%204.24%204.24%22%20/%3E%20%3Cpath%20d%3D%22m14.83%209.17%204.24-4.24%22%20/%3E%20%3Cpath%20d%3D%22m14.83%2014.83%204.24%204.24%22%20/%3E%20%3Cpath%20d%3D%22m9.17%2014.83-4.24%204.24%22%20/%3E%20%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%224%22%20/%3E%20%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%2210%22%20/%3E%20%3Cpath%20d%3D%22m4.93%204.93%204.24%204.24%22%20/%3E%20%3Cpath%20d%3D%22m14.83%209.17%204.24-4.24%22%20/%3E%20%3Cpath%20d%3D%22m14.83%2014.83%204.24%204.24%22%20/%3E%20%3Cpath%20d%3D%22m9.17%2014.83-4.24%204.24%22%20/%3E%20%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%224%22%20/%3E%20%3C/svg%3E");
+}
+
+.icon-lock {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Crect%20width%3D%2218%22%20height%3D%2211%22%20x%3D%223%22%20y%3D%2211%22%20rx%3D%222%22%20ry%3D%222%22%20/%3E%20%3Cpath%20d%3D%22M7%2011V7a5%205%200%200%201%2010%200v4%22%20/%3E%20%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Crect%20width%3D%2218%22%20height%3D%2211%22%20x%3D%223%22%20y%3D%2211%22%20rx%3D%222%22%20ry%3D%222%22%20/%3E%20%3Cpath%20d%3D%22M7%2011V7a5%205%200%200%201%2010%200v4%22%20/%3E%20%3C/svg%3E");
+}
+
+.icon-plus {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Cpath%20d%3D%22M5%2012h14%22%20/%3E%20%3Cpath%20d%3D%22M12%205v14%22%20/%3E%20%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Cpath%20d%3D%22M5%2012h14%22%20/%3E%20%3Cpath%20d%3D%22M12%205v14%22%20/%3E%20%3C/svg%3E");
+}
+
+.icon-search {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Cpath%20d%3D%22m21%2021-4.34-4.34%22%20/%3E%20%3Ccircle%20cx%3D%2211%22%20cy%3D%2211%22%20r%3D%228%22%20/%3E%20%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Cpath%20d%3D%22m21%2021-4.34-4.34%22%20/%3E%20%3Ccircle%20cx%3D%2211%22%20cy%3D%2211%22%20r%3D%228%22%20/%3E%20%3C/svg%3E");
+}
+
+.icon-server {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Crect%20width%3D%2220%22%20height%3D%228%22%20x%3D%222%22%20y%3D%222%22%20rx%3D%222%22%20ry%3D%222%22%20/%3E%20%3Crect%20width%3D%2220%22%20height%3D%228%22%20x%3D%222%22%20y%3D%2214%22%20rx%3D%222%22%20ry%3D%222%22%20/%3E%20%3Cline%20x1%3D%226%22%20x2%3D%226.01%22%20y1%3D%226%22%20y2%3D%226%22%20/%3E%20%3Cline%20x1%3D%226%22%20x2%3D%226.01%22%20y1%3D%2218%22%20y2%3D%2218%22%20/%3E%20%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Crect%20width%3D%2220%22%20height%3D%228%22%20x%3D%222%22%20y%3D%222%22%20rx%3D%222%22%20ry%3D%222%22%20/%3E%20%3Crect%20width%3D%2220%22%20height%3D%228%22%20x%3D%222%22%20y%3D%2214%22%20rx%3D%222%22%20ry%3D%222%22%20/%3E%20%3Cline%20x1%3D%226%22%20x2%3D%226.01%22%20y1%3D%226%22%20y2%3D%226%22%20/%3E%20%3Cline%20x1%3D%226%22%20x2%3D%226.01%22%20y1%3D%2218%22%20y2%3D%2218%22%20/%3E%20%3C/svg%3E");
+}
+
+.icon-shield-check {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Cpath%20d%3D%22M20%2013c0%205-3.5%207.5-7.66%208.95a1%201%200%200%201-.67-.01C7.5%2020.5%204%2018%204%2013V6a1%201%200%200%201%201-1c2%200%204.5-1.2%206.24-2.72a1.17%201.17%200%200%201%201.52%200C14.51%203.81%2017%205%2019%205a1%201%200%200%201%201%201z%22%20/%3E%20%3Cpath%20d%3D%22m9%2012%202%202%204-4%22%20/%3E%20%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Cpath%20d%3D%22M20%2013c0%205-3.5%207.5-7.66%208.95a1%201%200%200%201-.67-.01C7.5%2020.5%204%2018%204%2013V6a1%201%200%200%201%201-1c2%200%204.5-1.2%206.24-2.72a1.17%201.17%200%200%201%201.52%200C14.51%203.81%2017%205%2019%205a1%201%200%200%201%201%201z%22%20/%3E%20%3Cpath%20d%3D%22m9%2012%202%202%204-4%22%20/%3E%20%3C/svg%3E");
+}
+
+.icon-upload {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Cpath%20d%3D%22M12%203v12%22%20/%3E%20%3Cpath%20d%3D%22m17%208-5-5-5%205%22%20/%3E%20%3Cpath%20d%3D%22M21%2015v4a2%202%200%200%201-2%202H5a2%202%200%200%201-2-2v-4%22%20/%3E%20%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Cpath%20d%3D%22M12%203v12%22%20/%3E%20%3Cpath%20d%3D%22m17%208-5-5-5%205%22%20/%3E%20%3Cpath%20d%3D%22M21%2015v4a2%202%200%200%201-2%202H5a2%202%200%200%201-2-2v-4%22%20/%3E%20%3C/svg%3E");
+}
+
+.icon-user-cog {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Cpath%20d%3D%22M10%2015H6a4%204%200%200%200-4%204v2%22%20/%3E%20%3Cpath%20d%3D%22m14.305%2016.53.923-.382%22%20/%3E%20%3Cpath%20d%3D%22m15.228%2013.852-.923-.383%22%20/%3E%20%3Cpath%20d%3D%22m16.852%2012.228-.383-.923%22%20/%3E%20%3Cpath%20d%3D%22m16.852%2017.772-.383.924%22%20/%3E%20%3Cpath%20d%3D%22m19.148%2012.228.383-.923%22%20/%3E%20%3Cpath%20d%3D%22m19.53%2018.696-.382-.924%22%20/%3E%20%3Cpath%20d%3D%22m20.772%2013.852.924-.383%22%20/%3E%20%3Cpath%20d%3D%22m20.772%2016.148.924.383%22%20/%3E%20%3Ccircle%20cx%3D%2218%22%20cy%3D%2215%22%20r%3D%223%22%20/%3E%20%3Ccircle%20cx%3D%229%22%20cy%3D%227%22%20r%3D%224%22%20/%3E%20%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Cpath%20d%3D%22M10%2015H6a4%204%200%200%200-4%204v2%22%20/%3E%20%3Cpath%20d%3D%22m14.305%2016.53.923-.382%22%20/%3E%20%3Cpath%20d%3D%22m15.228%2013.852-.923-.383%22%20/%3E%20%3Cpath%20d%3D%22m16.852%2012.228-.383-.923%22%20/%3E%20%3Cpath%20d%3D%22m16.852%2017.772-.383.924%22%20/%3E%20%3Cpath%20d%3D%22m19.148%2012.228.383-.923%22%20/%3E%20%3Cpath%20d%3D%22m19.53%2018.696-.382-.924%22%20/%3E%20%3Cpath%20d%3D%22m20.772%2013.852.924-.383%22%20/%3E%20%3Cpath%20d%3D%22m20.772%2016.148.924.383%22%20/%3E%20%3Ccircle%20cx%3D%2218%22%20cy%3D%2215%22%20r%3D%223%22%20/%3E%20%3Ccircle%20cx%3D%229%22%20cy%3D%227%22%20r%3D%224%22%20/%3E%20%3C/svg%3E");
+}
+
+  /* ── DASHBOARD STYLES ── */
+  :root {
+    --black:   #0a0a0a;
+    --panel:   #111111;
+    --mid:     #181818;
+    --card:    #111111;
+    --rule:    #2a2a2a;
+    --rule2:   #333333;
+    --white:   #f5f4f0;
+    --signal:  #00b881;
+    --signal-dim: #009c6e;
+    --signal2: rgba(0,229,160,0.12);
+    --signal3: rgba(0,229,160,0.06);
+    --muted:   #9a9a9a;
+    --muted2:  #c7c6c0;
+    --danger:  #e05555;
+    --warn:    #e05555;
+    --mono:    Arial, sans-serif;
+    --sans:    Arial, sans-serif;
+  }
+
+  * { box-sizing:border-box; margin:0; padding:0; line-height:1.4; }
+  html, body { height:100%; overflow:hidden; }
+  body { font-family:var(--sans); background:var(--black); color:var(--white); display:flex; }
+
+  /* ── SIDEBAR ── */
+  #sidebar {
+    width:260px; flex-shrink:0;
+    background:var(--panel);
+    border-right:1px solid var(--rule);
+    display:flex; flex-direction:column;
+    padding:20px 12px;
+    overflow-y:auto;
+  }
+
+  .logo-container {
+    display:flex; align-items:center; gap:12px;
+    padding:4px 8px 16px;
+  }
+  .logo-g {
+    width:48px; height:48px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .logo-title { font-family:var(--mono); font-size:13px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--white); display:block; }
+  .logo-tagline { font-family:var(--mono); font-size:14px; color:var(--signal); letter-spacing:0.05em; display:block; margin-top:3px; }
+  .logo-sub   { font-family:var(--mono); font-size:12px; color:var(--muted); letter-spacing:0.08em; text-transform:uppercase; display:block; margin-top:2px; }
+
+  .nav-section-label {
+    font-family:var(--mono); font-size:15px; font-weight:700; letter-spacing:0.06em;
+    color:var(--muted); padding:12px 10px 6px;
+    margin-top:8px;
+  }
+  .nav-section-label:first-of-type { margin-top:0; }
+
+  .nav-item {
+    display:flex; align-items:center; gap:10px;
+    padding:11px 10px;
+    color:var(--muted2); cursor:pointer;
+    border-left:2px solid transparent;
+    transition:color 0.15s, border-color 0.15s, background 0.15s;
+    border-radius:0;
+    font-family:var(--sans); font-size:15px; font-weight:500;
+    user-select:none;
+  }
+  .nav-item:hover { color:var(--white); }
+  .nav-item.active { color:var(--signal); border-left-color:var(--signal); }
+  .nav-item .icon { width:14px; height:14px; flex-shrink:0; }
+  .nav-meta { display:block; font-family:var(--mono); font-size:12px; color:var(--muted); margin-top:2px; letter-spacing:0.05em; }
+  .nav-text-container { display:flex; flex-direction:column; }
+
+  .sidebar-footer {
+    margin-top:auto; padding:16px 10px 4px;
+    border-top:1px solid var(--rule);
+    font-family:var(--mono); font-size:12px; color:var(--muted);
+    letter-spacing:0.08em; line-height:1.8;
+  }
+  .sidebar-footer strong { color:var(--signal); }
+
+  .page-banner {
+    display:flex; align-items:center; gap:10px;
+    padding:14px 18px; border:1px solid var(--rule2); border-left:2px solid var(--signal);
+    background:var(--mid); font-family:var(--mono); font-size:14px; letter-spacing:0.05em;
+    color:var(--muted2); margin-bottom:20px;
+  }
+  .page-banner strong { color:var(--signal); }
+
+  /* ── MAIN CONTENT ── */
+  #content-wrapper {
+    flex:1; display:flex; flex-direction:column;
+    overflow:hidden; background:var(--black);
+  }
+
+  /* ── TOPBAR ── */
+  .topbar {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 32px; min-height:56px;
+    border-bottom:1px solid var(--rule);
+    background:var(--panel); flex-shrink:0;
+  }
+  .topbar-left { display:flex; flex-direction:column; gap:2px; }
+  .topbar-title { font-family:var(--mono); font-size:14px; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:var(--white); }
+  .topbar-sub   { font-family:var(--mono); font-size:12px; color:var(--muted); letter-spacing:0.08em; }
+  .topbar-right { display:flex; align-items:center; gap:20px; }
+  .topbar-stat  { display:flex; flex-direction:column; align-items:flex-end; gap:2px; }
+  .topbar-stat-val  { font-family:var(--mono); font-size:15px; font-weight:700; color:var(--signal); line-height:1; }
+  .topbar-stat-label { font-family:var(--mono); font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; }
+  .topbar-divider { width:1px; height:28px; background:var(--rule); }
+  .status-pill-top {
+    display:flex; align-items:center; gap:6px;
+    font-family:var(--mono); font-size:12px; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--signal); border:1px solid var(--signal); padding:4px 10px;
+  }
+  .pulse-dot {
+    width:6px; height:6px; background:var(--signal); border-radius:50%;
+    animation:pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.8)} }
+
+  /* ── SCROLL AREA ── */
+  .scroll-area { flex:1; overflow-y:auto; padding:28px 32px; }
+
+  /* ── VIEW PANELS ── */
+  .view-content { display:none; flex-direction:column; gap:18px; }
+  .view-content.active { display:flex; }
+
+  /* ── CARDS ── */
+  .card {
+    background:var(--card); border:1px solid var(--rule2);
+    padding:22px; position:relative;
+  }
+  .card-title {
+    font-family:var(--mono); font-size:17px; font-weight:700;
+    letter-spacing:0.02em; color:var(--white);
+    margin-bottom:18px;
+  }
+  .card-title-row {
+    display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;
+  }
+  .card-title-row .card-title { margin-bottom:0; }
+
+  .grid-2 { display:grid; grid-template-columns:2fr 1fr; gap:18px; }
+  .grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:18px; }
+  .grid-4 { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:18px; }
+
+  /* ── ANIMATED RINGS ── */
+  .status-center-container {
+    position:relative; overflow:hidden;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:16px 0; gap:12px;
+  }
+  .status-center-container::before {
+    content:''; position:absolute; inset:0; z-index:0;
+    background-image: linear-gradient(var(--rule) 1px, transparent 1px), linear-gradient(90deg, var(--rule) 1px, transparent 1px);
+    background-size:20px 20px;
+    background-position:center center;
+    -webkit-mask-image: radial-gradient(ellipse at center, black 35%, transparent 72%);
+    mask-image: radial-gradient(ellipse at center, black 35%, transparent 72%);
+  }
+  .status-center-container > * { position:relative; z-index:1; }
+  .animated-rings { position:relative; width:100px; height:100px; }
+  .ring {
+    position:absolute; border-radius:50%;
+    border:2px solid var(--signal);
+    top:50%; left:50%; transform:translate(-50%,-50%);
+  }
+  .ring-1 { width:100%; height:100%; opacity:0.15; animation:ring-spin 8s linear infinite; }
+  .ring-2 { width:74%; height:74%; opacity:0.3; animation:ring-spin 5s linear infinite reverse; }
+  .ring-3 { width:48%; height:48%; opacity:0.5; animation:ring-spin 3s linear infinite; }
+  @keyframes ring-spin { from{transform:translate(-50%,-50%) rotate(0deg)} to{transform:translate(-50%,-50%) rotate(360deg)} }
+  .ring-g {
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    font-family:var(--sans); font-size:24px; font-weight:800; color:var(--white);
+    text-shadow:0 0 16px var(--signal2);
+  }
+  .integrity-text {
+    font-family:var(--mono); font-size:13px; font-weight:700; letter-spacing:0.15em;
+    color:var(--muted2); text-transform:uppercase;
+  }
+  .integrity-text span { color:var(--signal); }
+  .heartbeat-sub { font-family:var(--mono); font-size:12px; color:var(--muted); letter-spacing:0.08em; text-transform:uppercase; }
+  .heartbeat-sub span { color:var(--signal); }
+
+  /* ── DONUT CHART ── */
+  .donut-box { display:flex; align-items:center; justify-content:center; gap:20px; padding:8px 0; }
+  .donut-svg { transform:rotate(-90deg); }
+  .donut-bg  { fill:none; stroke:var(--rule2); stroke-width:3; }
+  .donut-fill {
+    fill:none; stroke:var(--signal); stroke-opacity:0.82;
+    stroke-width:3; stroke-linecap:butt;
+    stroke-dasharray:0 100;
+    stroke-dashoffset:0;
+    transition: stroke-dasharray 0.6s ease;
+  }
+  .donut-center-text { font-family:var(--mono); font-size:12px; color:var(--muted); letter-spacing:0.06em; text-align:center; line-height:1.6; text-transform:uppercase; }
+  .capacity-metrics { font-family:var(--mono); font-size:14px; color:var(--muted); line-height:1.8; }
+  .capacity-metrics .highlight { color:var(--signal); font-weight:700; }
+
+  /* ── STAT BLOCKS ── */
+  .stat-block { padding:16px; background:var(--mid); border:1px solid var(--rule); display:flex; flex-direction:column; align-items:flex-start; }
+  .stat-block-label { font-family:var(--mono); font-size:14px; letter-spacing:0.06em; color:var(--muted); margin-bottom:10px; order:1; }
+  .stat-block-value { font-family:var(--mono); font-size:28px; font-weight:700; color:var(--white); line-height:1; margin-bottom:6px; order:2; }
+  .stat-block-sub { font-family:var(--mono); font-size:14px; color:var(--muted); order:3; }
+  .stat-block-value.green { color:var(--signal); }
+  .stat-block-value.warn  { color:var(--warn); }
+  .stat-block.caption-top .stat-block-label { order:1; margin-bottom:2px; }
+  .stat-block.caption-top .stat-block-sub   { order:2; margin-bottom:10px; }
+  .stat-block.caption-top .stat-block-value { order:3; margin-bottom:0; }
+
+  /* ── TABLE ── */
+  .table-wrap { overflow-x:auto; }
+  table { width:100%; border-collapse:collapse; font-size:15px; }
+  thead tr { border-bottom:1px solid var(--rule2); }
+  th {
+    font-family:var(--mono); font-size:12px; font-weight:700; text-transform:uppercase;
+    letter-spacing:0.1em; color:var(--muted); padding:13px 14px; text-align:left;
+  }
+  td { padding:15px 14px; border-bottom:1px solid var(--rule); color:var(--muted2); font-family:var(--mono); font-size:14px; }
+  .audit-table th { color:var(--signal); text-transform:none; letter-spacing:0.02em; }
+  .node-registry-table th { color:var(--signal); text-transform:none; letter-spacing:0.02em; }
+  #node-table th { color:var(--signal); text-transform:none; letter-spacing:0.02em; font-size:13px; }
+  tbody tr:last-child td { border-bottom:none; }
+  tbody tr:hover td { background:var(--signal3); }
+  .text-root   { color:var(--signal); font-weight:700; }
+  .text-leaf   { color:var(--muted2); }
+  .text-warn   { color:var(--warn); }
+  .text-danger { color:var(--danger); }
+  .node-id     { color:var(--white); font-weight:400; letter-spacing:0.02em; }
+
+  .indicator-dot {
+    width:6px; height:6px; border-radius:50%; background:var(--signal);
+    display:inline-block; margin-right:6px;
+    box-shadow:0 0 5px var(--signal);
+    animation:pulse 2s ease-in-out infinite;
+  }
+  .indicator-dot.warn   { background:var(--warn); box-shadow:0 0 5px var(--warn); animation:none; }
+  .indicator-dot.danger { background:var(--danger); box-shadow:0 0 5px var(--danger); animation:none; }
+  .status-pill { display:flex; align-items:center; }
+
+  /* ── MINI GRAPH ── */
+  .mini-graph { display:flex; align-items:flex-end; gap:3px; height:36px; }
+  .graph-bar { width:4px; background:var(--signal); border-radius:1px 1px 0 0; }
+
+  /* ── SEARCH ── */
+  .search-container {
+    display:flex; align-items:center; gap:8px;
+    border:1px solid var(--rule2); padding:6px 12px;
+    background:var(--mid);
+  }
+  .search-container .icon { width:13px; height:13px; color:var(--muted); flex-shrink:0; }
+  .search-input {
+    background:none; border:none; outline:none;
+    font-family:var(--mono); font-size:14px; color:var(--white);
+    width:160px;
+  }
+  .search-input::placeholder { color:var(--muted); }
+
+  /* ── BUTTONS ── */
+  .btn-generate {
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    font-family:var(--mono); font-size:13px; font-weight:700; letter-spacing:0.04em;
+    cursor:pointer; border:none; box-sizing:border-box;
+    background:var(--signal); color:var(--black); padding:0 18px; height:42px; line-height:1;
+    transition:opacity 0.2s;
+  }
+  .btn-generate:hover { opacity:0.85; }
+  .btn-secondary {
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    font-family:var(--mono); font-size:13px; font-weight:700; letter-spacing:0.04em;
+    cursor:pointer; box-sizing:border-box;
+    background:none; border:1px solid var(--rule2); color:var(--muted2); padding:0 16px; height:42px; line-height:1;
+    transition:border-color 0.15s, color 0.15s;
+  }
+  .btn-secondary:hover { border-color:var(--signal); color:var(--signal); }
+
+  /* ── ANALYTICS BARS ── */
+  .analytics-bar-row { display:flex; align-items:center; gap:12px; margin-bottom:10px; }
+  .analytics-bar-label { font-family:var(--mono); font-size:14px; color:var(--muted); min-width:120px; }
+  .analytics-bar-track { flex:1; height:4px; background:var(--rule2); }
+  .analytics-bar-fill  { height:4px; background:var(--signal); transition:width 1.2s ease-out; }
+  .analytics-bar-val   { font-family:var(--mono); font-size:14px; color:var(--white); min-width:40px; text-align:right; }
+
+  /* ── KEY PROVISIONING ── */
+  .key-field-label { font-family:var(--mono); font-size:13px; font-weight:700; letter-spacing:0.04em; color:var(--signal); margin-bottom:8px; display:block; }
+  .key-field-input {
+    width:100%; border:1px solid var(--rule2); padding:10px 12px;
+    font-family:var(--mono); font-size:15px; color:var(--white);
+    background:var(--mid); margin-bottom:14px; outline:none;
+    transition:border-color 0.2s;
+  }
+  .key-field-input:focus { border-color:var(--signal); }
+  .key-output-box {
+    border:1px solid var(--signal); background:var(--signal3); padding:16px;
+    font-family:var(--mono); font-size:14px; color:var(--signal);
+    letter-spacing:0.06em; word-break:break-all; line-height:1.8;
+    display:none; margin-top:16px;
+  }
+
+  /* ── TOKEN GENERATION ── */
+  .input-tabs { display:flex; gap:8px; margin-bottom:16px; }
+  .input-tab {
+    font-family:var(--mono); font-size:13px; font-weight:700; letter-spacing:0.06em;
+    padding:9px 16px; border:1px solid var(--rule2); background:var(--mid);
+    color:var(--muted); cursor:pointer; transition:border-color 0.15s, color 0.15s;
+  }
+  .input-tab.active { border-color:var(--signal); color:var(--signal); background:var(--signal3); }
+  .input-panel { display:none; }
+  .input-panel.active { display:block; }
+  .token-textarea {
+    width:100%; min-height:140px; resize:vertical;
+    border:1px solid var(--rule2); padding:12px; font-family:var(--mono); font-size:14px;
+    color:var(--white); background:var(--mid); outline:none; margin-bottom:14px;
+    transition:border-color 0.2s; line-height:1.6;
+  }
+  .token-textarea:focus { border-color:var(--signal); }
+  .dropzone {
+    border:1.5px dashed var(--rule2); padding:28px; text-align:center;
+    color:var(--muted); font-family:var(--mono); font-size:14px; margin-bottom:14px;
+    transition:border-color 0.2s; cursor:pointer;
+  }
+  .dropzone:hover, .dropzone.dragover { color:var(--signal); }
+  .dropzone input[type="file"] { display:none; }
+  .field-select {
+    width:100%; border:1px solid var(--rule2); padding:10px 12px;
+    font-family:var(--mono); font-size:15px; color:var(--white);
+    background:var(--mid); margin-bottom:14px; outline:none; cursor:pointer;
+  }
+  .field-select:focus { border-color:var(--signal); }
+
+  /* ── SETTINGS ── */
+  .setting-row {
+    display:flex; justify-content:space-between; align-items:center;
+    padding:14px 0; border-bottom:1px solid var(--rule);
+  }
+  .setting-row:last-child { border-bottom:none; }
+  .setting-label { font-size:16px; color:var(--signal); font-weight:500; }
+  .setting-sub   { font-family:var(--mono); font-size:14px; color:var(--muted); margin-top:3px; }
+  .toggle {
+    width:36px; height:20px; background:var(--rule2); border-radius:10px;
+    position:relative; cursor:pointer; transition:background 0.2s; flex-shrink:0;
+  }
+  .toggle.on { background:var(--signal-dim); }
+  .toggle::after {
+    content:''; position:absolute; width:14px; height:14px;
+    background:var(--white); border-radius:50%; top:3px; left:3px;
+    transition:left 0.2s;
+  }
+  .toggle.on::after { left:19px; }
+
+  /* ── CALLOUT ── */
+  .callout { border:1px solid var(--rule2); background:var(--mid); padding:16px; font-family:var(--mono); font-size:14px; color:var(--muted); line-height:1.7; }
+  .callout strong { color:var(--white); }
+  .callout.signal { border-left:2px solid var(--signal); }
+
+  /* ── TIMESTAMP ── */
+  #live-time { font-family:var(--mono); font-size:13px; color:var(--muted); letter-spacing:0.05em; padding:0 8px; text-align:center; }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<div id="sidebar">
+  <div class="logo-container">
+    <div class="logo-g">
+      <svg width="40" height="40" viewBox="0 0 60 60" fill="none">
+        <circle cx="30" cy="8" r="4.5" fill="#00b881"/>
+        <circle cx="8" cy="48" r="4.5" fill="#00b881"/>
+        <circle cx="52" cy="48" r="4.5" fill="#00b881"/>
+        <text x="30" y="36" font-family="Arial,sans-serif" font-size="26" font-weight="800" text-anchor="middle" dominant-baseline="central" fill="#f5f4f0">G</text>
+      </svg>
+    </div>
+    <div class="logo-text">
+      <span class="logo-title">Glexicon Monster</span>
+      <span class="logo-tagline">⚡ Tick. Tock. Token.</span>
+    </div>
+  </div>
+
+  <div id="live-time"></div>
+  <div id="live-mode-indicator" style="text-align:center; font-family:var(--mono); font-size:11px; letter-spacing:0.08em; color:var(--muted); margin-top:6px; padding-bottom:16px; border-bottom:1px solid var(--rule); margin-bottom:16px;">● Connecting…</div>
+
+  <div class="nav-section-label">HQ Command Board</div>
+  <div class="nav-item active" onclick="switchView('fleet-ops', this)">
+    <i class="icon icon-shield-check"></i>
+    <div class="nav-text-container">
+      <span>Deployment Command</span>
+    </div>
+  </div>
+
+  <div class="nav-section-label">Tokenisation</div>
+  <div class="nav-item" onclick="switchView('token-generation', this)">
+    <i class="icon icon-hash"></i>
+    <div class="nav-text-container">
+      <span>Generate Tokens</span>
+    </div>
+  </div>
+
+  <div class="nav-section-label">Infrastructure</div>
+  <div class="nav-item" onclick="switchView('node-registry', this)">
+    <i class="icon icon-server"></i>
+    <div class="nav-text-container">
+      <span>Node Registry</span>
+    </div>
+  </div>
+  <div class="nav-item" onclick="switchView('protocol-analytics', this)">
+    <i class="icon icon-activity"></i>
+    <div class="nav-text-container">
+      <span>Protocol Analytics</span>
+    </div>
+  </div>
+
+  <div class="nav-section-label">Security</div>
+  <div class="nav-item" onclick="switchView('key-provisioning', this)">
+    <i class="icon icon-key-round"></i>
+    <div class="nav-text-container">
+      <span>Key Provisioning</span>
+    </div>
+  </div>
+  <div class="nav-item" onclick="switchView('audit-verification', this)">
+    <i class="icon icon-file-text"></i>
+    <div class="nav-text-container">
+      <span>Audit & Verification</span>
+    </div>
+  </div>
+
+  <div class="nav-section-label">Account</div>
+  <div class="nav-item" onclick="switchView('account-settings', this)">
+    <i class="icon icon-user-cog"></i>
+    <div class="nav-text-container">
+      <span>Account Settings</span>
+    </div>
+  </div>
+  <div class="nav-item" onclick="switchView('help', this)">
+    <i class="icon icon-life-buoy"></i>
+    <div class="nav-text-container">
+      <span>Quick Start Guide</span>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="content-wrapper">
+
+  <!-- SCROLL AREA -->
+  <div class="scroll-area">
+
+    <!-- VIEW 1: DEPLOYMENT COMMAND -->
+    <div id="view-fleet-ops" class="view-content active">
+      <div class="page-banner">
+        <i class="icon icon-lock" style="width:16px;height:16px;color:var(--signal);"></i>
+        <span><strong>Zero-Knowledge Architecture:</strong> Sovereign On-Premise Protocol Operations & Strategic Node Deployments</span>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:18px;">
+        <div class="stat-block caption-top">
+          <div class="stat-block-label">Tick Tock Points</div>
+          <div class="stat-block-sub">Pre-allocated pool</div>
+          <div class="stat-block-value" id="stat-quota">25</div>
+        </div>
+        <div class="stat-block caption-top">
+          <div class="stat-block-label">Points Remaining</div>
+          <div class="stat-block-sub">Available to spend</div>
+          <div class="stat-block-value green" id="stat-remaining">25</div>
+        </div>
+        <div class="stat-block caption-top">
+          <div class="stat-block-label">Keys Decommissioned</div>
+          <div class="stat-block-sub">Node keys destroyed</div>
+          <div class="stat-block-value" id="stat-consumed">0</div>
+        </div>
+        <div class="stat-block caption-top">
+          <div class="stat-block-label">Active Nodes</div>
+          <div class="stat-block-sub">Heartbeat confirmed</div>
+          <div class="stat-block-value green" id="stat-active-nodes">0</div>
+        </div>
+        <div class="stat-block caption-top">
+          <div class="stat-block-label">Warnings</div>
+          <div class="stat-block-sub">Nodes flagged</div>
+          <div class="stat-block-value warn" id="stat-warnings">0</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card" style="text-align:center;">
+          <div class="card-title">Strategic Satellite Node Deployments</div>
+          <div class="status-center-container">
+            <div class="animated-rings">
+              <div class="ring ring-1"></div>
+              <div class="ring ring-2"></div>
+              <div class="ring ring-3"></div>
+              <div class="ring-g">G</div>
+            </div>
+            <div class="integrity-text">Fleet Integrity: <span>Secure</span></div>
+            <div class="heartbeat-sub">Root Node Heartbeat: <span>Active</span> · Last Seen: <span id="last-seen-time">—</span></div>
+          </div>
+        </div>
+        <div class="card" style="display:flex; flex-direction:column; justify-content:space-between; text-align:center;">
+          <div class="card-title">Global Node Capacity</div>
+          <div class="donut-box">
+            <svg class="donut-svg" width="110" height="110" viewBox="0 0 40 40">
+              <circle class="donut-bg" cx="20" cy="20" r="15.92"></circle>
+              <circle class="donut-fill" id="capacity-donut-fill" cx="20" cy="20" r="15.92"></circle>
+            </svg>
+            <div class="donut-center-text">
+              <span id="capacity-donut-pct" style="color:var(--signal); font-size:14px; font-weight:700;">0%</span><br>
+              Nodes<br>Active
+            </div>
+          </div>
+          <div class="capacity-metrics">
+            <p>Active: <span class="highlight" id="capacity-active">0</span> / <span id="capacity-max">25</span></p>
+            <p><span class="highlight" id="capacity-remaining">25</span> available node slots</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title-row">
+          <div class="card-title">Node Registry & Fleet Heartbeat</div>
+          <div style="display:flex; align-items:center; gap:16px;">
+            <div class="search-container">
+              <i class="icon icon-search"></i>
+              <input type="text" class="search-input" placeholder="Search Node ID..." oninput="filterTable(this.value)">
+            </div>
+            <div class="mini-graph">
+              <div class="graph-bar" style="height:10px; opacity:0.3;"></div>
+              <div class="graph-bar" style="height:16px; opacity:0.5;"></div>
+              <div class="graph-bar" style="height:8px; opacity:0.25;"></div>
+              <div class="graph-bar" style="height:28px;"></div>
+              <div class="graph-bar" style="height:14px; opacity:0.4;"></div>
+              <div class="graph-bar" style="height:22px; opacity:0.75;"></div>
+              <div class="graph-bar" style="height:6px; opacity:0.2;"></div>
+              <div class="graph-bar" style="height:32px;"></div>
+              <div class="graph-bar" style="height:11px; opacity:0.35;"></div>
+              <div class="graph-bar" style="height:24px; opacity:0.65;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table id="node-table">
+            <thead>
+              <tr>
+                <th>Node ID</th>
+                <th>Hw Hash</th>
+                <th>Verification Status</th>
+                <th>Site</th>
+                <th>Last Seen</th>
+                <th>Operational Health</th>
+              </tr>
+            </thead>
+            <tbody id="node-table-body">
+              <!-- Node rows will be populated dynamically by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+        <div style="display:flex; gap:10px; margin-top:16px;">
+          <button class="btn-secondary" onclick="generateLeafKey()">
+            <i class="icon icon-plus" style="width:14px;height:14px;"></i> Provision New Node
+          </button>
+          <button class="btn-secondary" onclick="exportRegistry()">
+            <i class="icon icon-download" style="width:14px;height:14px;"></i> Export Registry
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW: TOKEN GENERATION -->
+    <div id="view-token-generation" class="view-content">
+      <div class="card">
+        <div class="card-title-row">
+          <div class="card-title">Generate Tokens</div>
+          <div style="display:flex; gap:22px; align-items:flex-end;">
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
+              <span style="font-family:var(--mono); font-size:20px; font-weight:700; color:var(--signal);" id="token-pool-remaining">25</span>
+              <span style="font-family:var(--mono); font-size:13px; color:var(--muted); letter-spacing:0.06em;">Tick Tock Points Remaining</span>
+            </div>
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
+              <span style="font-family:var(--mono); font-size:20px; font-weight:700; color:var(--white);" id="token-session-count">0</span>
+              <span style="font-family:var(--mono); font-size:13px; color:var(--muted); letter-spacing:0.06em;">Tokens This Session</span>
+            </div>
+          </div>
+        </div>
+        <p style="color:var(--muted); font-size:15px; margin-bottom:20px;">Map primary keys, foreign keys, or a CSV column into unique Glexicon tokens.<br>Each token generated draws one Tick Tock Point from your licence allocation.<br>Source values are used only to generate the mapping below — nothing is transmitted or stored outside this session.</p>
+
+        <div class="input-tabs">
+          <div class="input-tab active" id="tab-btn-paste" onclick="switchInputTab('paste')">Paste Keys</div>
+          <div class="input-tab" id="tab-btn-csv" onclick="switchInputTab('csv')">Upload CSV</div>
+          <div class="input-tab" id="tab-btn-foreign" onclick="switchInputTab('foreign')">Foreign Keys</div>
+        </div>
+
+        <div class="input-panel active" id="panel-paste">
+          <label class="key-field-label">Primary Keys (one per line)</label>
+          <textarea class="token-textarea" id="paste-input" placeholder="CUST-00231&#10;CUST-00232&#10;CUST-00233&#10;..."></textarea>
+        </div>
+
+        <div class="input-panel" id="panel-csv">
+          <label class="key-field-label">CSV File</label>
+          <div class="dropzone" id="csv-dropzone" onclick="document.getElementById('csv-file-input').click()">
+            <i class="icon icon-upload" style="width:20px;height:20px;margin-bottom:8px;"></i>
+            <div id="csv-dropzone-label">Click to select a .csv file, or drag one here</div>
+            <input type="file" id="csv-file-input" accept=".csv" onchange="handleCSVFile(this.files[0])" />
+          </div>
+          <div id="csv-column-wrap" style="display:none;">
+            <label class="key-field-label">Key Column</label>
+            <select class="field-select" id="csv-column-select"></select>
+            <div class="table-wrap" style="margin-bottom:14px;">
+              <table id="csv-preview-table"></table>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-panel" id="panel-foreign">
+          <label class="key-field-label">Reference Table / Relationship</label>
+          <input class="key-field-input" id="foreign-ref" placeholder="e.g. orders.customer_id → customers.id" />
+          <label class="key-field-label">Foreign Keys (one per line)</label>
+          <textarea class="token-textarea" id="foreign-input" placeholder="FK-88213&#10;FK-88214&#10;FK-88215&#10;..."></textarea>
+        </div>
+
+        <label class="key-field-label">Target Deployment</label>
+        <select class="field-select" id="token-target-deployment">
+          <option>Main — HQ Pool</option>
+        </select>
+
+        <div style="display:flex; gap:10px; margin-top:16px;">
+          <button class="btn-secondary" onclick="generateTokens()">
+            <i class="icon icon-hash" style="width:14px;height:14px;"></i> Generate Tokens
+          </button>
+          <button class="btn-secondary" onclick="clearTokenForm()">Clear</button>
+        </div>
+      </div>
+
+      <div class="card" id="token-results-card" style="display:none;">
+        <div class="card-title-row">
+          <div class="card-title">Generation Results</div>
+          <button class="btn-secondary" onclick="downloadTokenMap()">
+            <i class="icon icon-download" style="width:13px;height:13px;"></i> Download Token Map
+          </button>
+        </div>
+        <div class="stat-block-row" style="display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:20px;">
+          <div class="stat-block">
+            <div class="stat-block-label">Keys Processed</div>
+            <div class="stat-block-value" id="result-processed">0</div>
+            <div class="stat-block-sub">rows read from input</div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-block-label">Tokens Generated</div>
+            <div class="stat-block-value green" id="result-generated">0</div>
+            <div class="stat-block-sub">unique token addresses</div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-block-label">Estimated Storage</div>
+            <div class="stat-block-value" id="result-storage" style="font-size:22px;">—</div>
+            <div class="stat-block-sub">at ~47 bytes / token</div>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Source Key</th><th>Generated Token</th><th>Status</th></tr></thead>
+            <tbody id="token-results-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="callout signal">
+        <strong>Live Mode:</strong> Generation here calls your Companion Server, which forwards to the real Monster Protocol Engine running on this deployment and writes to your Shared Token DB. These are real, resolvable tokens, and they draw from your actual Tick Tock Points allocation.<br><strong>Demo Mode</strong> (shown only when the Companion Server can't be reached): tokens are generated locally in your browser with a placeholder hash, purely to preview the input → output mapping shape — these never touch your real Tick Tock Points balance or the Shared Token DB.<br>No primary key or foreign key data ever leaves your infrastructure, in either mode.
+      </div>
+    </div>
+
+    <!-- VIEW: NODE REGISTRY (DYNAMIC) -->
+    <div id="view-node-registry" class="view-content">
+      <div class="card">
+        <div class="card-title-row">
+          <div class="card-title">Node Reference</div>
+          <div style="display:flex; align-items:center; gap:12px;">
+            <button class="btn-secondary" onclick="exportRegistry()" style="padding:8px 16px;font-size:13px;height:auto;">
+              <i class="icon icon-download" style="width:14px;height:14px;"></i> Export Registry
+            </button>
+            <button class="btn-secondary" onclick="loadNodeRegistry()" style="padding:8px 16px;font-size:13px;height:auto;">
+              <i class="icon icon-activity" style="width:14px;height:14px;"></i> Refresh
+            </button>
+          </div>
+        </div>
+        <p style="color:var(--muted); font-size:16px; margin-bottom:20px;">Every node currently provisioned across your fleet — tier, site, licence scope, and activation date.</p>
+        <div class="table-wrap">
+          <table class="node-registry-table" id="node-registry-table">
+            <thead>
+              <tr>
+                <th>Node ID</th>
+                <th>Tier</th>
+                <th>Site Location</th>
+                <th>Licence Scope</th>
+                <th>Activated</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="node-registry-body">
+              <tr><td colspan="6" style="text-align:center;color:var(--muted);padding:24px;">Loading nodes...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Gatekeeper Architecture</div>
+        <p style="color:var(--muted); font-size:16px; margin-bottom:8px;">Gatekeeper nodes sit between your Master Database and your Satellite Nodes. Every request a Satellite Node forwards is checked by a Gatekeeper for relevance before it ever reaches the Master Database — an extra ring of verification around your core data.</p>
+        <p style="color:var(--muted); font-size:14px; margin-bottom:20px;">Gatekeeper calibration is a technical configuration handled by your IT / engineering staff and is not adjustable from this dashboard.</p>
+        <div style="width:100%; padding:20px; border:1px solid var(--rule2); background:var(--mid); display:flex; justify-content:center;">
+          <svg viewBox="0 0 850 340" width="100%" style="max-width:850px;">
+            <defs>
+              <g id="dash-term">
+                <rect x="-11" y="-8" width="22" height="15" rx="2" fill="none" stroke="var(--white)" stroke-width="1.5"/>
+                <line x1="-4" y1="7" x2="4" y2="7" stroke="var(--white)" stroke-width="1.5"/>
+                <line x1="-7" y1="10" x2="7" y2="10" stroke="var(--white)" stroke-width="1.5"/>
+              </g>
+            </defs>
+
+            <text x="70" y="35" font-family="var(--sans)" font-size="12" fill="var(--white)" font-weight="bold" text-anchor="middle">SECURE</text>
+            <text x="70" y="53" font-family="var(--mono)" font-size="11" fill="var(--muted)" text-anchor="middle">Isolated Perimeter</text>
+
+            <text x="220" y="35" font-family="var(--sans)" font-size="12" fill="var(--signal)" font-weight="bold" text-anchor="middle">VERIFY</text>
+            <text x="220" y="53" font-family="var(--mono)" font-size="11" fill="var(--muted)" text-anchor="middle">Gatekeepers Validate Requests</text>
+
+            <text x="500" y="35" font-family="var(--sans)" font-size="12" fill="var(--signal)" font-weight="bold" text-anchor="middle">TRAFFIC &amp; QUERIES</text>
+            <text x="500" y="53" font-family="var(--mono)" font-size="11" fill="var(--muted)" text-anchor="middle">Satellite Nodes Manage Edge Traffic Directly</text>
+
+            <!-- MASTER DATABASE -->
+            <g transform="translate(70, 180)">
+              <text x="0" y="-55" font-family="var(--sans)" font-size="11" fill="var(--white)" font-weight="bold" text-anchor="middle">MASTER DB</text>
+              <rect x="-35" y="-40" width="70" height="80" rx="5" fill="var(--panel)" stroke="var(--white)" stroke-width="2"/>
+              <ellipse cx="0" cy="-22" rx="28" ry="8" fill="none" stroke="var(--white)" stroke-width="2"/>
+              <path d="M -28 -5 A 28 8 0 0 0 28 -5" fill="none" stroke="var(--white)" stroke-width="2"/>
+              <path d="M -28 12 A 28 8 0 0 0 28 12" fill="none" stroke="var(--white)" stroke-width="2"/>
+            </g>
+
+            <path d="M 105 180 L 195 180" stroke="var(--rule2)" stroke-width="2" stroke-dasharray="4 4"/>
+            <path d="M 195 100 L 195 260" stroke="var(--rule2)" stroke-width="2" stroke-dasharray="4 4"/>
+
+            <!-- GATEKEEPER SHIELD -->
+            <path d="M 180 75 A 140 140 0 0 1 180 285" fill="none" stroke="var(--signal)" stroke-width="3" stroke-linecap="round"/>
+
+            <g transform="translate(220, 100)"><circle cx="0" cy="0" r="12" fill="var(--panel)" stroke="var(--signal)" stroke-width="2"/><text x="0" y="4" font-family="var(--sans)" font-size="11" fill="var(--signal)" font-weight="bold" text-anchor="middle">G</text></g>
+            <g transform="translate(220, 180)"><circle cx="0" cy="0" r="12" fill="var(--panel)" stroke="var(--signal)" stroke-width="2"/><text x="0" y="4" font-family="var(--sans)" font-size="11" fill="var(--signal)" font-weight="bold" text-anchor="middle">G</text></g>
+            <g transform="translate(220, 260)"><circle cx="0" cy="0" r="12" fill="var(--panel)" stroke="var(--signal)" stroke-width="2"/><text x="0" y="4" font-family="var(--sans)" font-size="11" fill="var(--signal)" font-weight="bold" text-anchor="middle">G</text></g>
+
+            <path d="M 232 100 L 380 90" stroke="var(--rule2)" stroke-width="1.5"/>
+            <path d="M 232 100 L 380 135" stroke="var(--rule2)" stroke-width="1.5"/>
+            <path d="M 232 180 L 380 180" stroke="var(--rule2)" stroke-width="1.5"/>
+            <path d="M 232 260 L 380 225" stroke="var(--rule2)" stroke-width="1.5"/>
+            <path d="M 232 260 L 380 270" stroke="var(--rule2)" stroke-width="1.5"/>
+
+            <!-- SATELLITE NODES -->
+            <circle cx="390" cy="90" r="8" fill="var(--signal)"/>
+            <circle cx="390" cy="135" r="8" fill="var(--signal)"/>
+            <circle cx="390" cy="180" r="8" fill="var(--signal)"/>
+            <circle cx="390" cy="225" r="8" fill="var(--signal)"/>
+            <circle cx="390" cy="270" r="8" fill="var(--signal)"/>
+
+            <path d="M 398 90 L 590 85" stroke="var(--rule2)" stroke-width="1"/>
+            <path d="M 398 90 L 590 115" stroke="var(--rule2)" stroke-width="1"/>
+            <path d="M 398 135 L 590 145" stroke="var(--rule2)" stroke-width="1"/>
+            <path d="M 398 180 L 590 175" stroke="var(--rule2)" stroke-width="1"/>
+            <path d="M 398 225 L 590 205" stroke="var(--rule2)" stroke-width="1"/>
+            <path d="M 398 225 L 590 235" stroke="var(--rule2)" stroke-width="1"/>
+            <path d="M 398 270 L 590 265" stroke="var(--rule2)" stroke-width="1"/>
+
+            <!-- USER TERMINALS -->
+            <use href="#dash-term" x="600" y="85" />
+            <use href="#dash-term" x="600" y="115" />
+            <use href="#dash-term" x="600" y="145" />
+            <use href="#dash-term" x="600" y="175" />
+            <use href="#dash-term" x="600" y="205" />
+            <use href="#dash-term" x="600" y="235" />
+            <use href="#dash-term" x="600" y="265" />
+
+            <text x="220" y="315" font-family="var(--mono)" font-size="11" fill="var(--muted)" text-anchor="middle">GATEKEEPERS</text>
+            <text x="390" y="315" font-family="var(--mono)" font-size="11" fill="var(--muted)" text-anchor="middle">SATELLITE NODES</text>
+            <text x="600" y="315" font-family="var(--mono)" font-size="11" fill="var(--muted)" text-anchor="middle">USER TERMINALS</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 3: PROTOCOL ANALYTICS -->
+    <div id="view-protocol-analytics" class="view-content">
+      <div class="grid-3">
+        <div class="stat-block caption-top">
+          <div class="stat-block-label">Tokens Generated</div>
+          <div class="stat-block-sub">All-time fleet total</div>
+          <div class="stat-block-value green">247.4M</div>
+        </div>
+        <div class="stat-block caption-top">
+          <div class="stat-block-label">Avg Database Reduction</div>
+          <div class="stat-block-sub">Vs untokenised database</div>
+          <div class="stat-block-value">93×</div>
+        </div>
+        <div class="stat-block caption-top">
+          <div class="stat-block-label">Storage Saved</div>
+          <div class="stat-block-sub">Vs untokenised database, fleet-wide</div>
+          <div class="stat-block-value green">11.8TB</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Throughput by Node Tier</div>
+        <p style="color:var(--muted); font-size:15px; margin-bottom:16px;">Active database reduction achieved by each node tier, versus an untokenised database.</p>
+        <div style="margin-top:8px;">
+          <div class="analytics-bar-row"><div class="analytics-bar-label">Root Node</div><div class="analytics-bar-track"><div class="analytics-bar-fill" style="width:94%;"></div></div><div class="analytics-bar-val">94×</div></div>
+          <div class="analytics-bar-row"><div class="analytics-bar-label">Leaf L1 Nodes</div><div class="analytics-bar-track"><div class="analytics-bar-fill" style="width:88%;"></div></div><div class="analytics-bar-val">88×</div></div>
+          <div class="analytics-bar-row"><div class="analytics-bar-label">Leaf L2 Nodes</div><div class="analytics-bar-track"><div class="analytics-bar-fill" style="width:71%;"></div></div><div class="analytics-bar-val">71×</div></div>
+          <div class="analytics-bar-row"><div class="analytics-bar-label">Leaf L3 Nodes</div><div class="analytics-bar-track"><div class="analytics-bar-fill" style="width:82%;"></div></div><div class="analytics-bar-val">82×</div></div>
+          <div class="analytics-bar-row"><div class="analytics-bar-label">Remote Nodes</div><div class="analytics-bar-track"><div class="analytics-bar-fill" style="width:63%;"></div></div><div class="analytics-bar-val">63×</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Protocol Efficiency by Site</div>
+        <p style="color:var(--muted); font-size:15px; margin-bottom:16px;">Active database reduction achieved at each site, versus an untokenised database.</p>
+        <div style="margin-top:8px;">
+          <div class="analytics-bar-row"><div class="analytics-bar-label">London HQ</div><div class="analytics-bar-track"><div class="analytics-bar-fill" style="width:96%;"></div></div><div class="analytics-bar-val">96×</div></div>
+          <div class="analytics-bar-row"><div class="analytics-bar-label">Manchester</div><div class="analytics-bar-track"><div class="analytics-bar-fill" style="width:91%;"></div></div><div class="analytics-bar-val">91×</div></div>
+          <div class="analytics-bar-row"><div class="analytics-bar-label">Edinburgh</div><div class="analytics-bar-track"><div class="analytics-bar-fill" style="width:89%;"></div></div><div class="analytics-bar-val">89×</div></div>
+          <div class="analytics-bar-row"><div class="analytics-bar-label">Singapore</div><div class="analytics-bar-track"><div class="analytics-bar-fill" style="width:93%;"></div></div><div class="analytics-bar-val">93×</div></div>
+          <div class="analytics-bar-row"><div class="analytics-bar-label">New York</div><div class="analytics-bar-track"><div class="analytics-bar-fill" style="width:90%;"></div></div><div class="analytics-bar-val">90×</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 4: KEY PROVISIONING -->
+    <div id="view-key-provisioning" class="view-content">
+      <div class="card">
+        <div class="card-title-row">
+          <div class="card-title">Generate Leaf Key</div>
+          <div style="display:flex; gap:22px; align-items:flex-end;">
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
+              <span style="font-family:var(--mono); font-size:20px; font-weight:700; color:var(--signal);" id="prov-remaining">25</span>
+              <span style="font-family:var(--mono); font-size:13px; color:var(--muted); letter-spacing:0.06em;">Keys Remaining</span>
+            </div>
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
+              <span style="font-family:var(--mono); font-size:20px; font-weight:700; color:var(--white);" id="prov-node-license">0 / 25</span>
+              <span style="font-family:var(--mono); font-size:13px; color:var(--muted); letter-spacing:0.06em;">Node Licences Used</span>
+            </div>
+          </div>
+        </div>
+        <p style="color:var(--muted); font-size:15px; margin-bottom:20px;">Issue a new cryptographic Leaf Key to provision a downstream Deployment Node.<br>All keys are logged to the immutable audit trail and scoped to the approved site location.</p>
+        <label class="key-field-label">Destination Site</label>
+        <input class="key-field-input" id="key-site" placeholder="e.g. Paris Office · France" />
+        <label class="key-field-label">Node Tier</label>
+        <input class="key-field-input" id="key-tier" placeholder="e.g. Leaf L2 — Branch" />
+        <label class="key-field-label">Authorising Officer</label>
+        <input class="key-field-input" id="key-officer" placeholder="Full name and department" />
+        <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:16px;">
+          <button class="btn-secondary" onclick="provisionKey()">
+            <i class="icon icon-key-round" style="width:14px;height:14px;"></i> Issue Key
+          </button>
+          <button class="btn-secondary" onclick="clearKeyForm()">Clear</button>
+        </div>
+        <div class="key-output-box" id="key-output"></div>
+      </div>
+      <div class="callout signal">
+        <strong>Custody Notice:</strong> Each issued Leaf Key permanently decrements your institution's quota.<br>Keys are bound to the registered site and officer, logged to the immutable audit trail, and destroyed on decommission.<br>They cannot be recovered, reassigned, or reused — manage your pool carefully.
+      </div>
+    </div>
+
+    <!-- VIEW 5: AUDIT & VERIFICATION -->
+    <div id="view-audit-verification" class="view-content">
+      <div class="card">
+        <div class="card-title-row">
+          <div class="card-title">Immutable Audit Trail</div>
+          <button class="btn-secondary">
+            <i class="icon icon-download" style="width:13px;height:13px;"></i> Export Log
+          </button>
+        </div>
+        <div class="table-wrap">
+          <table class="audit-table">
+            <thead>
+              <tr><th>Time</th><th>Status</th><th>Node</th><th>Event</th><th>Detail</th><th>Site</th></tr>
+            </thead>
+            <tbody id="audit-log-body">
+              <tr><td colspan="6" style="text-align:center;color:var(--muted);padding:24px;">Loading audit trail...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 6: ACCOUNT SETTINGS -->
+    <div id="view-account-settings" class="view-content">
+      <div class="card">
+        <div class="card-title">HQ Profile & Licence</div>
+        <div class="setting-row">
+          <div><div class="setting-label">Institution</div><div class="setting-sub">Registered licensee name</div></div>
+          <span style="font-family:var(--mono); font-size:16px; color:var(--muted2);" id="settings-institution">Glexicon</span>
+        </div>
+        <div class="setting-row">
+          <div><div class="setting-label">Licence Tier</div><div class="setting-sub">Current enterprise tier</div></div>
+          <span style="font-family:var(--mono); font-size:16px; color:var(--signal);" id="settings-tier">Leader</span>
+        </div>
+        <div class="setting-row">
+          <div><div class="setting-label">Renewal Date</div><div class="setting-sub">Annual licence term</div></div>
+          <span style="font-family:var(--mono); font-size:16px; color:var(--muted2);">01 Jan 2027</span>
+        </div>
+        <div class="setting-row">
+          <div><div class="setting-label">Key Quota</div><div class="setting-sub">Pre-allocated pool — consumed keys are destroyed</div></div>
+          <span style="font-family:var(--mono); font-size:16px; color:var(--muted2);" id="settings-quota">25</span>
+        </div>
+        <div class="setting-row">
+          <div><div class="setting-label">Keys Remaining</div><div class="setting-sub">Available to issue across your fleet</div></div>
+          <span style="font-family:var(--mono); font-size:16px; color:var(--signal);" id="settings-remaining">25</span>
+        </div>
+        <div class="setting-row">
+          <div><div class="setting-label">Keys Consumed</div><div class="setting-sub">Permanently destroyed since activation</div></div>
+          <span style="font-family:var(--mono); font-size:16px; color:var(--muted2);" id="settings-consumed">0</span>
+        </div>
+        <div class="setting-row">
+          <div><div class="setting-label">Tick Tock Points Allocation</div><div class="setting-sub">Total token-generation pool for your licence tier</div></div>
+          <span style="font-family:var(--mono); font-size:16px; color:var(--muted2);" id="settings-tt-allocation">25</span>
+        </div>
+        <div class="setting-row">
+          <div><div class="setting-label">Tick Tock Points Used</div><div class="setting-sub">Drawn against your allocation to date</div></div>
+          <span style="font-family:var(--mono); font-size:16px; color:var(--muted2);" id="settings-tt-used">0</span>
+        </div>
+        <div class="setting-row">
+          <div><div class="setting-label">Tick Tock Points Remaining</div><div class="setting-sub">Available to spend on token generation</div></div>
+          <span style="font-family:var(--mono); font-size:16px; color:var(--signal);" id="settings-tt-remaining">25</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Security Settings</div>
+        <div class="setting-row">
+          <div><div class="setting-label">Zero-Knowledge Mode</div><div class="setting-sub">Enforce no outbound data transmission</div></div>
+          <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+        </div>
+        <div class="setting-row">
+          <div><div class="setting-label">Audit Log Immutability</div><div class="setting-sub">Lock audit entries against modification</div></div>
+          <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+        </div>
+        <div class="setting-row">
+          <div><div class="setting-label">Heartbeat Alerts</div><div class="setting-sub">Notify on node degradation or offline status</div></div>
+          <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+        </div>
+        <div class="setting-row">
+          <div><div class="setting-label">Key Provisioning Lock</div><div class="setting-sub">Require dual authorisation for leaf key issuance</div></div>
+          <div class="toggle" onclick="this.classList.toggle('on')"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 7: HELP -->
+    <div id="view-help" class="view-content">
+      <div class="card">
+        <div class="card-title">Quick Start Guide</div>
+        <p style="color:var(--muted); font-size:15px; margin-bottom:22px;">A short walkthrough of what each section of this dashboard does.</p>
+
+        <div class="setting-row">
+          <div><div class="setting-label">Deployment Command</div><div class="setting-sub">Your home page. Fleet-wide key quota, node heartbeat, and overall system status at a glance.</div></div>
+        </div>
+        <div class="setting-row">
+          <div><div class="setting-label">Generate Tokens</div><div class="setting-sub">Convert primary keys, foreign keys, or a CSV column into unique Glexicon tokens. Draws from your Tick Tock Points allocation.</div></div>
+        </div>
+        <div class="setting-row">
+          <div><div class="setting-label">Node Registry</div><div class="setting-sub">Inspect, manage, and decommission individual Deployment Nodes across your fleet.</div></div>
+        </div>
+        <div class="setting-row">
+          <div><div class="setting-label">Protocol Analytics</div><div class="setting-sub">Throughput and storage reduction figures, broken down by node tier and by site.</div></div>
+        </div>
+        <div class="setting-row">
+          <div><div class="setting-label">Key Provisioning</div><div class="setting-sub">Issue new cryptographic Leaf Keys to bring a new Deployment Node online.</div></div>
+        </div>
+        <div class="setting-row">
+          <div><div class="setting-label">Audit & Verification</div><div class="setting-sub">The immutable log of every heartbeat, key event, and token generation across your fleet.</div></div>
+        </div>
+        <div class="setting-row">
+          <div><div class="setting-label">Account Settings</div><div class="setting-sub">Your licence profile, key quota, and security configuration.</div></div>
+        </div>
+      </div>
+
+      <div class="callout signal">
+        <strong>Note:</strong> This guide covers dashboard navigation only. For protocol documentation or account support, use the contact details on your licence agreement.
+      </div>
+    </div>
+
+  </div><!-- /scroll-area -->
+</div><!-- /content-wrapper -->
+
+<script>
+  // ── LIVE MODE ─────────────────────────────────────────────────────────────
+  let LIVE_MODE = false;
+  let liveNodes = [];
+
+  // ── KEY POOL STATE ──
+  let KEY_QUOTA = 25;
+  let keysConsumed = 0;
+  let keysRemaining = KEY_QUOTA - keysConsumed;
+  let activeNodes = 0;
+  let nodeLicenseMax = null;
+  let nodeLicenseRemaining = null;
+  let warnings = 0;
+
+  // ── TICK TOCK POINTS ──
+  let TICK_TOCK_POINTS = 25;
+  let pointsConsumed = 0;
+  let pointsRemaining = TICK_TOCK_POINTS - pointsConsumed;
+
+  function setLiveIndicator(mode) {
+    const el = document.getElementById('live-mode-indicator');
+    if (!el) return;
+    if (mode === 'live') {
+      el.textContent = '● Live — connected to companion server';
+      el.style.color = 'var(--signal)';
+    } else if (mode === 'demo') {
+      el.textContent = '● Demo data — companion server not reachable';
+      el.style.color = 'var(--muted)';
+    } else {
+      el.textContent = '● Connecting…';
+      el.style.color = 'var(--muted)';
+    }
+  }
+
+  async function fetchStatus() {
+    const res = await fetch('/api/status');
+    if (!res.ok) throw new Error('status fetch failed');
+    return res.json();
+  }
+
+  async function fetchNodes() {
+    const res = await fetch('/api/nodes');
+    if (!res.ok) throw new Error('nodes fetch failed');
+    return res.json();
+  }
+
+  async function fetchAuditLog() {
+    const res = await fetch('/api/audit');
+    if (!res.ok) throw new Error('audit fetch failed');
+    return res.json();
+  }
+
+  function applyStatus(s) {
+    KEY_QUOTA     = s.key_quota;
+    keysConsumed  = s.keys_consumed;
+    keysRemaining = s.keys_remaining;
+    activeNodes   = s.active_nodes;
+    nodeLicenseMax       = s.node_license_max;
+    nodeLicenseRemaining = s.node_license_remaining;
+
+    if (typeof s.tick_tock_quota === 'number') {
+      TICK_TOCK_POINTS = s.tick_tock_quota;
+      pointsConsumed   = s.points_consumed;
+      pointsRemaining  = s.points_remaining;
+    }
+
+    const inst = document.getElementById('settings-institution');
+    if (inst && s.company_name) inst.textContent = s.company_name;
+    const tierEl = document.getElementById('settings-tier');
+    if (tierEl && s.tier) tierEl.textContent = s.tier;
+
+    const tpr = document.getElementById('token-pool-remaining');
+    if (tpr) tpr.textContent = pointsRemaining.toLocaleString();
+
+    updatePoolDisplays();
+  }
+
+  function statusPillHtml(status) {
+    if (status === 'optimal')  return '<div class="status-pill"><div class="indicator-dot"></div>Optimal</div>';
+    if (status === 'degraded') return '<div class="status-pill"><div class="indicator-dot warn"></div>Degraded</div>';
+    if (status === 'pending')  return '<div class="status-pill"><div class="indicator-dot warn"></div>Pending</div>';
+    if (status === 'decommissioned') return '<div class="status-pill"><div class="indicator-dot danger"></div>Decommissioned</div>';
+    return '<div class="status-pill"><div class="indicator-dot danger"></div>Offline</div>';
+  }
+
+  function verificationLabel(node) {
+    if (node.status === 'pending') return '<td class="text-warn">Pending Auth</td>';
+    return `<td class="text-leaf">${node.tier}</td>`;
+  }
+
+  function lastSeenText(node) {
+    if (!node.last_seen) return '—';
+    const d = new Date(node.last_seen * 1000);
+    return d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  }
+
+  function titleCaseNodeId(nodeId) {
+    return nodeId.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join('-');
+  }
+
+  function renderNodesTable(nodes) {
+    const body = document.getElementById('node-table-body');
+    if (!body) return;
+    if (!nodes || nodes.length === 0) {
+      body.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:24px;">No nodes deployed yet.</td></tr>';
+      return;
+    }
+    body.innerHTML = nodes.map(n => {
+      const isRoot = n.tier && n.tier.toLowerCase().includes('root');
+      const actionCell = isRoot
+        ? `<td><span style="font-family:var(--mono);font-size:15px;color:var(--signal);">Protected</span></td>`
+        : (n.status === 'decommissioned'
+            ? `<td><button class="btn-secondary" style="padding:6px 12px;font-size:12px;height:auto;color:var(--danger);border-color:var(--danger);" disabled>Destroyed</button></td>`
+            : `<td><button class="btn-secondary" style="padding:6px 12px;font-size:12px;height:auto;" onclick="decommissionNode('${n.node_id}', this)">Decommission</button></td>`);
+      return `<tr>` +
+        `<td class="node-id">${titleCaseNodeId(n.node_id)}</td>` +
+        `<td style="color:var(--muted); font-size:15px;">—</td>` +
+        verificationLabel(n) +
+        `<td>${n.site}</td>` +
+        `<td>${lastSeenText(n)}</td>` +
+        `<td>${statusPillHtml(n.status)}</td>` +
+        actionCell +
+      `</tr>`;
+    }).join('');
+
+    const warningCount = nodes.filter(n => n.status === 'degraded' || n.status === 'offline').length;
+    const warnEl = document.getElementById('stat-warnings');
+    if (warnEl) warnEl.textContent = warningCount;
+  }
+
+  async function refreshLiveData() {
+    try {
+      const [status, nodes, auditEntries] = await Promise.all([fetchStatus(), fetchNodes(), fetchAuditLog()]);
+      applyStatus(status);
+      liveNodes = nodes;
+      renderNodesTable(nodes);
+      renderNodeRegistry(nodes);
+      renderAuditLog(auditEntries);
+    } catch (e) {
+      console.warn('Live refresh failed:', e);
+    }
+  }
+
+  function renderNodeRegistry(nodes) {
+    const body = document.getElementById('node-registry-body');
+    if (!body) return;
+    if (!nodes || nodes.length === 0) {
+      body.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:24px;">No nodes provisioned yet.</td></tr>';
+      return;
+    }
+    body.innerHTML = nodes.map(n => {
+      const statusClass = n.status === 'optimal' || n.status === 'active' ? 'text-root' :
+                          n.status === 'degraded' || n.status === 'pending' ? 'text-warn' :
+                          'text-danger';
+      const statusDisplay = n.status === 'optimal' ? 'Active' :
+                            n.status === 'degraded' ? 'Degraded' :
+                            n.status === 'pending' ? 'Pending' :
+                            n.status === 'decommissioned' ? 'Decommissioned' :
+                            'Offline';
+      const activated = n.created_at ? new Date(n.created_at * 1000).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : '—';
+      const scope = n.tier && n.tier.toLowerCase().includes('root') ? 'Unlimited' :
+                    n.tier && n.tier.toLowerCase().includes('gate') ? 'Verification Layer' :
+                    'Site-Scoped';
+      return `<tr>` +
+        `<td class="node-id">${titleCaseNodeId(n.node_id)}</td>` +
+        `<td class="text-leaf">${n.tier}</td>` +
+        `<td>${n.site}</td>` +
+        `<td class="text-root">${scope}</td>` +
+        `<td>${activated}</td>` +
+        `<td class="${statusClass}">${statusDisplay}</td>` +
+      `</tr>`;
+    }).join('');
+  }
+
+  function renderAuditLog(entries) {
+    const body = document.getElementById('audit-log-body');
+    if (!body) return;
+    if (!entries || entries.length === 0) {
+      body.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:24px;">No audit events yet.</td></tr>';
+      return;
+    }
+    body.innerHTML = entries.map(e => {
+      const statusClass = e.status === 'warn' ? 'text-warn' : e.status === 'info' ? 'text-leaf' : 'text-root';
+      const statusDisplay = e.status ? e.status.charAt(0).toUpperCase() + e.status.slice(1).toLowerCase() : 'Ok';
+      const timeStr = e.time ? new Date(e.time * 1000).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : '—';
+      return `<tr><td>${timeStr}</td><td class="${statusClass}">${statusDisplay}</td>` +
+        `<td class="node-id">${e.node ? titleCaseNodeId(e.node) : '—'}</td>` +
+        `<td class="text-root">${e.event || '—'}</td><td>${e.detail || '—'}</td><td>${e.site || '—'}</td></tr>`;
+    }).join('');
+  }
+
+  async function loadNodeRegistry() {
+    try {
+      const nodes = await fetchNodes();
+      renderNodeRegistry(nodes);
+      showToast('Node registry refreshed.');
+    } catch (e) {
+      showToast('Failed to refresh node registry.');
+    }
+  }
+
+  async function initLiveMode() {
+    try {
+      const status = await fetchStatus();
+      LIVE_MODE = true;
+      setLiveIndicator('live');
+      applyStatus(status);
+      const nodes = await fetchNodes();
+      liveNodes = nodes;
+      renderNodesTable(nodes);
+      renderNodeRegistry(nodes);
+      try {
+        const auditEntries = await fetchAuditLog();
+        renderAuditLog(auditEntries);
+      } catch (e) {
+        renderAuditLog([]);
+      }
+      const nl = document.getElementById('prov-node-license');
+      if (nl && nodeLicenseMax !== null) {
+        nl.textContent = `${nodeLicenseMax - nodeLicenseRemaining} / ${nodeLicenseMax}`;
+      }
+      setInterval(refreshLiveData, 8000);
+    } catch (e) {
+      LIVE_MODE = false;
+      setLiveIndicator('demo');
+      updatePoolDisplays();
+      renderNodesTable([]);
+      renderNodeRegistry([]);
+      renderAuditLog([]);
+      console.info('Companion server not reachable — showing demo data.');
+    }
+  }
+
+  function updatePoolDisplays() {
+    const remEl = document.getElementById('stat-remaining');
+    if (remEl) remEl.textContent = pointsRemaining.toLocaleString();
+    const conEl = document.getElementById('stat-consumed');
+    if (conEl) conEl.textContent = keysConsumed.toLocaleString();
+    const actEl = document.getElementById('stat-active-nodes');
+    if (actEl) actEl.textContent = activeNodes;
+
+    const capMax = nodeLicenseMax !== null ? nodeLicenseMax : KEY_QUOTA;
+    const capActive = activeNodes;
+    const capRemaining = Math.max(0, capMax - capActive);
+    const capPct = capMax > 0 ? Math.round((capActive / capMax) * 100) : 0;
+
+    const donutFill = document.getElementById('capacity-donut-fill');
+    if (donutFill) donutFill.style.strokeDasharray = capPct + ' 100';
+    const donutPct = document.getElementById('capacity-donut-pct');
+    if (donutPct) donutPct.textContent = capPct + '%';
+    const capActiveEl = document.getElementById('capacity-active');
+    if (capActiveEl) capActiveEl.textContent = capActive;
+    const capMaxEl = document.getElementById('capacity-max');
+    if (capMaxEl) capMaxEl.textContent = capMax;
+    const capRemainingEl = document.getElementById('capacity-remaining');
+    if (capRemainingEl) capRemainingEl.textContent = capRemaining;
+
+    const pr = document.getElementById('prov-remaining');
+    if (pr) pr.textContent = keysRemaining.toLocaleString();
+    const nl = document.getElementById('prov-node-license');
+    if (nl && nodeLicenseMax !== null) {
+      nl.textContent = `${nodeLicenseMax - nodeLicenseRemaining} / ${nodeLicenseMax}`;
+    }
+
+    const tpr = document.getElementById('token-pool-remaining');
+    if (tpr) tpr.textContent = pointsRemaining.toLocaleString();
+
+    const sq2 = document.getElementById('stat-quota');
+    if (sq2) sq2.textContent = TICK_TOCK_POINTS.toLocaleString();
+
+    const sr = document.getElementById('settings-remaining');
+    const sc = document.getElementById('settings-consumed');
+    const sq = document.getElementById('settings-quota');
+    if (sr) sr.textContent = keysRemaining.toLocaleString();
+    if (sc) sc.textContent = keysConsumed.toLocaleString();
+    if (sq) sq.textContent = KEY_QUOTA.toLocaleString();
+
+    const ttAlloc = document.getElementById('settings-tt-allocation');
+    const ttUsed = document.getElementById('settings-tt-used');
+    const ttRem = document.getElementById('settings-tt-remaining');
+    if (ttAlloc) ttAlloc.textContent = TICK_TOCK_POINTS.toLocaleString();
+    if (ttUsed) ttUsed.textContent = pointsConsumed.toLocaleString();
+    if (ttRem) ttRem.textContent = pointsRemaining.toLocaleString();
+  }
+
+  function consumeKeysBulk(n) {
+    if (n > pointsRemaining) return false;
+    pointsConsumed += n;
+    pointsRemaining -= n;
+    updatePoolDisplays();
+    return true;
+  }
+
+  async function decommissionNode(nodeId, btnEl) {
+    if (!confirm(`Decommission ${nodeId}? The key assigned to this node will be permanently destroyed. Proceed?`)) return;
+
+    if (LIVE_MODE) {
+      try {
+        const res = await fetch('/api/nodes/decommission', {
+          method: 'POST',
+          body: JSON.stringify({ node_id: nodeId })
+        });
+        const data = await res.json();
+        if (!res.ok) { alert('Could not decommission: ' + (data.error || 'unknown error')); return; }
+        appendAuditLog('DESTROY', { node: nodeId, event: 'Destroyed', detail: 'Pool Unchanged · Not Recoverable' });
+        showToast('Node decommissioned. Key permanently destroyed.');
+        await refreshLiveData();
+      } catch (e) {
+        alert('Could not reach the companion server to decommission this node.');
+      }
+      return;
+    }
+
+    activeNodes = Math.max(0, activeNodes - 1);
+    updatePoolDisplays();
+    appendAuditLog('DESTROY', { node: nodeId, event: 'Destroyed', detail: 'Pool Unchanged · Not Recoverable' });
+    const row = btnEl.closest('tr');
+    if (row) {
+      const statusCell = row.querySelector('td:nth-last-child(2)');
+      if (statusCell) statusCell.innerHTML = '<div class="status-pill"><div class="indicator-dot danger"></div>Decommissioned</div>';
+      btnEl.textContent = 'Destroyed';
+      btnEl.disabled = true;
+      btnEl.style.color = 'var(--danger)';
+      btnEl.style.borderColor = 'var(--danger)';
+    }
+    showToast('Node decommissioned. Key permanently destroyed.');
+  }
+
+  const auditLogBody = document.getElementById('audit-log-body');
+  function appendAuditLog(level, entry) {
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit', second:'2-digit' });
+    const levelClass = level === 'DESTROY' ? 'text-warn' : level === 'OK' ? 'text-root' : 'text-leaf';
+    const levelDisplay = level.charAt(0).toUpperCase() + level.slice(1).toLowerCase();
+    const nodeDisplay = entry.node ? entry.node.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join('-') : '—';
+    const row = document.createElement('tr');
+    row.innerHTML = `<td>${timeStr}</td><td class="${levelClass}">${levelDisplay}</td>` +
+      `<td class="node-id">${nodeDisplay}</td><td class="text-root">${entry.event || '—'}</td>` +
+      `<td>${entry.detail || '—'}</td><td>${entry.site || '—'}</td>`;
+    auditLogBody.insertAdjacentElement('afterbegin', row);
+  }
+
+  let toastEl = null;
+  function showToast(msg) {
+    if (!toastEl) {
+      toastEl = document.createElement('div');
+      toastEl.style.cssText = 'position:fixed;bottom:24px;right:24px;background:var(--panel);border:1px solid var(--signal);color:var(--signal);padding:10px 18px;font-family:var(--mono);font-size:14px;font-weight:700;z-index:999;letter-spacing:0.05em;opacity:0;transition:opacity 0.3s;';
+      document.body.appendChild(toastEl);
+    }
+    toastEl.textContent = msg;
+    toastEl.style.opacity = '1';
+    setTimeout(() => toastEl.style.opacity = '0', 2800);
+  }
+
+  function updateClock() {
+    const now = new Date();
+    document.getElementById('live-time').textContent =
+      now.toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' }) + ' · ' +
+      now.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit', second:'2-digit' }) + ' GMT';
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  const VIEW_META = {
+    'fleet-ops':           { title:'Deployment Command',    sub:'Key pool · Node heartbeat · Sovereign status' },
+    'token-generation':    { title:'Generate Tokens',       sub:'Map primary keys, foreign keys, or CSV data into tokens' },
+    'node-registry':       { title:'Node Registry',         sub:'Configure and manage deployment nodes' },
+    'protocol-analytics':  { title:'Protocol Analytics',    sub:'Throughput · Efficiency · Storage gains' },
+    'key-provisioning':    { title:'Key Provisioning',      sub:'Issue cryptographic leaf keys · Keys consumed on decommission' },
+    'audit-verification':  { title:'Audit & Verification',  sub:'Immutable verification and destruction log trail' },
+    'account-settings':    { title:'Account Settings',      sub:'HQ profile · Key quota · Security configuration' },
+    'help':                { title:'Quick Start Guide',     sub:'A short walkthrough of the dashboard' },
+  };
+
+  function switchView(viewId, element) {
+    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+    document.querySelectorAll('.view-content').forEach(v => v.classList.remove('active'));
+    element.classList.add('active');
+    const panel = document.getElementById('view-' + viewId);
+    if (panel) panel.classList.add('active');
+    updatePoolDisplays();
+  }
+
+  function filterTable(query) {
+    const q = query.toLowerCase();
+    document.querySelectorAll('#node-table tbody tr').forEach(row => {
+      row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+
+  async function provisionKey() {
+    const site    = document.getElementById('key-site').value.trim();
+    const tier    = document.getElementById('key-tier').value.trim();
+    const officer = document.getElementById('key-officer').value.trim();
+    if (!site || !tier || !officer) { alert('Please complete all fields before issuing a key.'); return; }
+
+    const out = document.getElementById('key-output');
+
+    if (LIVE_MODE) {
+      try {
+        const res = await fetch('/api/nodes/issue', {
+          method: 'POST',
+          body: JSON.stringify({ site, tier, officer })
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          const reason = data.error === 'key_quota_exhausted'
+            ? 'Your Tick Tock Points pool is exhausted. Upgrade your tier to issue additional keys.'
+            : data.error === 'node_license_max_reached'
+            ? 'You have reached your licensed node limit. Decommission an existing node or upgrade your tier.'
+            : ('Could not issue key: ' + (data.error || 'unknown error'));
+          alert(reason);
+          return;
+        }
+        out.style.display = 'block';
+        out.innerHTML =
+          '✓ LEAF KEY ISSUED — POOL DECREMENTED<br><br>' +
+          'NODE ID: ' + data.node_id + '<br>' +
+          'KEY: ' + data.node_key + '<br>' +
+          'SITE: ' + site + '<br>' +
+          'TIER: ' + tier + '<br>' +
+          'OFFICER: ' + officer + '<br>' +
+          'ISSUED: ' + new Date().toISOString() + '<br><br>' +
+          '<strong>This key is shown once and is not stored anywhere for you to retrieve again.</strong> ' +
+          'Copy it now and provide it to the node agent as its NODE_KEY. The node will show as ' +
+          '"Pending Auth" until it sends its first heartbeat.';
+        appendAuditLog('INFO', { node: data.node_id, event: 'Key Issued', detail: `${tier} · Officer: ${officer}`, site: site });
+        showToast('Key issued for ' + data.node_id + '.');
+        await refreshLiveData();
+      } catch (e) {
+        alert('Could not reach the companion server to issue this key.');
+      }
+      return;
+    }
+
+    if (!consumeKeysBulk(1)) { alert('Key pool exhausted. Upgrade your tier to issue additional keys.'); return; }
+    activeNodes++;
+    updatePoolDisplays();
+    const keyStr = 'GLEX-LK-' +
+      Math.random().toString(36).substring(2,6).toUpperCase() + '-' +
+      Math.random().toString(36).substring(2,6).toUpperCase() + '-' +
+      Math.random().toString(36).substring(2,10).toUpperCase();
+    out.style.display = 'block';
+    out.innerHTML =
+      '✓ LEAF KEY ISSUED — POOL DECREMENTED<br><br>' +
+      'KEY: ' + keyStr + '<br>' +
+      'SITE: ' + site + '<br>' +
+      'TIER: ' + tier + '<br>' +
+      'OFFICER: ' + officer + '<br>' +
+      'ISSUED: ' + new Date().toISOString() + '<br>' +
+      'KEYS REMAINING: ' + keysRemaining.toLocaleString() + '<br><br>' +
+      'This key is now active. It will be permanently destroyed on node decommission.';
+    appendAuditLog('INFO', { event: 'Key Issued', detail: `${tier} · Officer: ${officer} · Pool: ${keysRemaining.toLocaleString()} Remaining`, site: site });
+    showToast('Key issued. Pool decremented to ' + keysRemaining.toLocaleString() + '.');
+  }
+
+  function clearKeyForm() {
+    document.getElementById('key-site').value = '';
+    document.getElementById('key-tier').value = '';
+    document.getElementById('key-officer').value = '';
+    document.getElementById('key-output').style.display = 'none';
+  }
+
+  function generateLeafKey() { switchView('key-provisioning', document.querySelector('[onclick*="key-provisioning"]')); }
+  function exportRegistry() {
+    if (!liveNodes || liveNodes.length === 0) {
+      showToast('No nodes in the registry yet — nothing to export.');
+      return;
+    }
+    const headers = ['node_id', 'site', 'tier', 'officer', 'status', 'health', 'last_seen', 'created_at'];
+    let csv = headers.join(',') + '\n';
+    liveNodes.forEach(n => {
+      csv += headers.map(h => {
+        const v = n[h] === undefined || n[h] === null ? '' : String(n[h]);
+        return v.includes(',') ? `"${v.replace(/"/g, '""')}"` : v;
+      }).join(',') + '\n';
+    });
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'glexicon-node-registry-' + Date.now() + '.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showToast('Node registry exported.');
+  }
+
+  let tokenSessionCount = 0;
+  let lastTokenResults = [];
+  let csvParsedRows = [];
+  let csvHeaders = [];
+
+  function switchInputTab(tab) {
+    ['paste','csv','foreign'].forEach(t => {
+      document.getElementById('tab-btn-' + t).classList.toggle('active', t === tab);
+      document.getElementById('panel-' + t).classList.toggle('active', t === tab);
+    });
+  }
+
+  function handleCSVFile(file) {
+    if (!file) return;
+    document.getElementById('csv-dropzone-label').textContent = file.name;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const lines = e.target.result.split(/\r?\n/).filter(l => l.trim().length > 0);
+      if (lines.length < 1) return;
+      csvHeaders = lines[0].split(',').map(h => h.trim());
+      csvParsedRows = lines.slice(1).map(l => l.split(',').map(c => c.trim()));
+      const select = document.getElementById('csv-column-select');
+      select.innerHTML = csvHeaders.map((h, i) => `<option value="${i}">${h}</option>`).join('');
+      const table = document.getElementById('csv-preview-table');
+      let html = '<thead><tr>' + csvHeaders.map(h => `<th>${h}</th>`).join('') + '</tr></thead><tbody>';
+      csvParsedRows.slice(0, 5).forEach(row => {
+        html += '<tr>' + row.map(c => `<td>${c}</td>`).join('') + '</tr>';
+      });
+      html += '</tbody>';
+      table.innerHTML = html;
+      document.getElementById('csv-column-wrap').style.display = 'block';
+    };
+    reader.readAsText(file);
+  }
+
+  function hashToken(str, salt) {
+    const s = str + '::' + salt;
+    let h1 = 0, h2 = 0;
+    for (let i = 0; i < s.length; i++) {
+      h1 = (h1 * 31 + s.charCodeAt(i)) >>> 0;
+      h2 = (h2 * 131 + s.charCodeAt(i) + i) >>> 0;
+    }
+    const hex1 = h1.toString(16).toUpperCase().padStart(8, '0');
+    const hex2 = h2.toString(16).toUpperCase().padStart(8, '0');
+    return hex1.substring(0, 4) + '-' + hex1.substring(4, 8) + '-' + hex2.substring(0, 4);
+  }
+
+  function formatBytes(n) {
+    if (n < 1024) return n + ' B';
+    if (n < 1024 * 1024) return (n / 1024).toFixed(1) + ' KB';
+    return (n / 1024 / 1024).toFixed(2) + ' MB';
+  }
+
+  async function generateTokens() {
+    const activeTab = document.querySelector('.input-tab.active').id.replace('tab-btn-', '');
+    let sourceKeys = [];
+
+    if (activeTab === 'paste') {
+      sourceKeys = document.getElementById('paste-input').value.split(/\r?\n/).map(k => k.trim()).filter(Boolean);
+    } else if (activeTab === 'foreign') {
+      sourceKeys = document.getElementById('foreign-input').value.split(/\r?\n/).map(k => k.trim()).filter(Boolean);
+    } else if (activeTab === 'csv') {
+      const colIdx = parseInt(document.getElementById('csv-column-select').value, 10);
+      if (isNaN(colIdx) || csvParsedRows.length === 0) { alert('Please upload a CSV file first.'); return; }
+      sourceKeys = csvParsedRows.map(row => row[colIdx]).filter(Boolean);
+    }
+
+    if (sourceKeys.length === 0) { alert('Please provide at least one key to tokenise.'); return; }
+
+    if (sourceKeys.length > pointsRemaining) {
+      alert('Insufficient Tick Tock Points. You have ' + pointsRemaining.toLocaleString() + ' remaining, but ' + sourceKeys.length.toLocaleString() + ' keys were submitted. Reduce the batch size or upgrade your tier.');
+      return;
+    }
+
+    const target = document.getElementById('token-target-deployment').value;
+    const tbody = document.getElementById('token-results-body');
+
+    if (LIVE_MODE) {
+      try {
+        const res = await fetch('/api/tokens/generate', {
+          method: 'POST',
+          body: JSON.stringify({ keys: sourceKeys, site: target })
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          const reason = data.error === 'points_quota_exhausted'
+            ? 'Your Tick Tock Points pool is exhausted. Upgrade your tier to generate additional tokens.'
+            : data.error === 'engine_unreachable'
+            ? 'Could not reach the Monster Protocol Engine on this deployment. It may still be starting up, or has failed — check the deployment log.'
+            : ('Could not generate tokens: ' + (data.error || 'unknown error'));
+          alert(reason);
+          return;
+        }
+
+        const results = (data.engine && data.engine.results) || [];
+        lastTokenResults = results
+          .filter(r => !r.error)
+          .map(r => ({ key: r.key, token: String(r.token), token_hex: r.token_hex }));
+        const failedCount = results.length - lastTokenResults.length;
+
+        tbody.innerHTML = results.map(r => r.error
+          ? `<tr><td class="node-id">${r.key}</td><td>—</td><td><span class="text-warn">Failed</span></td></tr>`
+          : `<tr><td class="node-id">${r.key}</td><td class="text-root">${r.token}</td><td><span class="text-root">Mapped</span></td></tr>`
+        ).join('');
+
+        document.getElementById('result-processed').textContent = sourceKeys.length.toLocaleString();
+        document.getElementById('result-generated').textContent = lastTokenResults.length.toLocaleString();
+        document.getElementById('result-storage').textContent = formatBytes(lastTokenResults.length * 47);
+
+        tokenSessionCount += lastTokenResults.length;
+        document.getElementById('token-session-count').textContent = tokenSessionCount.toLocaleString();
+
+        pointsConsumed = data.points_consumed;
+        pointsRemaining = data.points_remaining;
+        updatePoolDisplays();
+
+        document.getElementById('token-results-card').style.display = 'block';
+        // Don't append a client-side audit row here — companion_server already
+        // wrote the real one server-side. Pull it (and the fresh points
+        // balance) instead of duplicating it locally.
+        await refreshLiveData();
+
+        const failedNote = failedCount > 0 ? ` (${failedCount} failed — token-space collision exhausted)` : '';
+        showToast(lastTokenResults.length.toLocaleString() + ' real token(s) generated' + failedNote + '. ' + pointsRemaining.toLocaleString() + ' points remaining.');
+      } catch (e) {
+        alert('Could not reach the companion server to generate tokens.');
+      }
+      return;
+    }
+
+    // ── Demo mode only (companion server not reachable) — local preview,
+    // never touches a real Tick Tock Points balance since there isn't one
+    // to touch. See the callout on this page. ──────────────────────────────
+    const batchSalt = Math.random().toString(36).substring(2, 10);
+    lastTokenResults = sourceKeys.map(key => ({ key, token: 'GLX-' + hashToken(key, batchSalt) }));
+
+    tbody.innerHTML = lastTokenResults.map(r =>
+      `<tr><td class="node-id">${r.key}</td><td class="text-root">${r.token}</td><td><span class="text-root">Mapped</span></td></tr>`
+    ).join('');
+
+    document.getElementById('result-processed').textContent = sourceKeys.length.toLocaleString();
+    document.getElementById('result-generated').textContent = lastTokenResults.length.toLocaleString();
+    document.getElementById('result-storage').textContent = formatBytes(lastTokenResults.length * 47);
+
+    tokenSessionCount += lastTokenResults.length;
+    document.getElementById('token-session-count').textContent = tokenSessionCount.toLocaleString();
+
+    document.getElementById('token-results-card').style.display = 'block';
+    appendAuditLog('INFO', { event: `Tokens Generated (demo): ${lastTokenResults.length.toLocaleString()}`, detail: `Pool: ${pointsRemaining.toLocaleString()} Points Remaining`, site: target });
+    showToast(lastTokenResults.length.toLocaleString() + ' demo token(s) generated — not connected to a companion server.');
+  }
+
+  function downloadTokenMap() {
+    if (lastTokenResults.length === 0) return;
+    let csv = 'source_key,generated_token\n';
+    lastTokenResults.forEach(r => { csv += `${r.key},${r.token}\n`; });
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'glexicon-token-map-' + Date.now() + '.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showToast('Token map downloaded.');
+  }
+
+  function clearTokenForm() {
+    document.getElementById('paste-input').value = '';
+    document.getElementById('foreign-input').value = '';
+    document.getElementById('foreign-ref').value = '';
+    document.getElementById('csv-file-input').value = '';
+    document.getElementById('csv-dropzone-label').textContent = 'Click to select a .csv file, or drag one here';
+    document.getElementById('csv-column-wrap').style.display = 'none';
+    csvParsedRows = []; csvHeaders = [];
+    document.getElementById('token-results-card').style.display = 'none';
+    lastTokenResults = [];
+  }
+
+  // Initial display update
+  initLiveMode();
+</script>
+</body>
+</html>
