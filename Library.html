@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glexicon Monster — Industry Library</title>
+<style>
+  :root { 
+    --black:#0a0a0a; 
+    --white:#f5f4f0; 
+    --signal:#00b881; 
+    --rule:#2a2a2a; 
+    --panel:#111111; 
+    --mid:#181818; 
+    --muted:#a0a0a0; 
+    --mono: Arial, sans-serif; 
+    --sans: Arial, sans-serif; 
+  }
+  
+  * { 
+    box-sizing:border-box; 
+    margin:0; 
+    padding:0; 
+    font-family: var(--sans);
+  }
+  html { scroll-behavior:smooth; height: 100%; scroll-padding-top: 100px; }
+  
+  body { 
+    font-family:var(--sans); 
+    background:var(--black); 
+    color:var(--white); 
+    line-height:1.6;
+    position: relative;
+    min-height: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ── NAV WITH ICON INTEGRATION ── */
+  .site-nav { 
+    position:sticky; 
+    top:0; 
+    z-index:100; 
+    background:rgba(10,10,10,0.97); 
+    backdrop-filter:blur(8px); 
+    border-bottom:1px solid var(--rule); 
+    padding:28px 56px 0; 
+    height:100px; 
+    display:flex; 
+    align-items:center; 
+    justify-content:space-between; 
+  }
+  .nav-brand { display:flex; align-items:flex-end; gap:16px; text-decoration:none; padding-bottom:6px; }
+  .nav-brand-meta { display:flex; flex-direction:column; justify-content:center; }
+  .nav-brand-text { font-family:var(--mono); font-size:24px; letter-spacing:0.15em; color:var(--white); text-transform:uppercase; line-height:1.1; font-weight:700; }
+  .nav-tagline { font-family:var(--mono); font-size:15px; letter-spacing:0.05em; color:var(--muted); line-height:1.3; margin-top:4px; }
+  
+  .nav-links { display:flex; align-items:center; gap:6px; }
+  .nav-links a { font-family:var(--mono); font-size:13px; letter-spacing:0.05em; text-transform:uppercase; color:#888; text-decoration:none; padding:8px 12px; transition:color 0.15s; white-space:nowrap; }
+  .nav-links a:hover { color:var(--signal); }
+
+  /* ── PAGE LAYOUT ── */
+  .page-wrap { max-width:1040px; margin:0 auto; padding:36px 56px 380px; }
+  .page-header { padding-bottom:48px; border-bottom:1px solid var(--rule); margin-bottom:48px; }
+  
+  .page-eyebrow { font-family:var(--mono); font-size:16px; letter-spacing:0.15em; text-transform:uppercase; color:var(--signal); margin-bottom:16px; display:flex; align-items:center; gap:12px; font-weight:600; }
+  .page-eyebrow::after { content:''; flex:1; height:1px; background:var(--rule); }
+  
+.page-title { 
+  font-family: var(--sans) !important;
+  font-size:clamp(28px, 4.2vw, 38px); 
+  font-weight:700; 
+  letter-spacing:-0.03em; 
+  line-height:1.2; 
+  color:var(--white); 
+  margin-bottom:20px; 
+  }
+  .page-title span { color: var(--signal); }
+  .page-sub { 
+    font-family: var(--sans) !important; 
+    font-size:17px; 
+    color:var(--muted); 
+    max-width:680px; 
+    font-weight:400; 
+  }
+
+  /* ── STRUCTURAL BLOCK ROWS ── */
+  .content-row { border:1px solid var(--rule); margin-bottom:16px; background:var(--panel); }
+  .content-row-header { padding:18px 24px; background:var(--mid); border-bottom:1px solid var(--rule); display:flex; justify-content:space-between; align-items:center; }
+  .content-row-header h4 { font-family: var(--sans) !important; font-size:16px; font-weight:600; color:var(--white); letter-spacing:-0.01em; display:flex; align-items:center; gap:10px; }
+  .row-meta-badge { font-family:var(--mono); font-size:14px; font-weight:700; color:var(--signal); letter-spacing:0.05em; text-transform:uppercase; display:flex; align-items:center; gap:6px; }
+  
+  .content-columns { display:grid; grid-template-columns: 1.5fr 1fr; padding:28px; gap:0; }
+  .content-col { display:flex; flex-direction:column; gap:12px; }
+  .content-col:first-child { border-right:1px solid var(--rule); padding-right:28px; }
+  .content-col:last-child { padding-left:28px; justify-content: flex-start; }
+  
+  .content-label { font-family:var(--mono); font-size:14px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--muted); }
+  .content-body-text { font-size:15px; color:#999; line-height:1.6; }
+  .content-body-text strong { color:var(--white); font-weight:600; }
+  
+  .data-profile-table { width: 100%; border-collapse: collapse; margin-top: 4px; }
+  .data-profile-table tr { border-bottom: 1px solid #1a1a1a; }
+  .data-profile-table tr:last-child { border-bottom: none; }
+  .data-profile-table td { padding: 6px 0; font-family: var(--mono); font-size: 13px; color: var(--muted); }
+  .data-profile-table td:last-child { text-align: right; color: var(--white); font-weight: 500; }
+  .data-profile-table .highlight-signal { color: var(--signal) !important; font-weight: 600; }
+
+  .row-footer-desc { 
+    font-family: var(--sans) !important; 
+    font-size:15px; 
+    color:#999; 
+    padding:18px 24px 22px; 
+    border-top:1px dashed var(--rule); 
+    line-height:1.6; 
+  }
+  .row-footer-desc strong { color:var(--white); font-weight:600; }
+
+  /* ── GRID FOR SECTOR EDITIONS ── */
+  .sectors-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .sector-card { border:1px solid var(--rule); background:var(--panel); padding: 24px; text-decoration: none; display: flex; flex-direction: column; gap: 12px; transition: border-color 0.15s; }
+  .sector-card:hover { border-color: var(--signal); }
+  .sector-header-inline { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .sector-title { font-family: var(--sans) !important; font-size:18px; font-weight:700; color:var(--white); letter-spacing:-0.01em; }
+  .sector-desc { font-size:14px; color:#999; line-height:1.5; }
+  .sector-link { font-family: var(--mono); font-size:13px; color: var(--signal); text-transform: uppercase; font-weight: 600; margin-top: auto; padding-top: 8px; }
+
+  /* ── INLINE SVGS FROM ORIGINAL STYLE ── */
+  .section-icon { width: 18px; height: 18px; fill: none; stroke: var(--signal); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .badge-icon { width: 14px; height: 14px; fill: none; stroke: var(--signal); stroke-width: 2.5; }
+
+  /* ── CTA BLOCK ── */
+  #cta-block {
+    margin-top:48px; padding:40px; background:var(--panel);
+    border:1px solid var(--rule); display:flex; align-items:center;
+    justify-content:space-between; gap:24px; flex-wrap:wrap;
+  }
+  .cta-block-title { font-family: var(--sans) !important; font-size:22px; font-weight:700; color:var(--white); letter-spacing:-0.02em; margin-bottom:6px; }
+  .cta-block-sub { font-family: var(--sans) !important; font-size:15px; color:#999; max-width:540px; }
+  
+  .btn-primary {
+    font-family:var(--mono); font-size:16px; letter-spacing:0.05em; text-transform:uppercase;
+    color:#00b881; padding:12px 0; text-decoration:none;
+    font-weight:700; transition:color 0.15s; white-space:nowrap; flex-shrink:0;
+    background: transparent; border: none; cursor: pointer;
+  }
+  .btn-primary:hover { color:var(--signal); }
+
+  /* ── FOOTER STACK ── */
+  footer { 
+    width: 100%; 
+    position: absolute; 
+    bottom: 40px; 
+    left: 0; 
+    padding: 0 56px;
+  }
+  .footer-inner { 
+    max-width:1040px; 
+    margin:0 auto; 
+    display:flex; 
+    flex-direction:column;
+    align-items:center; 
+    justify-content:center;
+    text-align:center;
+    gap:12px; 
+  }
+  
+  .footer-top-link {
+    text-decoration:none;
+    margin-bottom:8px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  .footer-top-link span {
+    font-family:var(--mono);
+    font-size:15px;
+    color:#777;
+    transition:color 0.15s;
+  }
+  .footer-top-link:hover span {
+    color:var(--signal);
+  }
+  
+  .footer-rule {
+    width: 100%;
+    height: 1px;
+    background-color: var(--rule);
+    margin-bottom: 12px;
+  }
+  
+  .footer-copy { font-family:var(--mono); font-size:15px; color:#666; line-height:1.7; }
+  .footer-policy-links { font-family:var(--mono); font-size:15px; color:#666; margin-bottom:4px; }
+  .footer-policy-links a { color:#777; text-decoration:none; transition:color 0.15s; }
+  .footer-policy-links a:hover { color:var(--signal); }
+  
+  .bolt-svg {
+    width: 14px;
+    height: 14px;
+    vertical-align: middle;
+    margin: 0 6px;
+  }
+
+  @media(max-width:960px) {
+    .content-columns { grid-template-columns: 1fr; }
+    .content-col:first-child { border-right: none; padding-right: 0; border-bottom: 1px solid var(--rule); padding-bottom: 20px; }
+    .content-col:last-child { padding-left: 0; padding-top: 20px; }
+    .sectors-grid { grid-template-columns: 1fr; }
+  }
+
+  @media(max-width:900px) {
+    .site-nav { height: auto; padding: 32px 24px 16px; flex-direction: column; gap: 16px; align-items: flex-start; }
+    .nav-links { width: 100%; justify-content: flex-start; gap: 12px; }
+    .nav-links a { padding: 6px 0; font-size: 14px; }
+  }
+
+  @media(max-width:700px) {
+    .page-wrap { padding-left:24px; padding-right:24px; padding-bottom:420px; }
+    footer { padding: 0 24px; bottom: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a class="nav-brand" href="index.html">
+    <svg width="52" height="52" viewBox="0 0 60 60" fill="none" style="margin-top:10px; flex-shrink:0;"><circle cx="30" cy="12" r="4.5" fill="#00b881"/><circle cx="8" cy="52" r="4.5" fill="#00b881"/><circle cx="52" cy="52" r="4.5" fill="#00b881"/><text x="30" y="38" font-family="Arial, sans-serif" font-size="30" font-weight="900" text-anchor="middle" dominant-baseline="central" fill="#f5f4f0">G</text></svg>
+    <div class="nav-brand-meta">
+      <span class="nav-brand-text">Glexicon Monster</span>
+      <span class="nav-tagline">The Architecture of Next-Generation Data Efficiency</span>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="#part-one">Part One</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#part-two">Part Two</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-eyebrow">Monster Protocol · 2026</div>
+    <div class="page-title">The Complete <span>Industry Library.</span></div>
+    <div class="page-sub">12 Sector Editions. One highly secure, decentralised satellite node edge architecture.
+Every edition below is built on the identical zero-knowledge model — only the terminology, data types, and operational tempo change to match the industry.</div>
+  </div>
+
+  <div id="part-one" style="margin-top: 8px; margin-bottom: 24px;">
+    <div class="page-eyebrow">Sector Libraries · Part One</div>
+  </div>
+
+  <div class="sectors-grid">
+    <a href="Glexicon_Ebook_Energy_Utilities.html" class="sector-card">
+      <div class="sector-header-inline">
+        <div class="sector-title">Energy &amp; Utilities</div>
+        <svg class="section-icon" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      </div>
+      <div class="sector-desc">Grid telemetry and smart meter data resolved at the edge. Secure, high-throughput lookup built for the operational tempo of critical infrastructure.</div>
+      <div class="sector-link">Explore Edition →</div>
+    </a>
+
+    <a href="Glexicon_Ebook_Food_Beverage.html" class="sector-card">
+      <div class="sector-header-inline">
+        <div class="sector-title">Food &amp; Beverage</div>
+        <svg class="section-icon" viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 1 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+      </div>
+      <div class="sector-desc">Recipe data, supply chain records, and consumer intelligence streamlined across distributed nodes. Zero-friction lookups from source to shelf.</div>
+      <div class="sector-link">Explore Edition →</div>
+    </a>
+
+    <a href="Glexicon_Ebook_Hospitality_Travel.html" class="sector-card">
+      <div class="sector-header-inline">
+        <div class="sector-title">Hospitality &amp; Travel</div>
+        <svg class="section-icon" viewBox="0 0 24 24"><path d="M2 22 22 2M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+      </div>
+      <div class="sector-desc">Guest profiles and booking records converted into lightweight, secure pointers. Cross-property synergy without the synchronization lag.</div>
+      <div class="sector-link">Explore Edition →</div>
+    </a>
+
+    <a href="Glexicon_Ebook_Real_Estate.html" class="sector-card">
+      <div class="sector-header-inline">
+        <div class="sector-title">Real Estate &amp; PropTech</div>
+        <svg class="section-icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9z"/><path d="M9 22V12h6v10"/></svg>
+      </div>
+      <div class="sector-desc">Property listings, valuations, and transaction histories resolved instantly. Secure lookup that scales from single portfolios to global markets.</div>
+      <div class="sector-link">Explore Edition →</div>
+    </a>
+
+    <a href="Glexicon_Ebook_Space_Exploration.html" class="sector-card">
+      <div class="sector-header-inline">
+        <div class="sector-title">Space Exploration</div>
+        <svg class="section-icon" viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+      </div>
+      <div class="sector-desc">Telemetry, satellite imagery, and mission logs streamlined at the edge. Built for the tempo of international collaborations and deep space intelligence.</div>
+      <div class="sector-link">Explore Edition →</div>
+    </a>
+
+    <a href="Glexicon_Ebook_Sports_Entertainment.html" class="sector-card">
+      <div class="sector-header-inline">
+        <div class="sector-title">Sports &amp; Entertainment</div>
+        <svg class="section-icon" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M17 4h3a2 2 0 0 1-2 4h-1M7 4H4a2 2 0 0 0 2 4h1"/></svg>
+      </div>
+      <div class="sector-desc">Player performance and fan engagement data resolved with ultra-low latency. Secure, high-frequency lookup for teams, leagues, and broadcasters.</div>
+      <div class="sector-link">Explore Edition →</div>
+    </a>
+  </div>
+
+  <div id="architecture" class="content-row" style="margin-top: 32px;">
+    <div class="content-row-header">
+      <h4>
+        <svg class="section-icon" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        One Architecture, Twelve Industries
+      </h4>
+      <span class="row-meta-badge">
+        <svg class="badge-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        Core Mandate
+      </span>
+    </div>
+    <div class="content-columns">
+      <div class="content-col">
+        <div class="content-label">System Philosophy</div>
+        <div class="content-body-text">
+          The vocabulary changes. The data types change. The compliance demands change. <strong>The architecture never does.</strong> Every edition in this library runs the identical zero-knowledge model: Satellite Nodes act as blind relays, forwarding requests without ever touching the underlying data. Gatekeeper Nodes verify and resolve exclusively through the Shared Token Database. The Master Database itself is never reachable — by any node, at any stage, in any sector.
+        </div>
+      </div>
+      <div class="content-col">
+        <div class="content-label">Library Overview</div>
+        <table class="data-profile-table">
+          <tr><td>Editions Live</td><td>12</td></tr>
+          <tr><td>Architecture Model</td><td>Uniform</td></tr>
+          <tr><td>Master Database Connections</td><td class="highlight-signal">Zero</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="part-two" style="margin-top: 48px; margin-bottom: 24px;">
+    <div class="page-eyebrow">Sector Libraries · Part Two</div>
+  </div>
+
+  <div class="sectors-grid">
+    <a href="Glexicon_Ebook_Aerospace_Defence.html" class="sector-card">
+      <div class="sector-header-inline">
+        <div class="sector-title">Aerospace &amp; Defence</div>
+        <svg class="section-icon" viewBox="0 0 24 24"><path d="M12 2 4 6v6c0 5.25 3.5 9.5 8 10 4.5-.5 8-4.75 8-10V6l-8-4z"/></svg>
+      </div>
+      <div class="sector-desc">Flight records, telemetry, and mission-critical intelligence resolved at the edge. Institutional-grade security for the most sensitive operational data.</div>
+      <div class="sector-link">Explore Edition →</div>
+    </a>
+
+    <a href="Glexicon_Ebook_Agriculture.html" class="sector-card">
+      <div class="sector-header-inline">
+        <div class="sector-title">Agriculture &amp; AgTech</div>
+        <svg class="section-icon" viewBox="0 0 24 24"><path d="M12 3C7 3 4 7 4 12c0 5 4 9 8 9s8-4 8-9c0-1-.1-2-.4-3"/><path d="M12 3c3 3 3 12 0 18"/></svg>
+      </div>
+      <div class="sector-desc">Yield records, soil sensor data, and crop intelligence streamlined across regions. Zero-friction lookup from field to forecast.</div>
+      <div class="sector-link">Explore Edition →</div>
+    </a>
+
+    <a href="Glexicon_Ebook_Fashion.html" class="sector-card">
+      <div class="sector-header-inline">
+        <div class="sector-title">Fashion &amp; Luxury</div>
+        <svg class="section-icon" viewBox="0 0 24 24"><path d="M16 2l-4 3-4-3-4 4 3 3v10h10V9l3-3-4-4z"/></svg>
+      </div>
+      <div class="sector-desc">Product metadata, collection records, and trend intelligence resolved instantly. Secure lookup built for the pace of creative and commercial cycles.</div>
+      <div class="sector-link">Explore Edition →</div>
+    </a>
+
+    <a href="Glexicon_Ebook_Gov_Public_Sector.html" class="sector-card">
+      <div class="sector-header-inline">
+        <div class="sector-title">Government &amp; Public Sector</div>
+        <svg class="section-icon" viewBox="0 0 24 24"><path d="M3 21h18M4 21V10M20 21V10M2 10l10-6 10 6M6 10v11M10 10v11M14 10v11M18 10v11"/></svg>
+      </div>
+      <div class="sector-desc">Citizen records and administrative data resolved with institutional-grade security. Zero external dependency for the most sensitive civic information.</div>
+      <div class="sector-link">Explore Edition →</div>
+    </a>
+
+    <a href="Glexicon_Ebook_Logistics.html" class="sector-card">
+      <div class="sector-header-inline">
+        <div class="sector-title">Logistics &amp; Supply Chain</div>
+        <svg class="section-icon" viewBox="0 0 24 24"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+      </div>
+      <div class="sector-desc">Shipment tracking, container data, and route intelligence resolved at the edge. Secure, real-time lookup across every node in the distribution network.</div>
+      <div class="sector-link">Explore Edition →</div>
+    </a>
+
+    <a href="Glexicon_Ebook_Telecommunications.html" class="sector-card">
+      <div class="sector-header-inline">
+        <div class="sector-title">Telecommunications</div>
+        <svg class="section-icon" viewBox="0 0 24 24"><path d="M12 20h.01"/><path d="M8.5 16.5a5 5 0 0 1 7 0"/><path d="M5 13a10 10 0 0 1 14 0"/><path d="M2 9.5a15 15 0 0 1 20 0"/></svg>
+      </div>
+      <div class="sector-desc">Network traffic logs, subscriber data, and infrastructure telemetry resolved instantly. Built for the throughput demands of terrestrial, satellite, and mobile networks.</div>
+      <div class="sector-link">Explore Edition →</div>
+    </a>
+  </div>
+
+  <div id="cta-block">
+    <div>
+      <div class="cta-block-title">Twelve Industries. One Zero-Knowledge Architecture.</div>
+      <div class="cta-block-sub">Every edition above resolves through the same blind satellite relay and verifying gatekeeper model — the Master Database is never reachable, regardless of sector. Visit our subscription page to secure an institutional grade Protocol Engine package today.</div>
+    </div>
+    <a href="subscribe.html" class="btn-primary">Secure a License →</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <button onclick="scrollToTop()" class="footer-top-link"><span>↑ Return to Top</span></button>
+    
+    <div class="footer-rule"></div>
+    
+    <div class="footer-policy-links">
+      <a href="privacy.html">Privacy Policy</a> &nbsp;|&nbsp; <a href="terms.html">Terms of Service</a>
+    </div>
+    
+    <div class="footer-copy">
+      © 2026 Glexicon. All rights reserved.<br>
+      Trade Secret — Confidential Intellectual Property — Global Licensing Available<br>
+      <svg class="bolt-svg" viewBox="0 0 24 24" fill="#FFD700"><path d="M11 21h-1l1.5-6.5h-4.5c-.3 0-.5-.2-.6-.4-.1-.2 0-.5.2-.7l7.5-9.5h1l-1.5 6.5h4.5c.3 0 .5.2.6.4.1.2 0 .5-.2.7l-7.5 9.5z"/></svg>Tick. Tock. Token.<svg class="bolt-svg" viewBox="0 0 24 24" fill="#FFD700"><path d="M11 21h-1l1.5-6.5h-4.5c-.3 0-.5-.2-.6-.4-.1-.2 0-.5.2-.7l7.5-9.5h1l-1.5 6.5h4.5c.3 0 .5.2.6.4.1.2 0 .5-.2.7l-7.5 9.5z"/></svg>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
