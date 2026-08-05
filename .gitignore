@@ -10,3 +10,30 @@ Thumbs.db
 # Environment variables (Crucial for security!)
 .env
 .env.local
+# More env variants (people create these without thinking, easy to miss)
+.env.*.local
+.env.production
+.env.development
+
+# Editor/IDE clutter
+.vscode/
+.idea/
+*.swp
+
+# Logs (matches today's whole conversation)
+*.log
+npm-debug.log*
+
+# OS clutter (macOS-specific, beyond just .DS_Store)
+.AppleDouble
+.LSOverride
+
+# Package manager lock/cache noise (only if you don't intentionally commit lockfiles)
+.npm
+.cache/
+
+# Common secret/key file patterns — cheap insurance against exactly
+# today's kind of mistake (a real credential ending up in a committed file)
+*.pem
+*.key
+secrets.json
